@@ -1,0 +1,38 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32630.192
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApi", "WebApi\WebApi.csproj", "{E26AC6D6-8B0D-49C9-B21D-860DAA182229}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1.Service", "1.Service", "{7BD0D35F-CFCE-4E1C-998D-C0B99437193C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "0.Client", "0.Client", "{8F5B6CE4-0E11-44C7-8911-A57F30800580}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2.Logic", "2.Logic", "{A4CD104A-1219-44F8-8715-2AD991580590}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3.Data", "3.Data", "{3829BE23-9373-420E-9873-56186F0DA3D8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4.Common", "4.Common", "{0166A1A6-2645-404F-A4FA-183B0AFF84A1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E26AC6D6-8B0D-49C9-B21D-860DAA182229}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E26AC6D6-8B0D-49C9-B21D-860DAA182229}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E26AC6D6-8B0D-49C9-B21D-860DAA182229}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E26AC6D6-8B0D-49C9-B21D-860DAA182229}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{E26AC6D6-8B0D-49C9-B21D-860DAA182229} = {7BD0D35F-CFCE-4E1C-998D-C0B99437193C}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {AC958E4F-8530-4778-BF77-984BDF8F957A}
+	EndGlobalSection
+EndGlobal
