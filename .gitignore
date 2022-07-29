@@ -406,7 +406,7 @@ yarn-error.log*
 
 # production
 /build
-
+/WebAplication/package.json
 # misc
 .DS_Store
 .env.local
