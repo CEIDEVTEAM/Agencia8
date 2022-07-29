@@ -17,8 +17,7 @@ export default function UserForm(props){
                 apellido: Yup.string().required('Este campo es requerido')
                 .max(50, 'La longitud máxima es de 50 caracteres'),
                 userName: Yup.string().required('Este campo es requerido')
-                .max(50, 'La longitud máxima es de 50 caracteres')
-                      
+                .max(50, 'La longitud máxima es de 50 caracteres')                      
             })}
         >
             {(formikProps) => (
