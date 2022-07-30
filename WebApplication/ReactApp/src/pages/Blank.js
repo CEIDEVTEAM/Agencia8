@@ -1,29 +1,58 @@
-import React from 'react'
-import UserForm from '../components/form/Models/UsersForm'
-
-import PageTitle from '../components/Typography/PageTitle'
-import Button from '../utils/generals/Button'
+import React, { useEffect, useState } from 'react';
+import axios, {axiosResponse} from 'axios';
+import { testUrl } from '../utils/http/endpoints';
+import {
+  Table,
+  TableHeader,
+  TableCell,
+  TableBody,
+  TableRow,
+  TableFooter,
+  TableContainer,
+  Badge,
+  Avatar,
+  Button,
+  Pagination,
+} from '@windmill/react-ui'
 
 function Blank() {
+  
+  const [test, setTest] = useState([]);
+  
+  useEffect(()=> {
+    axios.get(testUrl).then((response)=>{
+      setTest(response.data)
+      
+    })
+  },[])
+
+  console.log(test)
   return (
-    // <>
-    //   <PageTitle>Blank</PageTitle>
-    //   <div className="inline-flex">
-    //     <Button className="green">Aceptar</Button>
-    //     <Button className="green">Pepe</Button>
-    //   </div>
-    // </>
-    // <>
-    
+      
+    <TableContainer className="mb-8">
+    <Table>
+      <TableHeader>
+        <tr>
+          <TableCell>Clima</TableCell>          
+        </tr>
+      </TableHeader>
+      <TableBody>
+        {test.map((x)=>
+      <TableRow key={x}>
+                
+                <TableCell>
+                  <span className="text-sm">{x}</span>
+                </TableCell>
+       </TableRow>
+    )}
+      </TableBody>
+        </Table>        
+      </TableContainer>
+    // <div>{test.map((x)=>
+    //   < key={x}>{x} </h4> )}</div>
 
-    <UserForm modelo={{nombre: ''}} 
-         onSubmit={async valores => {
-            await new Promise(r => setTimeout(r, 3000))
-            console.log(valores);
-         }}
-    />
-
-  )
+    )
+  
 }
 
 export default Blank
