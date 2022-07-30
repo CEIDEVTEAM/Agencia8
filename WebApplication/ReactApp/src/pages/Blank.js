@@ -33,15 +33,22 @@ function Blank() {
     <Table>
       <TableHeader>
         <tr>
-          <TableCell>Clima</TableCell>          
+          <TableCell>Nombre</TableCell> 
+          <TableCell>Email</TableCell>  
+          <TableCell>Nombre</TableCell>           
         </tr>
       </TableHeader>
       <TableBody>
         {test.map((x)=>
-      <TableRow key={x}>
-                
+      <TableRow key={x.id}>                
                 <TableCell>
-                  <span className="text-sm">{x}</span>
+                  <span className="text-sm">{x.name}</span>
+                </TableCell>
+                <TableCell>
+                  <span className="text-sm">{x.email}</span>
+                </TableCell>
+                <TableCell>
+                  <span className="text-sm">{x.phone}</span>
                 </TableCell>
        </TableRow>
     )}

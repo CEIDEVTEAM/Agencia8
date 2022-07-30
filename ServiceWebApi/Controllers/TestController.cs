@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using DataAccess.Context;
+using DataAccess.Models;
+using Microsoft.AspNetCore.Mvc;
+using System.Linq;
 
 namespace ServiceWebApi.Controllers
 {
@@ -12,16 +15,20 @@ namespace ServiceWebApi.Controllers
     };
 
         private readonly ILogger<WeatherForecastController> _logger;
+        private Agencia_8Context _context;
 
-        public TestController(ILogger<WeatherForecastController> logger)
+        public TestController(ILogger<WeatherForecastController> logger, Agencia_8Context context)
         {
             _logger = logger;
+            _context = context;
         }
 
+        
+
         [HttpGet]
-        public string[]Get()
+        public List<User> Get()
         {
-            return Summaries;
+            return _context.Users.Select(s=>s).ToList();
         }
     }
 }
