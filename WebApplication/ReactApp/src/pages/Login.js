@@ -1,4 +1,4 @@
-import React from 'react'
+import React ,{ useContext, useState }from 'react'
 import { Link } from 'react-router-dom'
 
 //import ImageLight from '../assets/img/login-office.jpeg'
@@ -7,8 +7,36 @@ import ImageDark from '../assets/img/maxresdefault.jpg'
 //import ImageDark from '../assets/img/login-office-dark.jpeg'
 import { GithubIcon, TwitterIcon } from '../icons'
 import { Label, Input, Button } from '@windmill/react-ui'
+import AutForm from '../components/form/Models/AutForm'
+
+import axios from "axios";
+import { useHistory } from "react-router-dom";
+import { authUrl } from "../utils/http/endpoints";
+import MostrarErrores from "../utils/generals/MostrarErrores";
+import AuthContext from "../context/AuthContext";
+
+import { guardarTokenLocalStorage, obtenerClaims } from "./manejadorJWT";;
 
 function Login() {
+  const {actualizar} = useContext(AuthContext);
+  const [errores, setErrores] = useState([]);
+  const history = useHistory();
+
+  async function login(credenciales) {
+    try {
+        const respuesta = await
+            axios.post<respuestaAutenticacion>(`${authUrl}/login`, credenciales);
+        
+            guardarTokenLocalStorage(respuesta.data);
+            actualizar(obtenerClaims());
+            history.push("/");
+        console.log(respuesta);
+    }
+    catch (error) {
+        setErrores(error.response.data);
+    }
+}
+  
   return (
     <div className="flex items-center min-h-screen p-6 bg-gray-50 dark:bg-gray-900">
       <div className="flex-1 h-full max-w-4xl mx-auto overflow-hidden bg-white rounded-lg shadow-xl dark:bg-gray-800">
@@ -27,52 +55,10 @@ function Login() {
               alt="Office"
             />
           </div>
-          <main className="flex items-center justify-center p-6 sm:p-12 md:w-1/2">
-            <div className="w-full">
-              <h1 className="mb-4 text-xl font-semibold text-gray-700 dark:text-gray-200">Acceso al sistema</h1>
-              <Label>
-                <span>Email</span>
-                <Input className="mt-1" type="email" placeholder="john@doe.com" />
-              </Label>
-
-              <Label className="mt-4">
-                <span>Password</span>
-                <Input className="mt-1" type="password" placeholder="***************" />
-              </Label>
-
-              <Button className="mt-4" block tag={Link} to="/app">
-                Log in
-              </Button>
-
-              <hr className="my-8" />
-
-              <Button block layout="outline">
-                <GithubIcon className="w-4 h-4 mr-2" aria-hidden="true" />
-                Github
-              </Button>
-              <Button className="mt-4" block layout="outline">
-                <TwitterIcon className="w-4 h-4 mr-2" aria-hidden="true" />
-                Twitter
-              </Button>
-
-              <p className="mt-4">
-                <Link
-                  className="text-sm font-medium text-purple-600 dark:text-purple-400 hover:underline"
-                  to="/forgot-password"
-                >
-                  Forgot your password?
-                </Link>
-              </p>
-              <p className="mt-1">
-                <Link
-                  className="text-sm font-medium text-purple-600 dark:text-purple-400 hover:underline"
-                  to="/create-account"
-                >
-                  Create account
-                </Link>
-              </p>
-            </div>
-          </main>
+          <MostrarErrores errores={errores} />        
+          <AutForm modelo={{user:'', password:''}} 
+                    onSubmit={async valores => await login(valores)}
+          />
         </div>
       </div>
     </div>
