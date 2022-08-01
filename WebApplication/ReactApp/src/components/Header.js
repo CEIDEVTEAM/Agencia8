@@ -11,8 +11,15 @@ import {
   OutlineLogoutIcon,
 } from '../icons'
 import { Avatar, Badge, Input, Dropdown, DropdownItem, WindmillContext } from '@windmill/react-ui'
+import AuthContext from '../context/AuthContext'
+import { logout } from '../utils/auth/manejadorJWT';
+import { Link, NavLink } from 'react-router-dom'
 
 function Header() {
+  const {actualizar, claims} = useContext(AuthContext);
+  function obtenerNombreUsuario() {
+      return claims.filter(x => x.nombre === "userName")[0]?.valor;
+  }
   const { mode, toggleMode } = useContext(WindmillContext)
   const { toggleSidebar } = useContext(SidebarContext)
 
@@ -120,17 +127,21 @@ function Header() {
               isOpen={isProfileMenuOpen}
               onClose={() => setIsProfileMenuOpen(false)}
             >
+              <span>Hola, {obtenerNombreUsuario()}</span>
               <DropdownItem tag="a" href="#">
                 <OutlinePersonIcon className="w-4 h-4 mr-3" aria-hidden="true" />
-                <span>Profile</span>
+                <span>Perfil</span>
               </DropdownItem>
               <DropdownItem tag="a" href="#">
                 <OutlineCogIcon className="w-4 h-4 mr-3" aria-hidden="true" />
-                <span>Settings</span>
+                <span>Configuración</span>
               </DropdownItem>
-              <DropdownItem onClick={() => alert('Log out!')}>
+              <DropdownItem onClick={() => {
+                                logout();
+                                actualizar([]);
+                            }}>
                 <OutlineLogoutIcon className="w-4 h-4 mr-3" aria-hidden="true" />
-                <span>Log out</span>
+                <Link to="/">Log out</Link>
               </DropdownItem>
             </Dropdown>
           </li>

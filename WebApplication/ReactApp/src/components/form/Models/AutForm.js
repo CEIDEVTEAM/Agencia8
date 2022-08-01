@@ -5,6 +5,8 @@ import ImageLight from '../../../assets/img/bolillero.jpg'
 import ImageDark from '../../../assets/img/maxresdefault.jpg'
 import { Button } from '@windmill/react-ui'
 import FormText from '../form-groups/FormText'
+import MostrarErrores from "../../../utils/generals/MostrarErrores";
+import ShowFieldError from "../form-groups/ShowFieldError"
 
 const AutForm = (props) => {
     return (       
@@ -21,12 +23,13 @@ const AutForm = (props) => {
                 >
                     {(formikProps) => (
                         <Form>
+                            <ShowFieldError mensaje={props.errores} />
                             <FormText campo="user" label="Usuario" />
                             <FormText campo="password" label="Contraseña" 
                                 type="password" placeholder="***************"/>
                             
                             <br />
-                            <Button className="blue" disabled={formikProps.isSubmitting}
+                            <Button block primary disabled={formikProps.isSubmitting}
                                 type="submit">Ingresar</Button>                               
                         </Form>
                     )}

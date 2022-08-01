@@ -12,10 +12,9 @@ import AutForm from '../components/form/Models/AutForm'
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 import { authUrl } from "../utils/http/endpoints";
-import MostrarErrores from "../utils/generals/MostrarErrores";
 import AuthContext from "../context/AuthContext";
 
-import { guardarTokenLocalStorage, obtenerClaims } from "./manejadorJWT";;
+import { guardarTokenLocalStorage, obtenerClaims } from "../utils/auth/manejadorJWT";;
 
 function Login() {
   const {actualizar} = useContext(AuthContext);
@@ -25,11 +24,11 @@ function Login() {
   async function login(credenciales) {
     try {
         const respuesta = await
-            axios.post<respuestaAutenticacion>(`${authUrl}/login`, credenciales);
+            axios.post(`${authUrl}/validateCredentials`, credenciales);
         
             guardarTokenLocalStorage(respuesta.data);
             actualizar(obtenerClaims());
-            history.push("/");
+            history.push("/app");
         console.log(respuesta);
     }
     catch (error) {
@@ -54,9 +53,8 @@ function Login() {
               src={ImageDark}
               alt="Office"
             />
-          </div>
-          <MostrarErrores errores={errores} />        
-          <AutForm modelo={{user:'', password:''}} 
+          </div>                 
+          <AutForm errores={errores} modelo={{user:'', password:''}} 
                     onSubmit={async valores => await login(valores)}
           />
         </div>

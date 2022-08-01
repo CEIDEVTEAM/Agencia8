@@ -1,9 +1,9 @@
 const llaveToken = "token";
-const llaveExpiracion = "token-expiracion"
+const llaveExpiracion = "expiration"
 
 export function guardarTokenLocalStorage(autenticacion){
     localStorage.setItem(llaveToken, autenticacion.token);
-    localStorage.setItem(llaveExpiracion, autenticacion.expiracion.toString());
+    localStorage.setItem(llaveExpiracion, autenticacion.expiration.toString());
 }
 
 export function obtenerClaims(){

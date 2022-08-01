@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react"
-export default function Button(props){
+export default function CustomButton(props){
     
     const [buttonClass, setbuttonClass]  = useState("");
     
@@ -33,7 +33,7 @@ export default function Button(props){
     )
 }
 
-Button.defaultProps = {
+CustomButton.defaultProps = {
     type: "button",
     disabled: false    
 }

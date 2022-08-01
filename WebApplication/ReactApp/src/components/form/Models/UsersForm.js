@@ -3,7 +3,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 import * as Yup from 'yup'
 import FormText from '../form-groups/FormText'
-import Button from '../../../utils/generals/Button'
+import CustomButton from '../../../utils/generals/CustomButton'
+import { Button } from '@windmill/react-ui'
 
 
 export default function UserForm(props){
@@ -27,9 +28,13 @@ export default function UserForm(props){
                     <FormText campo="userName" label="Nombre de Usuario" />
                     
                     <br/>
-                    <Button className="blue" disabled={formikProps.isSubmitting} 
-                        type="submit">Salvar</Button>
-                    <Button className="red">Cancel</Button>
+                    {/* <Button className="blue" disabled={formikProps.isSubmitting} 
+                        type="submit">Salvar</Button> */}
+                        <Button disabled={formikProps.isSubmitting}
+                                type="submit">Ingresar</Button>  
+                        
+                        <CustomButton className="red">Cancelar</CustomButton>  
+                    
                 </Form>
             )}
 

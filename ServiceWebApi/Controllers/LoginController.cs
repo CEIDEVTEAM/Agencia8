@@ -32,7 +32,7 @@ namespace ServiceWebApi.Controllers
             }
             else
             {
-                return BadRequest("Login incorrecto");
+                return BadRequest("Usuario y/o Contraseña Incorrectos, verifique.");
             }
         }
     }

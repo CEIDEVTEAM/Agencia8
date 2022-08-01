@@ -8,7 +8,7 @@ export default function FormText(props) {
         <Label className="mt-4">
           {props.label ? <label htmlFor={props.campo}>{props.label}</label> : null}
           <Field name={props.campo} className={props.className}
-            placeholder={props.placeholder} />
+            placeholder={props.placeholder} type={props.type}/>
            <ErrorMessage name={props.campo}>{mensaje =>
                  <ShowFieldError mensaje={mensaje} />
             }</ErrorMessage>
