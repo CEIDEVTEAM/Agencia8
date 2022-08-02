@@ -12,7 +12,7 @@ function Modals() {
   }
 
   function closeModal() {
-    setIsModalOpen(false)
+    setIsModalOpen(false)  
   }
 
   return (

@@ -1,7 +1,7 @@
 import React, { useState, useContext, Suspense, useEffect, lazy } from 'react'
-import { Switch, Route, Redirect, useLocation } from 'react-router-dom'
+import { Switch, Route, Redirect, useLocation, useHistory} from 'react-router-dom'
 import routes from '../routes'
-import { obtenerClaims } from '../utils/auth/manejadorJWT';
+import { obtenerClaims , obtenerToken } from '../utils/auth/manejadorJWT';
 import AuthContext from '../context/AuthContext'
 
 import Sidebar from '../components/Sidebar'
@@ -15,7 +15,7 @@ const Page404 = lazy(() => import('../pages/404'))
 function Layout() {
   const { isSidebarOpen, closeSidebar } = useContext(SidebarContext)
   let location = useLocation()
-
+  const history = useHistory();
   useEffect(() => {
     closeSidebar()
   }, [location])
@@ -23,15 +23,21 @@ function Layout() {
   const [claims, setClaims] = useState([]);
 
   useEffect(() => {
-    setClaims(obtenerClaims());
+    let token = obtenerToken()
+    if(token === undefined || token === null){
+      history.push("/")
+    }else{
+      setClaims(obtenerClaims());
+    }
   }, [])
 
   function actualizar(claims) {
     setClaims(claims);
-  }
+  } 
 
-  function esAdmin() {
-    return claims.findIndex(claim => claim.nombre === 'role' && claim.valor === 'Administrador') > -1;
+  function existResourse(resourse) {
+        
+    return claims.findIndex(claim => claim.valor === resourse) > -1;
   }
 
   return (
@@ -49,7 +55,7 @@ function Layout() {
               {routes.map(route =>
                 <Route key={route.path} path={`/app${route.path}`}
                   exact={true}>
-                  {route.isAdmin && !esAdmin() ? <>
+                  {!existResourse(route.resourse) ? <>
                     No tiene permiso para acceder a este componente
                     </> : <route.component/>}
                 </Route>)}

@@ -18,7 +18,7 @@ import { Link, NavLink } from 'react-router-dom'
 function Header() {
   const {actualizar, claims} = useContext(AuthContext);
   function obtenerNombreUsuario() {
-      return claims.filter(x => x.nombre === "userName")[0]?.valor;
+      return claims.filter(x => x.nombre === "name")[0]?.valor;
   }
   const { mode, toggleMode } = useContext(WindmillContext)
   const { toggleSidebar } = useContext(SidebarContext)

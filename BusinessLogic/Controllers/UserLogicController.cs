@@ -43,7 +43,14 @@ namespace BusinessLogic.Controllers
                 {
                     new Claim("userName", credentials.User),
                     new Claim("name", name),
-                    new Claim("role", role)
+                    new Claim("role", role),
+                    new Claim("resourse1", "dashboard"),
+                    new Claim("resourse2", "forms"),
+                    new Claim("resourse3", "buttons"),
+                    new Claim("resourse4", "pages"),
+                    new Claim("resourse5", "blank"),
+                    new Claim("resourse6", "404"),
+
                 };
 
                 var llave = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration));

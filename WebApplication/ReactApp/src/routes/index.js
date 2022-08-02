@@ -29,52 +29,63 @@ const routes = [
   {
     path: '/dashboard', // the url
     component: Dashboard, // view rendered
-    isAdmin: false
+    isAdmin: false,
+    resourse: "dashboard"
   },
   {
     path: '/forms',
     component: Forms,
-    isAdmin: true
+    isAdmin: true,
+    resourse: "forms"
   },
   {
     path: '/cards',
     component: Cards,
-    isAdmin: true
+    isAdmin: true,
+    resourse: "cards"
   },
   {
     path: '/charts',
     component: Charts,
-    isAdmin: true
+    isAdmin: true,
+    resourse: "charts"
+    
   },
   {
     path: '/buttons',
     component: Buttons,
-    isAdmin: true
+    isAdmin: true,
+    resourse: "buttons"
   },
   {
     path: '/modals',
     component: Modals,
-    isAdmin: true
+    isAdmin: true,
+    resourse: "modals"
   },
   {
     path: '/tables',
     component: Tables,
-    isAdmin: true
+    isAdmin: true,
+    resourse: "tables"
   },
   {
     path: '/404',
     component: Page404,
-    isAdmin: true
+    isAdmin: true,
+    resourse: "404"
   },
   {
     path: '/blank',
     component: Blank,
-    isAdmin: true
+    isAdmin: true,
+    resourse: "blank"
   },
   {
     path: '/users/newUser',
     component: NewUser,
-    isAdmin: true
+    isAdmin: true,
+    resourse: "newUser"
   },
 
   

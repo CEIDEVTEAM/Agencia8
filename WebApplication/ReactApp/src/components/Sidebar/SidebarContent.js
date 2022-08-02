@@ -1,9 +1,11 @@
-import React from 'react'
+import React, { useState, useContext, Suspense, useEffect, lazy } from 'react'
 import routes from '../../routes/sidebar'
 import { NavLink, Route } from 'react-router-dom'
 import * as Icons from '../../icons'
 import SidebarSubmenu from './SidebarSubmenu'
 import { Button } from '@windmill/react-ui'
+import { obtenerClaims } from '../../utils/auth/manejadorJWT';
+import AuthContext from '../../context/AuthContext'
 
 function Icon({ icon, ...props }) {
   const Icon = Icons[icon]
@@ -11,16 +13,33 @@ function Icon({ icon, ...props }) {
 }
 
 function SidebarContent() {
-  
+
+  const [claims, setClaims] = useState([]);
+
+  useEffect(() => {
+    setClaims(obtenerClaims());    
+  }, [])
+
+  function actualizar(claims) {
+    setClaims(claims);
+  } 
+
+  function existResourse(resourse) {
+        
+    return claims.findIndex(claim => claim.valor === resourse) > -1;
+  }
+
   return (
     <div className="py-4 text-gray-500 dark:text-gray-400">
       <a className="ml-6 text-lg font-bold text-gray-800 dark:text-gray-200" href="#">
         Agencia 8
       </a>
+      <AuthContext.Provider value={{ claims, actualizar }}>
       <ul className="mt-6">
         {routes.map((route) =>
+          existResourse(route.resourse)?
           route.routes ? (
-            <SidebarSubmenu route={route} key={route.name} />
+            <SidebarSubmenu route={route} claim ={claims} key={route.name} />
           ) : (
             <li className="relative px-6 py-3" key={route.name}>
               <NavLink
@@ -39,9 +58,11 @@ function SidebarContent() {
                 <span className="ml-4">{route.name}</span>
               </NavLink>
             </li>
-          )
+          ):null
+          
         )}
-      </ul>      
+      </ul> 
+      </AuthContext.Provider>    
     </div>
   )
 }
