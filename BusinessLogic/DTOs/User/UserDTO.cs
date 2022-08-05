@@ -19,5 +19,8 @@ namespace BusinessLogic.DTOs.User
         public DateTime? AddRow { get; set; }
         public DateTime? UpdRow { get; set; }
 
+        public List<string> Resources { get; set; } = null;
+        public string RoleName { get; set; } = null;
+
     }
 }

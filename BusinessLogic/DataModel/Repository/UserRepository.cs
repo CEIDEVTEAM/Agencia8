@@ -23,31 +23,39 @@ namespace BusinessLogic.DataModel.Repository
 
         public bool ValidateCredentials(UserCredentials credentials)
         {
-            return this._context.Users.Any(x => x.UserName == credentials.User && x.Password == credentials.Password);
+            return _context.Users.Any(x => x.UserName == credentials.User && x.Password == credentials.Password);
         }
 
-        public string GetCompleteNameByUser(string userName)
+        public UserDTO GetUserByUserName(string userName)
         {
-            string completeName = "";
-
-            UserDTO user = this._mapper.Map<UserDTO>(this._context.Users.FirstOrDefault(x => x.UserName == userName));
-
-            if (user != null)
-                completeName = $"{user.Name}";
-
-            return completeName;
+            return _mapper.Map<UserDTO>(_context.Users.FirstOrDefault(x => x.UserName == userName));
         }
 
-        public string GetRoleByUser(string userName)
+        public UserDTO GetUserWhitResourcesByUserName(string userName)
         {
-            string role = "";
-
-            UserDTO user = this._mapper.Map<UserDTO>(this._context.Users.FirstOrDefault(x => x.UserName == userName));
+            UserDTO user = _mapper.Map<UserDTO>(_context.Users.FirstOrDefault(x => x.UserName == userName));
 
             if (user != null && user.IdRole != null)
-                role = this._context.Role.FirstOrDefault(x => x.Id == user.IdRole)?.Name;
+            {
+                user.RoleName = _context.Role.FirstOrDefault(x => x.Id == user.IdRole)?.Name;
+                user.Resources = GetResourcesByRole(user.IdRole ?? -1);
+            }
 
-            return role;
+            return user;
+        }
+
+        public List<string> GetResourcesByRole(decimal roleId)
+        {
+            List<string> resources = new List<string>();
+
+            resources = (from role in _context.Role
+                         where role.Id == roleId
+                         join rolePerm in _context.PermissionRole on role.Id equals rolePerm.IdRole
+                         join perm in _context.Permission on rolePerm.IdPermission equals perm.Id
+                         select new { resource = perm.Feature })
+                         .Select(s => s.resource).ToList();
+
+            return resources;
         }
     }
 }

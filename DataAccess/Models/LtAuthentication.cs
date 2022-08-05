@@ -9,5 +9,6 @@ namespace DataAccess.Models
         public decimal UserId { get; set; }
         public string Action { get; set; } = null!;
         public DateTime? AddRow { get; set; }
+        public string Token { get; set; }
     }
 }

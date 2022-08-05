@@ -52,7 +52,7 @@ namespace DataAccess.Context
             {
                 entity.ToTable("Candidate");
 
-                entity.Property(e => e.Id).HasColumnType("numeric(10, 0)");
+                entity.Property(e => e.Id).HasColumnType("numeric(10, 0)").ValueGeneratedOnAdd();
 
                 entity.Property(e => e.AddRow)
                     .HasColumnType("datetime")
@@ -162,7 +162,7 @@ namespace DataAccess.Context
             {
                 entity.ToTable("Decision_Params");
 
-                entity.Property(e => e.Id).HasColumnType("numeric(10, 0)");
+                entity.Property(e => e.Id).HasColumnType("numeric(10, 0)").ValueGeneratedOnAdd(); ;
 
                 entity.Property(e => e.ActiveFlag)
                     .HasMaxLength(1)
@@ -188,7 +188,7 @@ namespace DataAccess.Context
             {
                 entity.ToTable("Decision_Support");
 
-                entity.Property(e => e.Id).HasColumnType("numeric(10, 0)");
+                entity.Property(e => e.Id).HasColumnType("numeric(10, 0)").ValueGeneratedOnAdd();
 
                 entity.Property(e => e.AddRow)
                     .HasColumnType("datetime")
@@ -325,7 +325,7 @@ namespace DataAccess.Context
             {
                 entity.ToTable("LT_Authentication");
 
-                entity.Property(e => e.Id).HasColumnType("numeric(10, 0)");
+                entity.Property(e => e.Id).HasColumnType("numeric(10, 0)").ValueGeneratedOnAdd();
 
                 entity.Property(e => e.Action)
                     .HasMaxLength(50)
@@ -338,13 +338,17 @@ namespace DataAccess.Context
                 entity.Property(e => e.UserId)
                     .HasColumnType("numeric(10, 0)")
                     .HasColumnName("User_Id");
+
+                entity.Property(e => e.Token)
+                    .HasMaxLength(2000)
+                    .IsUnicode(false);
             });
 
             modelBuilder.Entity<LtCandidate>(entity =>
             {
                 entity.ToTable("LT_Candidate");
 
-                entity.Property(e => e.Id).HasColumnType("numeric(10, 0)");
+                entity.Property(e => e.Id).HasColumnType("numeric(10, 0)").ValueGeneratedOnAdd();
 
                 entity.Property(e => e.Action)
                     .HasMaxLength(50)
@@ -417,7 +421,7 @@ namespace DataAccess.Context
             {
                 entity.ToTable("LT_Dependent");
 
-                entity.Property(e => e.Id).HasColumnType("numeric(10, 0)");
+                entity.Property(e => e.Id).HasColumnType("numeric(10, 0)").ValueGeneratedOnAdd();
 
                 entity.Property(e => e.Action)
                     .HasMaxLength(50)
@@ -482,7 +486,7 @@ namespace DataAccess.Context
             {
                 entity.ToTable("LT_Shop_Data");
 
-                entity.Property(e => e.Id).HasColumnType("numeric(10, 0)");
+                entity.Property(e => e.Id).HasColumnType("numeric(10, 0)").ValueGeneratedOnAdd();
 
                 entity.Property(e => e.Action)
                     .HasMaxLength(50)
@@ -542,7 +546,7 @@ namespace DataAccess.Context
             {
                 entity.ToTable("Permission");
 
-                entity.Property(e => e.Id).HasColumnType("numeric(10, 0)");
+                entity.Property(e => e.Id).HasColumnType("numeric(10, 0)").ValueGeneratedOnAdd();
 
                 entity.Property(e => e.AddRow)
                     .HasColumnType("datetime")
@@ -588,7 +592,7 @@ namespace DataAccess.Context
             {
                 entity.ToTable("Procedure_Step");
 
-                entity.Property(e => e.Id).HasColumnType("numeric(10, 0)");
+                entity.Property(e => e.Id).HasColumnType("numeric(10, 0)").ValueGeneratedOnAdd();
 
                 entity.Property(e => e.AddRow)
                     .HasColumnType("datetime")
@@ -644,7 +648,7 @@ namespace DataAccess.Context
             {
                 entity.ToTable("Role");
 
-                entity.Property(e => e.Id).HasColumnType("numeric(10, 0)");
+                entity.Property(e => e.Id).HasColumnType("numeric(10, 0)").ValueGeneratedOnAdd();
 
                 entity.Property(e => e.AddRow)
                     .HasColumnType("datetime")
@@ -663,7 +667,7 @@ namespace DataAccess.Context
             {
                 entity.ToTable("Shop_Data");
 
-                entity.Property(e => e.Id).HasColumnType("numeric(10, 0)");
+                entity.Property(e => e.Id).HasColumnType("numeric(10, 0)").ValueGeneratedOnAdd();
 
                 entity.Property(e => e.AddRow)
                     .HasColumnType("datetime")
@@ -725,7 +729,7 @@ namespace DataAccess.Context
             {
                 entity.ToTable("Step_Type");
 
-                entity.Property(e => e.Id).HasColumnType("numeric(10, 0)");
+                entity.Property(e => e.Id).HasColumnType("numeric(10, 0)").ValueGeneratedOnAdd();
 
                 entity.Property(e => e.AactiveFlag)
                     .HasMaxLength(1)
@@ -753,7 +757,7 @@ namespace DataAccess.Context
             {
                 entity.ToTable("User");
 
-                entity.Property(e => e.Id).HasColumnType("numeric(10, 0)");
+                entity.Property(e => e.Id).HasColumnType("numeric(10, 0)").ValueGeneratedOnAdd();
 
                 entity.Property(e => e.AddRow)
                     .HasColumnType("datetime")
