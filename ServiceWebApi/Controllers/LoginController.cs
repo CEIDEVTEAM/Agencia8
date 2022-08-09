@@ -50,8 +50,7 @@ namespace ServiceWebApi.Controllers
             {
                 UserLogicController lg = new UserLogicController(_configuration, _application);
 
-                lg.SetLogout(token.Token);
-
+                lg.SetLogout(token.Token);               
 
                 return true;
             }
@@ -60,5 +59,7 @@ namespace ServiceWebApi.Controllers
                 return false;
             }
         }
+
+       
     }
 }
