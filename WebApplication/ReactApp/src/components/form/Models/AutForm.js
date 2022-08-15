@@ -29,7 +29,7 @@ const AutForm = (props) => {
                                 type="password" placeholder="***************"/>
                             
                             <br />
-                            <Button block primary disabled={formikProps.isSubmitting}
+                            <Button block disabled={formikProps.isSubmitting}
                                 type="submit">Ingresar</Button>                               
                         </Form>
                     )}

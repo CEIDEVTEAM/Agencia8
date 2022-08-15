@@ -1,7 +1,12 @@
 ﻿using AutoMapper;
+using BusinessLogic.DTOs.Generals;
 using BusinessLogic.DTOs.User;
+using BusinessLogic.Utils;
 using DataAccess.Context;
 using DataAccess.Models;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -49,5 +54,12 @@ namespace BusinessLogic.DataModel.Repository
 
             return role;
         }
+
+        public IQueryable<User> GetUsers()
+        {
+            return _context.Users.AsQueryable();
+        }
+
+        
     }
 }

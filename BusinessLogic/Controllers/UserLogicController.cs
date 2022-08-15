@@ -1,5 +1,10 @@
-﻿using BusinessLogic.DataModel;
+﻿using AutoMapper;
+using BusinessLogic.DataModel;
+using BusinessLogic.DTOs.Generals;
 using BusinessLogic.DTOs.User;
+using BusinessLogic.Utils;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System;
@@ -16,12 +21,14 @@ namespace BusinessLogic.Controllers
     {
         private IConfiguration _configuration;
         private string _application;
+        
 
         public UserLogicController(IConfiguration configuration, string application)
         {
             this._configuration = configuration;
-            this._application = application;
+            this._application = application;            
         }
+        
 
         public bool ValidateCredentials(UserCredentials credentials)
         {

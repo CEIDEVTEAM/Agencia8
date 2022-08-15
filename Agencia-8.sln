@@ -15,11 +15,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4.Common", "4.Common", "{01
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApplication", "WebApplication\WebApplication.csproj", "{BEC2450C-34CE-4D53-ACCF-9FEB85468203}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceWebApi", "ServiceWebApi\ServiceWebApi.csproj", "{D41CFBD7-1B2F-436D-A23B-51F3703348BC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServiceWebApi", "ServiceWebApi\ServiceWebApi.csproj", "{D41CFBD7-1B2F-436D-A23B-51F3703348BC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusinessLogic", "BusinessLogic\BusinessLogic.csproj", "{CEB5EBE2-63D0-498D-B5DC-F663DD148947}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BusinessLogic", "BusinessLogic\BusinessLogic.csproj", "{CEB5EBE2-63D0-498D-B5DC-F663DD148947}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccess", "DataAccess\DataAccess.csproj", "{E7E3F509-5EEE-4617-9E95-309F8D608436}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAccess", "DataAccess\DataAccess.csproj", "{E7E3F509-5EEE-4617-9E95-309F8D608436}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
