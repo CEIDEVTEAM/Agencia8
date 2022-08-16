@@ -46,5 +46,8 @@ app.UseEndpoints(endpoints =>
 });
 
 //app.MapControllers();
+app.UseAuthentication();
+
+app.MapControllers();
 
 app.Run();

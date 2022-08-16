@@ -19,13 +19,15 @@ namespace BusinessLogic.DataModel
         #region Repository
 
         public UserRepository UserRepository { get; set; }
-
+        public LogRepository LogRepository { get; set; }
         #endregion
 
         public UnitOfWork(IConfiguration configuration, string application)
         {
             this._context = new Agencia_8Context(configuration, application);
+
             this.UserRepository = new UserRepository(this._context);
+            this.LogRepository = new LogRepository(this._context);
         }
 
         public void BeginTransaction()

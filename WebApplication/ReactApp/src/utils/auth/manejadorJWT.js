@@ -1,3 +1,6 @@
+import { authUrl } from "../../utils/http/endpoints";
+import axios from "axios";
+
 const llaveToken = "token";
 const llaveExpiracion = "expiration"
 
@@ -15,7 +18,7 @@ export function obtenerClaims(){
 
     const expiracion = localStorage.getItem(llaveExpiracion);
     const expiracionFecha = new Date(expiracion);
-
+    
     if (expiracionFecha <= new Date()){
         logout();
         return [];
@@ -30,9 +33,20 @@ export function obtenerClaims(){
     return respuesta;
 }
 
-export function logout(){
+export async function logout(){
+    const token = {token: localStorage.getItem(llaveToken)}
+
     localStorage.removeItem(llaveToken);
     localStorage.removeItem(llaveExpiracion);
+
+    try {
+        const respuesta = 
+        await axios.post(`${authUrl}/SetLogout`, token);
+            //history.push("/app");
+        }
+    catch (error) {
+
+    }
 }
 
 export function obtenerToken(){

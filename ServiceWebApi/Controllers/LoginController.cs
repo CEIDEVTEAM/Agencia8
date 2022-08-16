@@ -21,19 +21,45 @@ namespace ServiceWebApi.Controllers
         [HttpPost("ValidateCredentials")]
         public async Task<ActionResult<AuthenticationResponse>> ValidateCredentials([FromBody] UserCredentials credentials)
         {
-
-            UserLogicController lg = new UserLogicController(_configuration, _application);
-
-            bool enabled = lg.ValidateCredentials(credentials);
-
-            if (enabled)
+            try
             {
-                return await lg.BuildUserToken(credentials, _configuration["jwt_key"]);
+                UserLogicController lg = new UserLogicController(_configuration, _application);
+
+                bool enabled = lg.ValidateCredentials(credentials);
+
+                if (enabled)
+                {
+                    return await lg.BuildUserToken(credentials, _configuration["jwt_key"]);
+                }
+                else
+                {
+                    return BadRequest("Usuario y/o Contraseña Incorrectos, verifique.");
+                }
+
             }
-            else
+            catch (Exception ex)
             {
-                return BadRequest("Usuario y/o Contraseña Incorrectos, verifique.");
+                return BadRequest("No es posible comunicarse con el proveedor.");
             }
         }
+
+        [HttpPost("SetLogout")]
+        public bool SetLogout([FromBody] AuthenticationResponse token)
+        {
+            try
+            {
+                UserLogicController lg = new UserLogicController(_configuration, _application);
+
+                lg.SetLogout(token.Token);               
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
+       
     }
 }

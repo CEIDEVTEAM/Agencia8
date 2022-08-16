@@ -28,6 +28,7 @@ namespace ServiceWebApi.Controllers
         [HttpGet]
         public List<User> Get()
         {
+
             return _context.Users.Select(s=>s).ToList();
         }
     }
