@@ -1,11 +1,12 @@
-﻿using AutoMapper;
+﻿
+using AutoMapper;
 using BusinessLogic.DataModel;
 using BusinessLogic.DTOs.Generals;
 using BusinessLogic.DTOs.User;
 using BusinessLogic.Utils;
+using DataAccess.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using CommonSolution.Constants;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System;
@@ -18,85 +19,168 @@ using System.Threading.Tasks;
 
 namespace BusinessLogic.Controllers
 {
-    public class UserLogicController
+    public class UserLogicController : ControllerBase
     {
         private IConfiguration _configuration;
         private string _application;
-        
+        private readonly IMapper _mapper;
 
         public UserLogicController(IConfiguration configuration, string application)
         {
             this._configuration = configuration;
-            this._application = application;            
-        }
-        
-
-        public bool ValidateCredentials(UserCredentials credentials)
-        {
-            using (var uow = new UnitOfWork(this._configuration, this._application))
-            {
-                return uow.UserRepository.ValidateCredentials(credentials);
-            }
+            this._application = application;
+            this._mapper = new Mapper(new MapperConfiguration(x => x.CreateMap<User, UserCreationDTO>().ReverseMap()));
         }
 
-        public async Task<AuthenticationResponse> BuildUserToken(UserCredentials credentials, string configuration)
+        public async Task<GenericResponse> AddUser(UserCreationDTO dto)
         {
+            List<string> errors = new List<string>();
+            bool successful = false;
 
-            using (var uow = new UnitOfWork(this._configuration, this._application))
+            using (var uow = new UnitOfWork(_configuration, _application))
             {
-                UserDTO user = uow.UserRepository.GetUserWhitResourcesByUserName(credentials.User);
+                uow.BeginTransaction();
 
-                var claims = new List<Claim>()
+                try
                 {
-                    new Claim("userName", credentials.User),
-                    new Claim("name", user.Name),
-                    new Claim("role", user.RoleName)
-                };
+                    errors = Validations(dto, uow, true);
 
-                if (user.Resources.Any())
-                {
-                    int resCount = 1;
-                    user.Resources.ForEach(x =>
+                    if (!errors.Any())
                     {
-                        claims.Add(new Claim($"resource{resCount}", x));
-                        resCount++;
-                    });
+                        var user = _mapper.Map<User>(dto);
+
+                        user.ActiveFlag = "S";
+                        uow.UserRepository.AddUser(user);
+
+                        uow.SaveChanges();
+                        uow.Commit();
+                        successful = true;
+                    }
                 }
-
-                var llave = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration));
-                var creds = new SigningCredentials(llave, SecurityAlgorithms.HmacSha256);
-
-                var expiration = DateTime.UtcNow.AddSeconds(20);
-
-                var token = new JwtSecurityToken(issuer: null, audience: null, claims: claims,
-                    expires: expiration, signingCredentials: creds);
-
-                uow.LogRepository.LogAuthentication(user, token, CLog.login);
-
-                return new AuthenticationResponse()
+                catch (Exception ex)
                 {
-                    Token = new JwtSecurityTokenHandler().WriteToken(token),
-                    Expiration = expiration
-                };
-
+                    errors.Add("Error al comunicarse con la base de datos");
+                    uow.Rollback();
+                }
             }
-        }
 
-        public bool SetLogout(string strToken)
-        {
-            using (var uow = new UnitOfWork(this._configuration, this._application))
+            return new GenericResponse()
             {
-                JwtSecurityToken token = new JwtSecurityTokenHandler().ReadJwtToken(strToken);
+                Errors = errors,
+                Successful = successful
+            };
 
-                string userName = token.Claims.FirstOrDefault(x => x.Type == "userName").Value;
+        }
 
-                UserDTO user = uow.UserRepository.GetUserByUserName(userName);
+        public async Task<GenericResponse> EditUser(UserCreationDTO dto)
+        {
+            List<string> errors = new List<string>();
+            bool successful = false;
 
-                uow.LogRepository.LogAuthentication(user, token, CLog.logout);
+            using (var uow = new UnitOfWork(_configuration, _application))
+            {
+                uow.BeginTransaction();
 
+                try
+                {
+                    errors = Validations(dto, uow);
+
+                    if (!errors.Any())
+                    {
+                        User user = uow.UserRepository.GetUserById(dto.Id);
+
+                        if (user != null)
+                        {
+                            user.Address = dto.Address;
+                            user.Name = dto.Name;
+                            user.Phone = dto.Phone;
+                            user.Email = dto.Email;
+                            user.IdRole = dto.IdRole;
+
+                            uow.UserRepository.UpdateUser(user);
+
+                            uow.SaveChanges();
+                            uow.Commit();
+                            successful = true;
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    errors.Add("Error al comunicarse con la base de datos");
+                    uow.Rollback();
+                }
             }
 
-            return true;
+            return new GenericResponse()
+            {
+                Errors = errors,
+                Successful = successful
+            };
+
         }
+
+        public async Task<GenericResponse> DeleteUser(int userId)
+        {
+            List<string> errors = new List<string>();
+            bool successful = false;
+
+            using (var uow = new UnitOfWork(_configuration, _application))
+            {
+                uow.BeginTransaction();
+
+                try
+                {
+                    if (uow.UserRepository.ExistUsuarioById(userId))
+                    {
+                        User user = uow.UserRepository.GetUserById(userId);
+
+                        if (user != null)
+                        {
+                            user.ActiveFlag = "N";
+                            uow.UserRepository.UpdateUser(user);
+
+                            uow.SaveChanges();
+                            uow.Commit();
+                            successful = true;
+                        }
+                    }
+                    else
+                        errors.Add("El usuario no existe.");
+                }
+                catch (Exception ex)
+                {
+                    errors.Add("Error al comunicarse con la base de datos");
+                    uow.Rollback();
+                }
+            }
+
+            return new GenericResponse()
+            {
+                Errors = errors,
+                Successful = successful
+            };
+        }
+
+        #region VALIDATIONS
+
+        public List<string> Validations(UserCreationDTO user, UnitOfWork uow, bool isAdd = false)
+        {
+            List<string> colerrors = new List<string>();
+
+            if (!isAdd && !uow.UserRepository.ExistUsuarioById(user.Id))
+                colerrors.Add("El usuario no existe.");
+
+            if (isAdd && uow.UserRepository.ExistUsuarioByUserName(user.UserName))
+                colerrors.Add("El nombre de usuario ya está registrado.");
+
+            if (!uow.UserRepository.ExistUserRole(user.IdRole ?? -1))
+                colerrors.Add("Debe seleccionar un rol de usuario válido.");
+
+            return colerrors;
+        }
+
+        #endregion
+
     }
 }

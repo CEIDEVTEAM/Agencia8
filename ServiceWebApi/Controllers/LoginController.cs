@@ -23,7 +23,7 @@ namespace ServiceWebApi.Controllers
         {
             try
             {
-                UserLogicController lg = new UserLogicController(_configuration, _application);
+                SesionLogicController lg = new SesionLogicController(_configuration, _application);
 
                 bool enabled = lg.ValidateCredentials(credentials);
 
@@ -48,7 +48,7 @@ namespace ServiceWebApi.Controllers
         {
             try
             {
-                UserLogicController lg = new UserLogicController(_configuration, _application);
+                SesionLogicController lg = new SesionLogicController(_configuration, _application);
 
                 lg.SetLogout(token.Token);               
 

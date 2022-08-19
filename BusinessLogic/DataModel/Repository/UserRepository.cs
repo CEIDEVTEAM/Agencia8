@@ -28,7 +28,7 @@ namespace BusinessLogic.DataModel.Repository
 
         public bool ValidateCredentials(UserCredentials credentials)
         {
-            return _context.Users.Any(x => x.UserName == credentials.User && x.Password == credentials.Password);
+            return _context.Users.Any(x => x.UserName == credentials.User && x.Password == credentials.Password && x.ActiveFlag == "S");
         }
 
         public UserDTO GetUserByUserName(string userName)
@@ -47,6 +47,12 @@ namespace BusinessLogic.DataModel.Repository
             }
 
             return user;
+        }
+
+        public void AddUser(User user)
+        {
+            user.AddRow = DateTime.Now;
+            _context.Users.Add(user);
         }
 
         public List<string> GetResourcesByRole(decimal roleId)
@@ -68,6 +74,29 @@ namespace BusinessLogic.DataModel.Repository
             return _context.Users.AsQueryable();
         }
 
-        
+        public User GetUserById(decimal userId)
+        {
+            return _context.Users.FirstOrDefault(x => x.Id == userId);
+        }
+
+        public bool ExistUsuarioByUserName(string userName)
+        {
+            return _context.Users.Any(x => x.UserName == userName && x.ActiveFlag == "S");
+        }
+        public bool ExistUsuarioById(decimal userId)
+        {
+            return _context.Users.Any(x => x.Id == userId && x.ActiveFlag == "S");
+        }
+
+        public bool ExistUserRole(decimal roleId)
+        {
+            return _context.Role.Any(x => x.Id == roleId);
+        }
+
+        public void UpdateUser(User user)
+        {
+            user.UpdRow = DateTime.Now;
+            _context.Users.Update(user);
+        }
     }
 }

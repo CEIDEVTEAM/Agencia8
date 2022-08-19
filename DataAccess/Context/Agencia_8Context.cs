@@ -800,6 +800,11 @@ namespace DataAccess.Context
                     .WithMany(p => p.Users)
                     .HasForeignKey(d => d.IdRole)
                     .HasConstraintName("FK_User_Id_Role");
+
+                entity.Property(e => e.ActiveFlag)
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .HasColumnName("Active_Flag");
             });
 
             OnModelCreatingPartial(modelBuilder);
