@@ -15,6 +15,7 @@ namespace DataAccess.Models
         public decimal? IdRole { get; set; }
         public DateTime? AddRow { get; set; }
         public DateTime? UpdRow { get; set; }
+        public string? ActiveFlag { get; set; }
 
         public virtual Role? IdRoleNavigation { get; set; }
         public virtual ProcedureStep ProcedureStep { get; set; } = null!;
