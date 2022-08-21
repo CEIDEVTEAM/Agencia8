@@ -24,11 +24,11 @@ namespace DataAccess.Context
         public virtual DbSet<ContactPerson> ContactPerson { get; set; }
         public virtual DbSet<DecisionParam> DecisionParam { get; set; }
         public virtual DbSet<DecisionSupport> DecisionSupport { get; set; }
-        public virtual DbSet<Dependet> Dependet { get; set; }
+        public virtual DbSet<Dependent> Dependent { get; set; }
         public virtual DbSet<ExternalDependent> ExternalDependent { get; set; }
         public virtual DbSet<LtAuthentication> LtAuthentication { get; set; }
         public virtual DbSet<LtCandidate> LtCandidate { get; set; }
-        public virtual DbSet<LtDependent> LtDeLtDependentpendents { get; set; }
+        public virtual DbSet<LtDependent> LtDependent { get; set; }
         public virtual DbSet<LtShopData> LtShopData { get; set; }
         public virtual DbSet<Permission> Permission { get; set; }
         public virtual DbSet<PermissionRole> PermissionRole { get; set; }
@@ -206,7 +206,7 @@ namespace DataAccess.Context
                     .IsFixedLength();
             });
 
-            modelBuilder.Entity<Dependet>(entity =>
+            modelBuilder.Entity<Dependent>(entity =>
             {
                 entity.HasKey(e => e.Number);
 

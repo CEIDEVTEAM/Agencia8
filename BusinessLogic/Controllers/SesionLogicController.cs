@@ -71,7 +71,7 @@ namespace BusinessLogic.Controllers
                 var token = new JwtSecurityToken(issuer: null, audience: null, claims: claims,
                     expires: expiration, signingCredentials: creds);
 
-                uow.LogRepository.LogAuthentication(user, token, CLog.login);
+                uow.LogRepository.LogAuthentication(user, token, CActions.login);
 
                 return new AuthenticationResponse()
                 {
@@ -92,7 +92,7 @@ namespace BusinessLogic.Controllers
 
                 UserDTO user = uow.UserRepository.GetUserByUserName(userName);
 
-                uow.LogRepository.LogAuthentication(user, token, CLog.logout);
+                uow.LogRepository.LogAuthentication(user, token, CActions.logout);
 
             }
 

@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace DataAccess.Models
 {
-    public partial class Dependet
+    public partial class Dependent
     {
-        public Dependet()
+        public Dependent()
         {
             ShopData = new HashSet<ShopData>();
         }

@@ -49,10 +49,10 @@ namespace BusinessLogic.DataModel.Repository
             return user;
         }
 
-        public void AddUser(User user)
+        public async void AddUser(User user)
         {
             user.AddRow = DateTime.Now;
-            _context.Users.Add(user);
+            await _context.Users.AddAsync(user);
         }
 
         public List<string> GetResourcesByRole(decimal roleId)

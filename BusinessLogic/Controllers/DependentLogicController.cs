@@ -1,26 +1,22 @@
-﻿using AutoMapper;
-using BusinessLogic.DataModel;
+﻿using BusinessLogic.DataModel;
+using BusinessLogic.DTOs.Dependent;
 using BusinessLogic.DTOs.Generals;
-using BusinessLogic.DTOs.User;
-using DataAccess.Models;
 using Microsoft.Extensions.Configuration;
 
 namespace BusinessLogic.Controllers
 {
-    public class UserLogicController
+    public class DependentLogicController
     {
         private IConfiguration _configuration;
         private string _application;
-        private readonly IMapper _mapper;
 
-        public UserLogicController(IConfiguration configuration, string application)
+        public DependentLogicController(IConfiguration configuration, string application)
         {
             this._configuration = configuration;
             this._application = application;
-            this._mapper = new Mapper(new MapperConfiguration(x => x.CreateMap<User, UserCreationDTO>().ReverseMap()));
         }
 
-        public async Task<GenericResponse> AddUser(UserCreationDTO dto)
+        public async Task<GenericResponse> AddDependent(DependentCreationDTO dto, int userId)
         {
             List<string> errors = new List<string>();
             bool successful = false;
@@ -35,10 +31,16 @@ namespace BusinessLogic.Controllers
 
                     if (!errors.Any())
                     {
-                        User user = _mapper.Map<User>(dto);
+                        uow.DependentRepository.AddDependent(dto, uow, userId);
 
-                        user.ActiveFlag = "S";
-                        uow.UserRepository.AddUser(user);
+                        if (dto.ShopData != null)
+                        {
+                            dto.ShopData.NumberDependent = dto.Number; //VER SI ES NECESARIO
+                            uow.ShopDataRepository.AddShopData(dto.ShopData, uow, userId);
+                        }
+
+                        dto.ContactPerson.Number = dto.Number; //VER SI ES NECESARIO
+                        uow.ContactPersonRepository.AddContactPerson(dto.ContactPerson);
 
                         uow.SaveChanges();
                         uow.Commit();
@@ -60,7 +62,7 @@ namespace BusinessLogic.Controllers
 
         }
 
-        public async Task<GenericResponse> EditUser(UserCreationDTO dto)
+        public async Task<GenericResponse> EditDependent(DependentCreationDTO dto, decimal userId)
         {
             List<string> errors = new List<string>();
             bool successful = false;
@@ -75,22 +77,20 @@ namespace BusinessLogic.Controllers
 
                     if (!errors.Any())
                     {
-                        User user = uow.UserRepository.GetUserById(dto.Id);
+                        uow.DependentRepository.UpdateDependent(dto, uow, userId);
 
-                        if (user != null)
+                        if (dto.ShopData != null)
                         {
-                            user.Address = dto.Address;
-                            user.Name = dto.Name;
-                            user.Phone = dto.Phone;
-                            user.Email = dto.Email;
-                            user.IdRole = dto.IdRole;
-
-                            uow.UserRepository.UpdateUser(user);
-
-                            uow.SaveChanges();
-                            uow.Commit();
-                            successful = true;
+                            dto.ShopData.NumberDependent = dto.Number;  //VER SI ES NECESARIO
+                            uow.ShopDataRepository.UpdateShopData(dto.ShopData, uow, userId);
                         }
+
+                        dto.ContactPerson.Number = dto.Number; //VER SI ES NECESARIO
+                        uow.ContactPersonRepository.UpdateContactPerson(dto.ContactPerson);
+
+                        uow.SaveChanges();
+                        uow.Commit();
+                        successful = true;
                     }
                 }
                 catch (Exception ex)
@@ -108,7 +108,7 @@ namespace BusinessLogic.Controllers
 
         }
 
-        public async Task<GenericResponse> DeleteUser(int userId)
+        public async Task<GenericResponse> DeleteDependent(decimal number, decimal userId)
         {
             List<string> errors = new List<string>();
             bool successful = false;
@@ -119,22 +119,22 @@ namespace BusinessLogic.Controllers
 
                 try
                 {
-                    if (uow.UserRepository.ExistUsuarioById(userId))
+                    if (uow.DependentRepository.ExistDependentByNumber(number))
                     {
-                        User user = uow.UserRepository.GetUserById(userId);
+                        uow.DependentRepository.DeleteDependent(number, uow, userId);
 
-                        if (user != null)
-                        {
-                            user.ActiveFlag = "N";
-                            uow.UserRepository.UpdateUser(user);
+                        if (uow.ShopDataRepository.ExistShopDataByNumber(number))
+                            uow.ShopDataRepository.DeleteShopData(number, uow, userId);
 
-                            uow.SaveChanges();
-                            uow.Commit();
-                            successful = true;
-                        }
+                        if (uow.ContactPersonRepository.ExistContactPersonByNumber(number))
+                            uow.ContactPersonRepository.DeleteContactPerson(number);
+
+                        uow.SaveChanges();
+                        uow.Commit();
+                        successful = true;
                     }
                     else
-                        errors.Add("El usuario no existe.");
+                        errors.Add($"Sub agente o corredor no existe.");
                 }
                 catch (Exception ex)
                 {
@@ -152,18 +152,15 @@ namespace BusinessLogic.Controllers
 
         #region VALIDATIONS
 
-        public List<string> Validations(UserCreationDTO user, UnitOfWork uow, bool isAdd = false)
+        public List<string> Validations(DependentCreationDTO dependent, UnitOfWork uow, bool isAdd = false)
         {
             List<string> colerrors = new List<string>();
 
-            if (!isAdd && !uow.UserRepository.ExistUsuarioById(user.Id))
-                colerrors.Add("El usuario no existe.");
+            if (!isAdd && !uow.DependentRepository.ExistDependentByNumber(dependent.Number))
+                colerrors.Add($"El {dependent.Condition} no existe.");
 
-            if (isAdd && uow.UserRepository.ExistUsuarioByUserName(user.UserName))
-                colerrors.Add("El nombre de usuario ya está registrado.");
-
-            if (!uow.UserRepository.ExistUserRole(user.IdRole ?? -1))
-                colerrors.Add("Debe seleccionar un rol de usuario válido.");
+            if (isAdd && uow.DependentRepository.ExistDependentByNumber(dependent.Number))
+                colerrors.Add($"El {dependent.Condition} ya está registrado.");
 
             return colerrors;
         }
