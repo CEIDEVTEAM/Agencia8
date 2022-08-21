@@ -13,19 +13,29 @@ export default function UserForm(props){
             onSubmit={props.onSubmit}
 
             validationSchema={Yup.object({
-                nombre: Yup.string().required('Este campo es requerido')
+                Name: Yup.string().required('Este campo es requerido')
+                .max(30, 'La longitud máxima es de 30 caracteres'),                
+                Password: Yup.string().required('Este campo es requerido')
                 .max(50, 'La longitud máxima es de 50 caracteres'),
-                apellido: Yup.string().required('Este campo es requerido')
+                Email: Yup.string().required('Este campo es requerido')
                 .max(50, 'La longitud máxima es de 50 caracteres'),
-                userName: Yup.string().required('Este campo es requerido')
-                .max(50, 'La longitud máxima es de 50 caracteres')                      
+                Address: Yup.string().required('Este campo es requerido')
+                .max(50, 'La longitud máxima es de 50 caracteres'),
+                Phone: Yup.string().required('Este campo es requerido')
+                .max(50, 'La longitud máxima es de 50 caracteres'),
+                IdRole: Yup.string().required('Este campo es requerido')
+                .max(50, 'La longitud máxima es de 50 caracteres'),
+
             })}
         >
             {(formikProps) => (
                 <Form>
-                    <FormText campo="nombre" label="Nombre" />
-                    <FormText campo="apellido" label="Apellido" />
-                    <FormText campo="userName" label="Nombre de Usuario" />
+                    <FormText campo="Name" label="Nombre" />
+                    <FormText campo="Password" label="Contraseña" />
+                    <FormText campo="Email" label="Correo Electrónico" />
+                    <FormText campo="Address" label="Dirección" />
+                    <FormText campo="Phone" label="Teléfono" />
+                    <FormText campo="IdRole" label="Role" />
                     
                     <br/>
                     {/* <Button className="blue" disabled={formikProps.isSubmitting} 
@@ -33,7 +43,7 @@ export default function UserForm(props){
                         <Button disabled={formikProps.isSubmitting}
                                 type="submit">Ingresar</Button>  
                         
-                        <CustomButton className="red">Cancelar</CustomButton>  
+                        {/* <CustomButton className="red">Cancelar</CustomButton>   */}
                     
                 </Form>
             )}
