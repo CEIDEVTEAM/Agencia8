@@ -83,6 +83,25 @@ const routes = [
       },
     ],
   },
+  {
+    icon: 'PeopleIcon',
+    name: 'Usuarios',
+    resourse: "users",
+    routes: [
+      // submenu
+      {
+        path: '/app/users/NewUser',
+        name: 'Nuevo Usuario',
+        resourse: "NewUser",
+        exact: true
+      },
+      {
+        path: '/app/users/ListUsers',
+        name: 'Listado de Usuarios',
+        resourse: "ListUsers",        
+      },
+    ],
+  },
 ]
 
 export default routes

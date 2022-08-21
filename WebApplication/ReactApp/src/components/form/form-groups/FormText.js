@@ -1,14 +1,14 @@
 import { Field, ErrorMessage } from "formik";
 import React from "react";
 import ShowFieldError from "./ShowFieldError";
-import { Input, HelperText, Label, Select, Textarea } from '@windmill/react-ui'
+import {Label} from '@windmill/react-ui'
 
 export default function FormText(props) {
     return (
         <Label className="mt-4">
           {props.label ? <label htmlFor={props.campo}>{props.label}</label> : null}
           <Field name={props.campo} className={props.className}
-            placeholder={props.placeholder} type={props.type}/>
+            placeholder={props.placeholder} type={props.type} disabled={props.disabled}/>
            <ErrorMessage name={props.campo}>{mensaje =>
                  <ShowFieldError mensaje={mensaje} />
             }</ErrorMessage>

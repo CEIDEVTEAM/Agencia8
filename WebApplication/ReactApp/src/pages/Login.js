@@ -5,8 +5,6 @@ import { Link } from 'react-router-dom'
 import ImageLight from '../assets/img/bolillero.jpg'
 import ImageDark from '../assets/img/maxresdefault.jpg'
 //import ImageDark from '../assets/img/login-office-dark.jpeg'
-import { GithubIcon, TwitterIcon } from '../icons'
-import { Label, Input, Button } from '@windmill/react-ui'
 import AutForm from '../components/form/Models/AutForm'
 
 import axios from "axios";

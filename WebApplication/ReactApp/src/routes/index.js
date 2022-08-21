@@ -13,6 +13,9 @@ const Blank = lazy(() => import('../pages/Blank'))
 
 //USUARIOS
 const NewUser = lazy(() => import('../pages/users/NewUser'))
+const ListUsers = lazy(() => import('../pages/users/ListUsers'))
+const EditUser = lazy(() => import('../pages/users/EditUser'))
+
 
 
 /**
@@ -85,7 +88,19 @@ const routes = [
     path: '/users/newUser',
     component: NewUser,
     isAdmin: true,
-    resourse: "newUser"
+    resourse: "NewUser"
+  },
+  {
+    path: '/users/ListUsers',
+    component: ListUsers,
+    isAdmin: true,
+    resourse: "ListUsers"
+  },
+  {
+    path: '/users/EditUser',
+    component: EditUser,
+    isAdmin: true,
+    resourse: "EditUser"
   },
 
   

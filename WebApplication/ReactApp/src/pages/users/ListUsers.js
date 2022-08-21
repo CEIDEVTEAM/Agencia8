@@ -12,64 +12,74 @@ import {
   Button,
   Pagination,
 } from '@windmill/react-ui'
+import EditUser from './EditUser';
 
 import { EditIcon, TrashIcon } from '../../icons'
+import { userUrl } from '../../utils/http/endpoints';
+import { controllers } from 'chart.js';
+import PageTitle from '../../components/Typography/PageTitle';
 
 
-export const Grid = (props) => {
+export default function ListUsers () {
 
-  const recordsPerPage = 10
+  const recordsPerPage = 30
   const [totalResults, setTotalResults] = useState(0);
   const [page, setPage] = useState(1)
   const [dataTable, setDataTable] = useState([])
 
+  const [openModal, setModalOpen] = useState(false)
+  const [id, setId] = useState(0)
 
 
-  useEffect(() => {
-    getTotalRecords();
+
+  useEffect(() => {   
     loadData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
 
-  }, [page, setPage])
+  }, [page, setPage, openModal])
 
   function loadData() {
-    axios.get(props.url, {
+    axios.get(userUrl, {
       params: { page, recordsPerPage }
     })
       .then((response) => {
         const totalRecords =
-          parseInt(response.headers['totalRecords'], 10);
+          parseInt(response.headers['totalrecords'], 10);
         setDataTable(response.data);
         setTotalResults(Math.ceil(totalRecords / recordsPerPage))
-        console.log(response.data)
-      })
-
-  }
-
-  function getTotalRecords() {
-    axios.get(props.totalRecords)
-      .then((response) => {
-        setTotalResults(response.data)
-        console.log(response.data)
+        console.log(response)
+        console.log(totalRecords)
+        console.log(totalRecords)        
       })
   }
+ 
 
   function onPageChangeTable(p) {
     setPage(p)
   }
 
   function handleEdit(id) {
+    setModalOpen(true)
+    setId(id);
     console.log(id)
-
+  }
+  function onClose(){
+    setModalOpen(false)
   }
 
+
+  const labels = ["id","Nombre de Usuario", "Contraseña","Email","Nombre","Direccion","Telefono","Role","Fecha Alta","Fecha Modificación","Flag"]
+  const columns = ["id","userName","password","email","name","address","phone","idRole","addRow","updRow","Active_Flag"]
+
   return (
+    <>
+    <PageTitle>Listado de Usuarios</PageTitle>
     <TableContainer className="mb-8">
       <Table>
         <TableHeader>
           <tr>
             <TableCell>Acciones</TableCell>
-            {props.labels.map((label, i) => <TableCell key={i}>{label}</TableCell>)}
+            {labels.map((label, i) => <TableCell key={i}>{label}</TableCell>)}
           </tr>
         </TableHeader>
         <TableBody>
@@ -85,7 +95,7 @@ export const Grid = (props) => {
                   </Button>
                 </div>
               </TableCell>
-              {props.columns.map((column, i) => <TableCell key={i}>{data[column]}</TableCell>)}
+              {columns.map((column, i) => <TableCell key={i}>{data[column]}</TableCell>)}
 
             </TableRow>
           ))}
@@ -100,7 +110,9 @@ export const Grid = (props) => {
         />
       </TableFooter>
     </TableContainer>
-
+    <EditUser isOpen={openModal} onClose={onClose} id={id}></EditUser>
+    </>
   )
 }
 
+//export default ListUsers

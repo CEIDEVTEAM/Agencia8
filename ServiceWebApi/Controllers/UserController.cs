@@ -25,8 +25,8 @@ namespace ServiceWebApi.Controllers
 
         }
 
-        [HttpGet("userList")]
-        public async Task<ActionResult<List<UserDTO>>> UsersList([FromQuery] PaginationDTO dto)
+        [HttpGet()]
+        public async Task<ActionResult<List<UserDTO>>> Get([FromQuery] PaginationDTO dto)
         {
             using (var uow = new UnitOfWork(this._configuration, _application))
             {
@@ -35,6 +35,18 @@ namespace ServiceWebApi.Controllers
                 await HttpContext.InsertHeaderPaginationParams(queryable);
                 var users = await queryable.OrderBy(x => x.Name).Paginate(dto).ToListAsync();
                 return _mapper.Map<List<UserDTO>>(users);
+            }
+
+        }
+
+        [HttpGet("{id:int}")]
+        public async Task<ActionResult<UserDTO>> Get(int id)
+        {
+            using (var uow = new UnitOfWork(this._configuration, _application))
+            {
+                var queryable = uow.UserRepository.GetUserById(id);
+
+                return _mapper.Map<UserDTO>(queryable);
             }
 
         }
@@ -63,8 +75,8 @@ namespace ServiceWebApi.Controllers
             }
         }
 
-        [HttpPost("EditUser")]
-        public async Task<ActionResult<GenericResponse>> EditUser([FromBody] UserCreationDTO dto)
+        [HttpPut("{id:int}")]
+        public async Task<ActionResult<GenericResponse>> EditUser(int id, [FromBody] UserCreationDTO dto)
         {
             try
             {

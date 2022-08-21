@@ -1,21 +1,42 @@
-import React from 'react'
-import UserForm from '../../components/form/Models/UsersForm'
+import React,{ useEffect, useState } from "react";
+import axios from "axios";
+import { useHistory } from "react-router-dom";
+import { urlNewUser } from "../../utils/http/endpoints";
+import ShowErrors from "../../utils/generals/ShowErrors";
+import UsersForm from "../../components/form/Models/UsersForm";
 import PageTitle from '../../components/Typography/PageTitle'
 
 function NewUser () {
     
-    return (
-        <>
-            <PageTitle>Crear Usuario</PageTitle>
-            <div className="px-4 py-3 mb-3 bg-white rounded-lg shadow-md dark:bg-gray-800">
-                <UserForm modelo={{nombre:'', apellido:'', userName:''}} 
-                    onSubmit={async valores => {
-                        await new Promise(r => setTimeout(r, 3000))
-                        console.log(valores);
-                    }}
-                />
-            </div>
-        </>
-    )
+    const history = useHistory();
+    const [errors, setErrors] = useState([]);    
+
+   async function New(valors){       
+       try{
+         console.log(valors)
+           
+         const response = await axios.post(urlNewUser, valors);
+         console.log(response)
+           setErrors(response.data.errors)  
+                   
+       }
+       catch (error){
+           setErrors(error.errors);
+       }
+   }
+
+   return (
+       <>
+           <PageTitle>Registro de Usuarios</PageTitle>
+           <div className="grid md:grid-cols-2 md:gap-6">
+           <ShowErrors errors={errors} />
+           </div>
+           <UsersForm model={{name:'',userName:'',password:'',email:'',address:'',phone:'',idRole:''}} 
+                onSubmit={async valors => {
+                   await New(valors);
+                }}
+           />
+       </>
+   )
 }
 export default NewUser
