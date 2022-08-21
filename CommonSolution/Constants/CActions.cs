@@ -6,10 +6,13 @@ using System.Threading.Tasks;
 
 namespace CommonSolution.Constants
 {
-    public class CLog
+    public class CActions
     {
         public const string login = "LOGIN";
         public const string logout = "LOGOUT";
 
+        public const string add = "AGREGAR";
+        public const string edit = "MODIFICAR";
+        public const string delete = "BORRAR";
     }
 }

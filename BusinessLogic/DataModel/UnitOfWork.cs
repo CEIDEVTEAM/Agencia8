@@ -16,10 +16,16 @@ namespace BusinessLogic.DataModel
         protected readonly Agencia_8Context _context;
         protected IDbContextTransaction _transaction;
 
+
         #region Repository
 
         public UserRepository UserRepository { get; set; }
         public LogRepository LogRepository { get; set; }
+        public DependentRepository DependentRepository { get; set; }
+        public CandidateRepository CandidateRepository { get; set; }
+        public ShopDataRepository ShopDataRepository { get; set; }
+        public ContactPersonRepository ContactPersonRepository { get; set; }
+
         #endregion
 
         public UnitOfWork(IConfiguration configuration, string application)
@@ -28,6 +34,10 @@ namespace BusinessLogic.DataModel
 
             this.UserRepository = new UserRepository(this._context);
             this.LogRepository = new LogRepository(this._context);
+            this.DependentRepository = new DependentRepository(this._context);
+            this.CandidateRepository = new CandidateRepository(this._context);
+            this.ShopDataRepository = new ShopDataRepository(this._context);
+            this.ContactPersonRepository = new ContactPersonRepository(this._context);
         }
 
         public void BeginTransaction()
@@ -55,6 +65,11 @@ namespace BusinessLogic.DataModel
         public void SaveChanges()
         {
             this._context.SaveChanges();
+        }
+
+        public void SaveChangesAsync()
+        {
+            this._context.SaveChangesAsync();
         }
     }
 }

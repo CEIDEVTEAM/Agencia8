@@ -13,6 +13,6 @@ namespace DataAccess.Models
         public DateTime? AddRow { get; set; }
         public DateTime? UpdRow { get; set; }
 
-        public virtual Dependet NumberNavigation { get; set; } = null!;
+        public virtual Dependent NumberNavigation { get; set; } = null!;
     }
 }

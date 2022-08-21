@@ -49,7 +49,7 @@ namespace ServiceWebApi.Controllers
         //    return response;
         //}
 
-        [HttpPost("AddUser")]
+        [HttpPost("addUser")]
         public async Task<ActionResult<GenericResponse>> AddUser([FromBody] UserCreationDTO dto)
         {
             try
@@ -63,7 +63,7 @@ namespace ServiceWebApi.Controllers
             }
         }
 
-        [HttpPost("EditUser")]
+        [HttpPost("editUser")]
         public async Task<ActionResult<GenericResponse>> EditUser([FromBody] UserCreationDTO dto)
         {
             try
@@ -77,7 +77,7 @@ namespace ServiceWebApi.Controllers
             }
         }
 
-        [HttpPost("DeleteUser")]
+        [HttpPost("deleteUser")]
         public async Task<ActionResult<GenericResponse>> DeleteUser([FromQuery] int userId)
         {
             try

@@ -19,6 +19,6 @@ namespace DataAccess.Models
         public DateTime? UpdRow { get; set; }
 
         public virtual Candidate? IdCandidateNavigation { get; set; }
-        public virtual Dependet? NumberDependentNavigation { get; set; }
+        public virtual Dependent? NumberDependentNavigation { get; set; }
     }
 }
