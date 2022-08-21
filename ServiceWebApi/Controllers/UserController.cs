@@ -52,15 +52,6 @@ namespace ServiceWebApi.Controllers
         }
 
 
-
-        //[HttpGet("usersTotalRecords")]
-        //public async Task<ActionResult<int>> UserUrlTotalRecords([FromQuery] PaginationDTO dto)
-        //{
-        //    UserLogicController lg = new UserLogicController(_configuration, _application);
-        //    var response = await lg.GetUsersTotalRecord(dto);
-        //    return response;
-        //}
-
         [HttpPost("AddUser")]
         public async Task<ActionResult<GenericResponse>> AddUser([FromBody] UserCreationDTO dto)
         {
