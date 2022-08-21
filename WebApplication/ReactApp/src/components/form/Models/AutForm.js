@@ -5,7 +5,7 @@ import ImageLight from '../../../assets/img/bolillero.jpg'
 import ImageDark from '../../../assets/img/maxresdefault.jpg'
 import { Button } from '@windmill/react-ui'
 import FormText from '../form-groups/FormText'
-import MostrarErrores from "../../../utils/generals/MostrarErrores";
+import ShowErrors from "../../../utils/generals/ShowErrors";
 import ShowFieldError from "../form-groups/ShowFieldError"
 
 const AutForm = (props) => {

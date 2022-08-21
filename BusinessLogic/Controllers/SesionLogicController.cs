@@ -66,7 +66,7 @@ namespace BusinessLogic.Controllers
                 var llave = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration));
                 var creds = new SigningCredentials(llave, SecurityAlgorithms.HmacSha256);
 
-                var expiration = DateTime.UtcNow.AddSeconds(20);
+                var expiration = DateTime.UtcNow.AddDays(20);
 
                 var token = new JwtSecurityToken(issuer: null, audience: null, claims: claims,
                     expires: expiration, signingCredentials: creds);

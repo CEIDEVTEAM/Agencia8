@@ -9,33 +9,36 @@ import { Button } from '@windmill/react-ui'
 
 export default function UserForm(props){
     return(
-        <Formik initialValues={props.modelo}
+        <Formik initialValues={props.model}
             onSubmit={props.onSubmit}
 
             validationSchema={Yup.object({
-                Name: Yup.string().required('Este campo es requerido')
-                .max(30, 'La longitud máxima es de 30 caracteres'),                
-                Password: Yup.string().required('Este campo es requerido')
+                name: Yup.string().required('Este campo es requerido')
+                .max(30, 'La longitud máxima es de 30 caracteres'),
+                userName: Yup.string().required('Este campo es requerido')
+                .max(30, 'La longitud máxima es de 30 caracteres'),                  
+                password: Yup.string().required('Este campo es requerido')
                 .max(50, 'La longitud máxima es de 50 caracteres'),
-                Email: Yup.string().required('Este campo es requerido')
+                email: Yup.string().required('Este campo es requerido')
                 .max(50, 'La longitud máxima es de 50 caracteres'),
-                Address: Yup.string().required('Este campo es requerido')
+                address: Yup.string().required('Este campo es requerido')
                 .max(50, 'La longitud máxima es de 50 caracteres'),
-                Phone: Yup.string().required('Este campo es requerido')
+                phone: Yup.string().required('Este campo es requerido')
                 .max(50, 'La longitud máxima es de 50 caracteres'),
-                IdRole: Yup.string().required('Este campo es requerido')
+                idRole: Yup.string().required('Este campo es requerido')
                 .max(50, 'La longitud máxima es de 50 caracteres'),
 
             })}
         >
             {(formikProps) => (
                 <Form>
-                    <FormText campo="Name" label="Nombre" />
-                    <FormText campo="Password" label="Contraseña" />
-                    <FormText campo="Email" label="Correo Electrónico" />
-                    <FormText campo="Address" label="Dirección" />
-                    <FormText campo="Phone" label="Teléfono" />
-                    <FormText campo="IdRole" label="Role" />
+                    <FormText campo="name" label="Nombre" />
+                    <FormText campo="userName" label="Nombre de Usuario" />
+                    <FormText campo="password" label="Contraseña" />
+                    <FormText campo="email" label="Correo Electrónico" />
+                    <FormText campo="address" label="Dirección" />
+                    <FormText campo="phone" label="Teléfono" />
+                    <FormText campo="idRole" label="Role" />
                     
                     <br/>
                     {/* <Button className="blue" disabled={formikProps.isSubmitting} 

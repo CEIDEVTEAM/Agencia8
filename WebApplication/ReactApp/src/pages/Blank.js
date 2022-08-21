@@ -2,30 +2,34 @@ import React from 'react';
 import axios from "axios";
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
-import { urlNewUser } from "utils/endpoints";
+import { urlNewUser } from "../utils/http/endpoints";
 import ShowErrors from "../utils/generals/ShowErrors";
-import FormularioGeneros from "./FormularioGeneros";
+import NewUser from "../components/form/Models/UsersForm";
 
 
-export default function NewUser() {
+export default function Blank() {
      const history = useHistory();
      const [errors, setErrors] = useState([]);
 
-    async function New(){
+    async function New(valors){       
         try{
-            await axios.post(urlNewUser);            
+            
+          const response = await axios.post(urlNewUser, valors);
+          console.log(response)
+            setErrors(response.data.errors)  
+                    
         }
         catch (error){
-            setErrors(error.response.data);
+            setErrors(error.errors);
         }
     }
 
     return (
         <>
-            <ShowErrors errores={errors} />
-            <FormularioGeneros modelo={{nombre: ''}} 
-                 onSubmit={async valores => {
-                    await New(valores);
+            <ShowErrors errors={errors} />
+            <NewUser model={{name:'',userName:'',password:'',email:'',address:'',phone:'',idRole:''}} 
+                 onSubmit={async valors => {
+                    await New(valors);
                  }}
             />
         </>
