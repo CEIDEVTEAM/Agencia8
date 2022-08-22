@@ -46,18 +46,18 @@ function Header() {
           <MenuIcon className="w-6 h-6" aria-hidden="true" />
         </button>
         {/* <!-- Search input --> */}
-        {/* <div className="flex justify-center flex-1 lg:mr-32">
+        <div className="flex justify-center flex-1 lg:mr-32">
           <div className="relative w-full max-w-xl mr-6 focus-within:text-purple-500">
-            <div className="absolute inset-y-0 flex items-center pl-2">
+            {/* <div className="absolute inset-y-0 flex items-center pl-2">
               <SearchIcon className="w-4 h-4" aria-hidden="true" />
-            </div>
-            <Input
+            </div> */}
+            {/* <Input
               className="pl-8 text-gray-700"
               placeholder="Search for projects"
               aria-label="Search"
-            />
-          </div> */}
-        {/* </div> */}
+            /> */}
+          </div>
+        </div>
         <ul className="flex items-center flex-shrink-0 space-x-6">
           {/* <!-- Theme toggler --> */}
           <li className="flex">
@@ -74,7 +74,7 @@ function Header() {
             </button>
           </li>
           {/* <!-- Notifications menu --> */}
-          <li className="relative">
+          {/* <li className="relative">
             <button
               className="relative align-middle rounded-md focus:outline-none focus:shadow-outline-purple"
               onClick={handleNotificationsClick}
@@ -83,13 +83,13 @@ function Header() {
             >
               <BellIcon className="w-5 h-5" aria-hidden="true" />
               {/* <!-- Notification badge --> */}
-              <span
+              {/* <span
                 aria-hidden="true"
                 className="absolute top-0 right-0 inline-block w-3 h-3 transform translate-x-1 -translate-y-1 bg-red-600 border-2 border-white rounded-full dark:border-gray-800"
               ></span>
-            </button>
+            </button> */}
 
-            <Dropdown
+            {/* <Dropdown
               align="right"
               isOpen={isNotificationsMenuOpen}
               onClose={() => setIsNotificationsMenuOpen(false)}
@@ -106,7 +106,7 @@ function Header() {
                 <span>Alerts</span>
               </DropdownItem>
             </Dropdown>
-          </li>
+          </li> */} 
           {/* <!-- Profile menu --> */}
           <li className="relative">
             <button

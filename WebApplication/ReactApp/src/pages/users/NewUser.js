@@ -6,13 +6,13 @@ import ShowErrors from "../../utils/generals/ShowErrors";
 import UsersForm from "../../components/form/Models/UsersForm";
 import PageTitle from '../../components/Typography/PageTitle';
 import ShowSuccess from "../../utils/generals/ShowSuccess";
-
+import ToastyErrors from "../../utils/generals/ToastyErrors";
+import { toast } from 'react-toastify';
 
 function NewUser() {
 
     const history = useHistory();
     const [errors, setErrors] = useState([]);
-    const [success, setSuccess] = useState();
     const [model, setModel] = useState({ name: '', userName: '', password: '', email: '', address: '', phone: '', idRole: '' });
 
     async function New(values) {
@@ -23,9 +23,8 @@ function NewUser() {
             console.log(response)
             setErrors(response.data.errors)
             if (response.data.successful) {
-                setSuccess("Guardado correctamente")
                 return true;
-            }else{
+            } else {
                 return false;
             }
         }
@@ -34,21 +33,24 @@ function NewUser() {
             return false;
         }
     }
- 
+
     return (
         <>
             <PageTitle>Registro de Usuarios</PageTitle>
-            <div className="grid md:grid-cols-2 md:gap-6">
-                <ShowErrors errors={errors} />
-                <ShowSuccess success={success} />
-
-            </div>
+            
             <UsersForm model={model}
-                onSubmit={async (values, {resetForm}) => {
-                    let response = await New(values); 
-                    if (response)
-                         resetForm()
-                    
+                onSubmit={async (values, { resetForm }) => {
+                    let response = await New(values);
+                    if (response) {
+                        toast.success("Guardado correctamente")
+                        resetForm()
+                    }
+                    if (response === false){
+                        errors.forEach(element => {                            
+                            toast.error(element)
+                        });
+                    }
+
                 }}
             />
         </>

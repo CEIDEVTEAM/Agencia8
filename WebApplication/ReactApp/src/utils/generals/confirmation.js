@@ -17,7 +17,7 @@ export default function confirmar(
     }).then(result => {
         if (result.isConfirmed) {
             onConfirm()
-            Swal.fire('Se completó la opecación!', '', 'success')
+            Swal.fire('Operación Completada!', '', 'success')
           } else {
             Swal.fire('No se ha realizado ningún cambio!', '', 'info')
           }
