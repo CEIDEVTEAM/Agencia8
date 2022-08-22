@@ -3,6 +3,7 @@ using BusinessLogic.Controllers;
 using BusinessLogic.DataModel;
 using BusinessLogic.DTOs.Generals;
 using BusinessLogic.DTOs.User;
+using BusinessLogic.Mappers;
 using BusinessLogic.Utils;
 using DataAccess.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -17,11 +18,13 @@ namespace ServiceWebApi.Controllers
         public const string _application = "USER";
         private readonly IConfiguration _configuration;
         private readonly IMapper _mapper;
+        private readonly UserMapper _userMapper;
 
         public UserController(IConfiguration configuration)
         {
             this._configuration = configuration;
             this._mapper = new Mapper(new MapperConfiguration(x => x.CreateMap<User, UserDTO>()));
+            this._userMapper = new UserMapper();
 
         }
 
@@ -34,7 +37,12 @@ namespace ServiceWebApi.Controllers
 
                 await HttpContext.InsertHeaderPaginationParams(queryable);
                 var users = await queryable.OrderBy(x => x.Name).Paginate(dto).ToListAsync();
-                return _mapper.Map<List<UserDTO>>(users);
+                List<UserDTO> resp = new List<UserDTO>();
+                foreach (var item in users)
+                {
+                    resp.Add(_userMapper.MapToObject(item));
+                }
+                return resp;
             }
 
         }
@@ -80,13 +88,13 @@ namespace ServiceWebApi.Controllers
             }
         }
 
-        [HttpPost("deleteUser")]
-        public async Task<ActionResult<GenericResponse>> DeleteUser([FromQuery] int userId)
+        [HttpDelete("{id:int}")]
+        public async Task<ActionResult<GenericResponse>> DeleteUser(int id)
         {
             try
             {
                 UserLogicController lg = new UserLogicController(_configuration, _application);
-                return await lg.DeleteUser(userId);
+                return await lg.DeleteUser(id);
             }
             catch (Exception ex)
             {

@@ -16,8 +16,9 @@ namespace BusinessLogic.DTOs.User
         public string? Address { get; set; }
         public string? Phone { get; set; }
         public decimal? IdRole { get; set; }
-        public DateTime? AddRow { get; set; }
-        public DateTime? UpdRow { get; set; }
+        public string? AddRow { get; set; }
+        public string? UpdRow { get; set; }
+        public string? ActiveFlag { get; set; }
 
         public List<string> Resources { get; set; } = null;
         public string RoleName { get; set; } = null;

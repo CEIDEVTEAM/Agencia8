@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import axios from "axios";
-import { Link } from "react-router-dom"
 import {
   Table,
   TableHeader,
@@ -16,8 +15,8 @@ import EditUser from './EditUser';
 
 import { EditIcon, TrashIcon } from '../../icons'
 import { userUrl } from '../../utils/http/endpoints';
-import { controllers } from 'chart.js';
 import PageTitle from '../../components/Typography/PageTitle';
+import confirmation from '../../utils/generals/confirmation';
 
 
 export default function ListUsers () {
@@ -52,6 +51,16 @@ export default function ListUsers () {
         console.log(totalRecords)        
       })
   }
+
+  async function logicDelete(id) {
+    try {
+        await axios.delete(`${userUrl}/${id}`)
+        loadData();
+    }
+    catch (error) {
+        console.log(error.response.data);
+    }
+}
  
 
   function onPageChangeTable(p) {
@@ -60,16 +69,15 @@ export default function ListUsers () {
 
   function handleEdit(id) {
     setModalOpen(true)
-    setId(id);
-    console.log(id)
+    setId(id);    
   }
   function onClose(){
     setModalOpen(false)
   }
 
 
-  const labels = ["id","Nombre de Usuario", "Contraseña","Email","Nombre","Direccion","Telefono","Role","Fecha Alta","Fecha Modificación","Flag"]
-  const columns = ["id","userName","password","email","name","address","phone","idRole","addRow","updRow","Active_Flag"]
+  const labels = ["id","Nombre de Usuario","Email","Nombre","Direccion","Telefono","Role","Fecha Alta","Fecha Modificación","Flag"]
+  const columns = ["id","userName","email","name","address","phone","idRole","addRow","updRow","activeFlag"]
 
   return (
     <>
@@ -90,7 +98,7 @@ export default function ListUsers () {
                   <Button onClick={() => handleEdit(data.id)} layout="link" size="icon" aria-label="Edit">
                     <EditIcon className="w-5 h-5" aria-hidden="true" />
                   </Button>
-                  <Button layout="link" size="icon" aria-label="Delete">
+                  <Button onClick={()=>confirmation(()=> logicDelete(data.id))} layout="link" size="icon" aria-label="Delete">
                     <TrashIcon className="w-5 h-5" aria-hidden="true" />
                   </Button>
                 </div>
