@@ -45,7 +45,13 @@ namespace BusinessLogic.Mappers
             };
         }
 
-        
+        public List<UserDTO> MapToObjoct(List<User> listEntity)
+        {
+            List<UserDTO> listDTO = new List<UserDTO>();
+            listEntity.ForEach(x => { listDTO.Add(MapToObject(x)); });
+
+            return listDTO;
+        }
 
     }
 }
