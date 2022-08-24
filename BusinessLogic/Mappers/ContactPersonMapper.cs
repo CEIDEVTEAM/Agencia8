@@ -17,7 +17,8 @@ namespace BusinessLogic.Mappers
 
             return new ContactPerson()
             {
-                Number = dto.Number,
+                IdCandidate = dto.IdCandidate,
+                IdDependent = dto.IdDependent,
                 Name = dto.Name,
                 LastName = dto.LastName,
                 Phone = dto.Phone,
@@ -32,7 +33,8 @@ namespace BusinessLogic.Mappers
 
             return new ContactPersonCreationDTO()
             {
-                Number = entity.Number,
+                IdCandidate = entity.IdCandidate,
+                IdDependent = entity.IdDependent,
                 Name = entity.Name,
                 LastName = entity.LastName,
                 Phone = entity.Phone,

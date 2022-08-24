@@ -77,7 +77,7 @@ namespace BusinessLogic.DataModel.Repository
 
         public bool ExistShopDataByNumber(decimal number)
         {
-            return _context.ShopData.Any(x => x.NumberDependent == number);
+            return _context.ShopData.Any(x => x.Id == number);
         }
 
         #endregion
@@ -87,7 +87,7 @@ namespace BusinessLogic.DataModel.Repository
 
         public ShopData GetShopDataByNumber(decimal number)
         {
-            return _context.ShopData.FirstOrDefault(x => x.NumberDependent == number);
+            return _context.ShopData.FirstOrDefault(x => x.Id == number);
         }
 
         public ShopData GetShopDataByIdCandidate(decimal id)

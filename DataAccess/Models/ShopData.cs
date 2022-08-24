@@ -13,12 +13,12 @@ namespace DataAccess.Models
         public string ShopType { get; set; } = null!;
         public string? Latitude { get; set; }
         public string? Longitude { get; set; }
-        public decimal? NumberDependent { get; set; }
+        public decimal? IdDependent { get; set; }
         public decimal? IdCandidate { get; set; }
         public DateTime? AddRow { get; set; }
         public DateTime? UpdRow { get; set; }
 
         public virtual Candidate? IdCandidateNavigation { get; set; }
-        public virtual Dependent? NumberDependentNavigation { get; set; }
+        public virtual Dependent IdNavigation { get; set; } = null!;
     }
 }

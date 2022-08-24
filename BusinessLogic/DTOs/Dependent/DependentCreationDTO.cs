@@ -20,7 +20,7 @@ namespace BusinessLogic.DTOs.Dependent
         public string PersonalAddress { get; set; }
         public string Phone { get; set; }
         public string Condition { get; set; }
-        public decimal PatentNamber { get; set; }
+        public decimal? PatentNamber { get; set; }
 
         public ContactPersonCreationDTO ContactPerson { get; set; }
         public ShopDataCreationDTO ShopData { get; set; }

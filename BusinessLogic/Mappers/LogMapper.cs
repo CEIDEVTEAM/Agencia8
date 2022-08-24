@@ -70,7 +70,7 @@ namespace BusinessLogic.Mappers
                 ShopType = entity.ShopType,
                 Latitude = entity.Latitude,
                 Longitude = entity.Longitude,
-                NumberDependent = entity.NumberDependent,
+                NumberDependent = entity.IdDependent,
                 IdCandidate = entity.IdCandidate,
             };
         }
