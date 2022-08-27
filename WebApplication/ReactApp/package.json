@@ -1,5 +1,5 @@
 {
-  "name": "Agencia 8",
+  "name": "Agencia8",
   "version": "0.4.0",
   "description": "Desarrollo para agencia.",
   "private": true,
@@ -16,6 +16,7 @@
     "eject": "react-scripts eject"
   },
   "dependencies": {
+    "@react-leaflet/core": "1.0.2",
     "@testing-library/jest-dom": "4.2.4",
     "@testing-library/react": "9.5.0",
     "@testing-library/user-event": "7.2.1",
@@ -25,12 +26,14 @@
     "classnames": "2.2.6",
     "faker": "4.1.0",
     "formik": "^2.2.9",
+    "leaflet": "1.7.1",
     "react": "^16.13.1",
     "react-app-rewired": "^2.2.1",
     "react-chartjs-2": "2.9.0",
     "react-data-table-component": "^7.5.2",
     "react-dom": "^16.13.1",
     "react-focus-lock": "2.4.0",
+    "react-leaflet": "3.1.0",
     "react-router-dom": "5.2.0",
     "react-scripts": "3.4.1",
     "react-toastify": "^9.0.0",

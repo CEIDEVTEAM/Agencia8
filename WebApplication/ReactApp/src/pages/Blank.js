@@ -1,42 +1,31 @@
-import React,{ useEffect, useState } from "react";
-import axios from "axios";
-import { useHistory } from "react-router-dom";
-import { urlNewUser } from "../utils/http/endpoints";
-import ShowErrors from "../utils/generals/ShowErrors";
-import NewUser from "../components/form/Models/UsersForm";
+import React, { useEffect, useState } from "react";
 import PageTitle from '../components/Typography/PageTitle'
+import CandidateForm from "../components/form/Models/CandidateForm";
+import { toast } from 'react-toastify';
+import ToastyErrors from "../utils/generals/ToastyErrors";
 
 
 
 export default function Blank() {
-     const history = useHistory();
-     const [errors, setErrors] = useState([]);    
+    const [errors, setErrors] = useState([]);
+    async function New(values) {
 
-    async function New(valors){       
-        try{
-          console.log(valors)
-            
-          const response = await axios.post(urlNewUser, valors);
-          console.log(response)
-            setErrors(response.data.errors)  
-                    
-        }
-        catch (error){
-            setErrors(error.errors);
-        }
+        console.log(values)
+
+
     }
 
     return (
         <>
-            <PageTitle>Registro de Usuarios</PageTitle>
-            <div className="grid md:grid-cols-2 md:gap-6">
-            <ShowErrors errors={errors} />
-            </div>
-            <NewUser model={{name:'',userName:'',password:'',email:'',address:'',phone:'',idRole:''}} 
-                 onSubmit={async valors => {
-                    await New(valors);
-                 }}
-            />
+            <PageTitle>Registro de Aspirante</PageTitle>
+            <ToastyErrors errors={errors}/>
+            <CandidateForm model={{ name: '',lastName:'',personalAddress:'',personalDocument:'',birthDate:'',gender:'', phone: '', email: '' }}
+                onSubmit={async (values, { resetForm }) => {
+                    let response = await New(values);
+                    toast.success("Guardado correctamente")
+                    setErrors([])
+                    resetForm()
+                }} />
         </>
     )
 }

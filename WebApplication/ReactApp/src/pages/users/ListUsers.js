@@ -76,8 +76,8 @@ export default function ListUsers () {
   }
 
 
-  const labels = ["id","Nombre de Usuario","Email","Nombre","Direccion","Telefono","Role","Fecha Alta","Fecha Modificación","Flag"]
-  const columns = ["id","userName","email","name","address","phone","idRole","addRow","updRow","activeFlag"]
+  const labels = ["Nombre de Usuario","Email","Nombre","Direccion","Telefono","Role","Fecha Alta","Fecha Modificación","Flag"]
+  const columns = ["userName","email","name","address","phone","idRole","addRow","updRow","activeFlag"]
 
   return (
     <>

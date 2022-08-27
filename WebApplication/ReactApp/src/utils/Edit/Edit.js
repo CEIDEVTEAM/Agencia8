@@ -4,6 +4,8 @@ import { useParams, useHistory } from "react-router-dom";
 import ShowErrors from "../../utils/generals/ShowErrors";
 import ShowSuccess from "../../utils/generals/ShowSuccess";
 import Loading from "../generals/Loading"
+import { toast } from 'react-toastify';
+import ToastyErrors from "../../utils/generals/ToastyErrors";
 
 
 export default function Edit(props) {
@@ -24,9 +26,14 @@ export default function Edit(props) {
     async function edit(entity) {
         try {            
             const response = await axios.put(`${props.url}/${id}`, entity);
-            if(response.data.successful)            
-                setSuccess("Cambios realizados correctamente")            
+            if(response.data.successful) {
+                toast.success("Cambios realizados correctamente") 
+                setErrors([])
+            }else{
+                setErrors(response.data.errors)
+            }           
             console.log(response)          
+                       
             //history.push(props.urlIndice);
         }
         catch (error) {
@@ -36,8 +43,7 @@ export default function Edit(props) {
 
     return (
         <>
-            <ShowErrors errors={errors} />
-            <ShowSuccess success={success} />
+            <ShowErrors errors={errors}/>            
             {entity ? props.children(entity, edit) : <Loading/>}
         </>
 

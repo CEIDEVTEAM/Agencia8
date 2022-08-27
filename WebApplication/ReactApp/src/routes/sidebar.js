@@ -51,9 +51,9 @@ const routes = [
     resourse: "tables"
   },
   {
-    icon: 'PagesIcon',
-    name: 'Pages',
-    resourse: "pages",
+    icon: 'FortuneWheelIcon',
+    name: 'Sub Agentes',
+    resourse: "subagentes",
     routes: [
       // submenu
       {
@@ -80,6 +80,25 @@ const routes = [
         path: '/app/blank',
         name: 'Blank',
         resourse: "blank"
+      },
+    ],
+  },
+  {
+    icon: 'FormsIcon',
+    name: 'Aspirantes',
+    resourse: "candidates",
+    routes: [
+      // submenu
+      {
+        path: '/app/candidates/NewCandidate',
+        name: 'Registrar Aspirante',
+        resourse: "NewCandidate",
+        exact: true
+      },
+      {
+        path: '/app/candidates/CandidatesManagment',
+        name: 'Gestión de Aspirantes',
+        resourse: "CandidatesManagment",        
       },
     ],
   },

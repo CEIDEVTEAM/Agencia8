@@ -13,7 +13,7 @@ using System.Text;
 namespace ServiceWebApi.Controllers
 {
     [Route("api/candidate")]
-    [ApiController]
+    [ApiController]    
     //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = "isAdmin")]
     public class CandidateController : ControllerBase
     {
@@ -27,7 +27,7 @@ namespace ServiceWebApi.Controllers
             this._mapper = new Mapper(new MapperConfiguration(x => x.CreateMap<Candidate, CandidateDTO>()));
         }
 
-        [HttpGet("candidateList")]
+        [HttpGet]
         public async Task<ActionResult<List<CandidateDTO>>> CandidateList([FromQuery] PaginationDTO dto)
         {
             using (var uow = new UnitOfWork(this._configuration, _application))

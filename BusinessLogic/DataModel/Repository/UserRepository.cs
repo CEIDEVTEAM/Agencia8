@@ -33,7 +33,8 @@ namespace BusinessLogic.DataModel.Repository
 
         public UserDTO GetUserByUserName(string userName)
         {
-            return _mapper.Map<UserDTO>(_context.Users.FirstOrDefault(x => x.UserName == userName));
+            var x = _context.Users.FirstOrDefault(x => x.UserName == userName);
+            return _mapper.Map<UserDTO>(x);
         }
 
         public UserDTO GetUserWhitResourcesByUserName(string userName)
