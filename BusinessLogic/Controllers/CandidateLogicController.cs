@@ -36,17 +36,15 @@ namespace BusinessLogic.Controllers
 
                     if (!errors.Any())
                     {
-                        uow.CandidateRepository.AddCandidate(dto, uow, userId);
+                        decimal idCandidate = uow.CandidateRepository.AddCandidate(dto, uow, userId);
 
                         if (dto.ShopData != null)
                         {
-                            dto.ShopData.IdCandidate = dto.Id; //VER SI ES NECESARIO
+                            dto.ShopData.IdCandidate = idCandidate;
                             uow.ShopDataRepository.AddShopData(dto.ShopData, uow, userId);
                         }
 
-                        //EDU
-                        //FALTA IMPLEMENTACION EN LA BASE
-                        //dto.ContactPerson.IdCandidate = dto.Id; 
+                        dto.ContactPerson.IdCandidate = idCandidate; 
                         uow.ContactPersonRepository.AddContactPerson(dto.ContactPerson);
 
                         uow.SaveChanges();
