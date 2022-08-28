@@ -3,6 +3,7 @@ using BusinessLogic.Controllers;
 using BusinessLogic.DataModel;
 using BusinessLogic.DTOs.Candidate;
 using BusinessLogic.DTOs.Generals;
+using BusinessLogic.Mappers;
 using BusinessLogic.Utils;
 using DataAccess.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -13,21 +14,24 @@ using System.Text;
 namespace ServiceWebApi.Controllers
 {
     [Route("api/candidate")]
-    [ApiController]
+    [ApiController]    
     //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = "isAdmin")]
     public class CandidateController : ControllerBase
     {
         public const string _application = "CANDIDATE";
         private readonly IConfiguration _configuration;
         private readonly IMapper _mapper;
+        private readonly CandidateMapper _cMapper;
 
         public CandidateController(IConfiguration configuration)
         {
             this._configuration = configuration;
             this._mapper = new Mapper(new MapperConfiguration(x => x.CreateMap<Candidate, CandidateDTO>()));
+            this._cMapper = new CandidateMapper();
+
         }
 
-        [HttpGet("candidateList")]
+        [HttpGet]
         public async Task<ActionResult<List<CandidateDTO>>> CandidateList([FromQuery] PaginationDTO dto)
         {
             using (var uow = new UnitOfWork(this._configuration, _application))
@@ -37,6 +41,18 @@ namespace ServiceWebApi.Controllers
                 await HttpContext.InsertHeaderPaginationParams(queryable);
                 var candidates = await queryable.OrderBy(x => x.Name).Paginate(dto).ToListAsync();
                 return _mapper.Map<List<CandidateDTO>>(candidates);
+            }
+
+        }
+
+        [HttpGet("{id:int}")]
+        public async Task<ActionResult<CandidateDTO>> Get(int id)
+        {
+            using (var uow = new UnitOfWork(this._configuration, _application))
+            {
+                var queryable = uow.CandidateRepository.GetCandidateById(id);
+
+                return _cMapper.Map(queryable);
             }
 
         }
@@ -57,7 +73,7 @@ namespace ServiceWebApi.Controllers
             }
         }
 
-        [HttpPost("editCandidate")]
+        [HttpPut("{id:int}")]
         public async Task<ActionResult<GenericResponse>> EditCandidate([FromBody] CandidateCreationDTO dto)
         {
             try

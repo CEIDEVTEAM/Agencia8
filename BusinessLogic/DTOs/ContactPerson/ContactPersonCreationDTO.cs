@@ -8,7 +8,9 @@ namespace BusinessLogic.DTOs.ContactPerson
 {
     public class ContactPersonCreationDTO
     {
-        public decimal Number { get; set; }
+        public decimal Id { get; set; }
+        public decimal? IdDependent { get; set; }
+        public decimal? IdCandidate { get; set; }
         public string Name { get; set; }
         public string LastName { get; set; }
         public string Phone { get; set; }

@@ -31,15 +31,15 @@ namespace BusinessLogic.Controllers
 
                     if (!errors.Any())
                     {
-                        uow.DependentRepository.AddDependent(dto, uow, userId);
+                        decimal idDependent = uow.DependentRepository.AddDependent(dto, uow, userId);
 
                         if (dto.ShopData != null)
                         {
-                            dto.ShopData.NumberDependent = dto.Number; //VER SI ES NECESARIO
+                            dto.ShopData.NumberDependent = idDependent;
                             uow.ShopDataRepository.AddShopData(dto.ShopData, uow, userId);
                         }
 
-                        dto.ContactPerson.Number = dto.Number; //VER SI ES NECESARIO
+                        dto.ContactPerson.IdDependent = idDependent; 
                         uow.ContactPersonRepository.AddContactPerson(dto.ContactPerson);
 
                         uow.SaveChanges();
@@ -81,11 +81,11 @@ namespace BusinessLogic.Controllers
 
                         if (dto.ShopData != null)
                         {
-                            dto.ShopData.NumberDependent = dto.Number;  //VER SI ES NECESARIO
+                            //dto.ShopData.IdDependent = dto.IdDependent;  //VER SI ES NECESARIO
                             uow.ShopDataRepository.UpdateShopData(dto.ShopData, uow, userId);
                         }
 
-                        dto.ContactPerson.Number = dto.Number; //VER SI ES NECESARIO
+                        //dto.ContactPerson.IdDependent = dto.IdDependent; //VER SI ES NECESARIO
                         uow.ContactPersonRepository.UpdateContactPerson(dto.ContactPerson);
 
                         uow.SaveChanges();

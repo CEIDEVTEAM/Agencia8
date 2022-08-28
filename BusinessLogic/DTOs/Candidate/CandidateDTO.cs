@@ -8,9 +8,10 @@ namespace BusinessLogic.DTOs.Candidate
 {
     public class CandidateDTO
     {
+        public int Id { get; set; }
         public string Name { get; set; }
         public string LastName { get; set; }
-        public DateTime BirthDate { get; set; }
+        public string BirthDate { get; set; }
         public string PersonalDocument { get; set; }
         public string Gender { get; set; }
         public string MaritalStatus { get; set; }

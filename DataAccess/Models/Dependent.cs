@@ -7,7 +7,7 @@ namespace DataAccess.Models
     {
         public Dependent()
         {
-            ShopData = new HashSet<ShopData>();
+            DependentFacts = new HashSet<DependentFact>();
         }
 
         public decimal Number { get; set; }
@@ -20,12 +20,15 @@ namespace DataAccess.Models
         public string PersonalAddress { get; set; } = null!;
         public string Phone { get; set; } = null!;
         public string Condition { get; set; } = null!;
-        public decimal PatentNamber { get; set; }
+        public decimal? PatentNamber { get; set; }
         public decimal? UpdUserId { get; set; }
         public DateTime? AddRow { get; set; }
         public DateTime? UpdRow { get; set; }
+        public decimal Id { get; set; }
+        public string ActiveFlag { get; set; } = null!;
 
         public virtual ContactPerson ContactPerson { get; set; } = null!;
-        public virtual ICollection<ShopData> ShopData { get; set; }
+        public virtual ShopData ShopData { get; set; } = null!;
+        public virtual ICollection<DependentFact> DependentFacts { get; set; }
     }
 }

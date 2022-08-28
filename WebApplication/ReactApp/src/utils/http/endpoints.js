@@ -10,3 +10,5 @@ export const userUrl = `${apiURL}/user`;
 export const userUrlTotalRecords = `${apiURL}/user/usersTotalRecords`;
 export const urerUrlEdit = `${apiURL}/user/edit`;
 export const urlNewUser = `${apiURL}/user/AddUser`;
+
+export const candidateUrl = `${apiURL}/candidate`;

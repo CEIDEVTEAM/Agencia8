@@ -59,6 +59,8 @@ app.UseRouting();
 
 app.UseCors();
 
+app.UseAuthentication();
+
 app.UseAuthorization();
 
 app.UseEndpoints(endpoints =>
@@ -67,8 +69,6 @@ app.UseEndpoints(endpoints =>
 });
 
 //app.MapControllers();
-app.UseAuthentication();
 
-app.MapControllers();
 
 app.Run();

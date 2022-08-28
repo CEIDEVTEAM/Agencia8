@@ -6,19 +6,25 @@ using BusinessLogic.DTOs.User;
 using BusinessLogic.Mappers;
 using BusinessLogic.Utils;
 using DataAccess.Models;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Identity.Web;
+using System.Net.Http.Headers;
 using System.Text;
 namespace ServiceWebApi.Controllers
 {
     [Route("api/user")]
     [ApiController]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class UserController : ControllerBase
     {
         public const string _application = "USER";
         private readonly IConfiguration _configuration;
         private readonly IMapper _mapper;
         private readonly UserMapper _userMapper;
+        readonly ITokenAcquisition tokenAcquisition;
 
         public UserController(IConfiguration configuration)
         {
@@ -34,14 +40,13 @@ namespace ServiceWebApi.Controllers
             using (var uow = new UnitOfWork(this._configuration, _application))
             {
                 var queryable = uow.UserRepository.GetUsers();
-
+                var value = HttpContext.User.Claims.FirstOrDefault(x => x.Type == "userName").Value;
+                UserDTO userDto = uow.UserRepository.GetUserByUserName(value);
+                
                 await HttpContext.InsertHeaderPaginationParams(queryable);
                 var users = await queryable.OrderBy(x => x.Name).Paginate(dto).ToListAsync();
-                List<UserDTO> resp = new List<UserDTO>();
-                foreach (var item in users)
-                {
-                    resp.Add(_userMapper.MapToObject(item));
-                }
+                List<UserDTO> resp = _userMapper.MapToObjoct(users);
+
                 return resp;
             }
 

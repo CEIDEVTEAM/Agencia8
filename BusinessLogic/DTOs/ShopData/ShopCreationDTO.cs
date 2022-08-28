@@ -18,6 +18,7 @@ namespace BusinessLogic.DTOs.ShopData
         public string? Longitude { get; set; }
         public decimal? NumberDependent { get; set; }
         public decimal? IdCandidate { get; set; }
+        public decimal? IdDependent { get; set; }
 
     }
 }
