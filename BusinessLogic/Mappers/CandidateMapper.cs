@@ -1,5 +1,8 @@
 ﻿using BusinessLogic.DTOs.Candidate;
+using BusinessLogic.DTOs.ContactPerson;
 using BusinessLogic.DTOs.Dependent;
+using BusinessLogic.DTOs.ShopData;
+using CommonSolution.Constants;
 using DataAccess.Models;
 using System;
 using System.Collections.Generic;
@@ -76,6 +79,49 @@ namespace BusinessLogic.Mappers
             entity.IdDecisionSupport = dto.IdDecisionSupport;
 
             return entity;
+        }
+
+        public CandidateCreationDTO MapToObject(CandidateCreationFrontDTO frontDTO)
+        {
+            if (frontDTO == null)
+                throw new Exception("No hay objeto/entidad para mapear");
+
+            return new CandidateCreationDTO
+            {
+
+                Name = frontDTO.name,
+                LastName = frontDTO.lastName,
+                BirthDate = frontDTO.birthDate,
+                PersonalDocument = frontDTO.personalDocument,
+                Gender = frontDTO.Gender,
+                MaritalStatus = frontDTO.MaritalStatus,
+                PersonalAddress = frontDTO.personalAddress,
+                Phone = frontDTO.phone,
+                Condition = frontDTO.condition,
+                Status = CStatus.enrolled,
+
+                ContactPerson = new ContactPersonCreationDTO
+                {
+                    Name = frontDTO.cpName,
+                    LastName = frontDTO.cpLastName,
+                    Phone = frontDTO.cpPhone,
+                    Bond = frontDTO.bond
+                },
+                ShopData = string.IsNullOrEmpty(frontDTO.cName) ? null : new ShopDataCreationDTO
+                {
+
+                    Name = frontDTO.cName,
+                    Phone = frontDTO.cPhone,
+                    Address = frontDTO.address,
+                    Neighborhood = frontDTO.neighborhood,
+                    ShopType = frontDTO.shopType,
+                    Latitude = frontDTO.latitude.ToString(),
+                    Longitude = frontDTO.longitude.ToString(),
+                }
+
+
+            };
+
         }
 
     }

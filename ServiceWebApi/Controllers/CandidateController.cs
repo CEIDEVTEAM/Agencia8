@@ -42,7 +42,7 @@ namespace ServiceWebApi.Controllers
         }
 
         [HttpPost("addCandidate")]
-        public async Task<ActionResult<GenericResponse>> AddCandidate([FromBody] CandidateCreationDTO dto)
+        public async Task<ActionResult<GenericResponse>> AddCandidate([FromBody] CandidateCreationFrontDTO dto)
         {
             try
             {
