@@ -16,6 +16,7 @@ import { EditIcon, TrashIcon } from '../../icons'
 import { candidateUrl } from '../../utils/http/endpoints';
 import PageTitle from '../../components/Typography/PageTitle';
 import confirmation from '../../utils/generals/confirmation';
+import EditCandidate from './EditCandidate';
 
 
 export default function CandidatesManagment () {
@@ -117,7 +118,7 @@ export default function CandidatesManagment () {
         />
       </TableFooter>
     </TableContainer>
-    {/* <EditUser isOpen={openModal} onClose={onClose} id={id}></EditUser> */}
+    <EditCandidate isOpen={openModal} onClose={onClose} id={id}></EditCandidate>
     </>
   )
 }

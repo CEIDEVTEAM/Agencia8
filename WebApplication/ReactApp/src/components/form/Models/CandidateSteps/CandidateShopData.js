@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import FormText from '../../form-groups/FormText'
 import FormSelect from '../../form-groups/FormSelect'
 import FormDate from "../../form-groups/FormDate";
+import FormMap from "../../form-groups/FormMap";
 
 
 
@@ -17,7 +18,11 @@ export default function TestForm1(props) {
                 <FormSelect options={options} campo="neighborhood" label="Barrio" />
                 <FormText campo="shopType" label="Tipo de Comercio"/>
                 <FormText campo="cPhone" label="Telefono de comercio" />
-            </div>          
+            </div>
+            <br/>
+            <div className="grid md:grid-cols-1 md:gap-6"> 
+                <FormMap campoLat="latitude" campoLng="longitude"/> 
+            </div>       
             
         </div>
     )

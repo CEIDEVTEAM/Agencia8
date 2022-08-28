@@ -1,5 +1,6 @@
 import React from 'react'
-import { useFormikContext } from 'formik';
+import { useFormikContext,ErrorMessage } from 'formik';
+import ShowFieldError from "./ShowFieldError";
 import Map from './Map'
 
 export default function FormMap(props){
@@ -12,10 +13,15 @@ export default function FormMap(props){
     }
 
     return (
+        <>
         <Map
             coordenadas={props.coordenadas}
             manejarClickMapa={actualizarCampos}
         />
+        <ErrorMessage name={props.campoLat}>{mensaje =>                
+            <ShowFieldError mensaje={mensaje} />
+       }</ErrorMessage>
+       </>
     )
 }
 

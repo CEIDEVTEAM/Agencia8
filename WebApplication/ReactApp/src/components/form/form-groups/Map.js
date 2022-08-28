@@ -15,10 +15,10 @@ let DefaultIcon = L.icon({
 L.Marker.prototype.options.icon = DefaultIcon;
 
 export default function Map(props) {
-    const [coords, setCoords] = useState(props.coords)
+    const [coords, setCoords] = useState(props.coordenadas)
     return (
         <MapContainer
-            center={[18.467455, -69.931242]} zoom={14}
+            center={[-34.910051, -54.953425]} zoom={14}
             style={{ height: props.height }}
         >
             <TileLayer attribution="React Películas"

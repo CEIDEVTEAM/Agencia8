@@ -3,6 +3,7 @@ using BusinessLogic.DTOs.Dependent;
 using DataAccess.Models;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -31,6 +32,28 @@ namespace BusinessLogic.Mappers
                 Condition = dto.Condition,
                 Status = dto.Condition,
                 IdDecisionSupport = dto.IdDecisionSupport,
+            };
+        }
+        public CandidateDTO Map(Candidate entity)
+        {
+            if (entity == null)
+                throw new Exception("No hay entidad para mapear");
+
+            return new CandidateDTO()
+            {
+                Number = entity.Number,
+                Name = entity.Name,
+                LastName = entity.Name,
+                BirthDate = entity.BirthDate.ToString(new CultureInfo("es-Uy")),
+                PersonalDocument = entity.PersonalDocument,
+                Gender = entity.Gender,
+                MaritalStatus = entity.MaritalStatus,
+                PersonalAddress = entity.PersonalAddress,
+                Phone = entity.Phone,
+                Condition = entity.Condition,
+                Id = (int)entity.Id,
+                Status = entity.Condition,
+                IdDecisionSupport = entity.IdDecisionSupport,
             };
         }
 

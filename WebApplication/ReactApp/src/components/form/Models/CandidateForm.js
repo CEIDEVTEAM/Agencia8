@@ -10,8 +10,8 @@ import CandidateContactPerson from './CandidateSteps/CandidateContactPerson';
 const WizardStep = ({ children }) => children;
 const stepsNames = [
     "Información Personal",
-    "Información del Comercio",
-    "Persona de Contacto"
+    "Persona de Contacto",
+    "Información del Comercio"
 ];
 
 const CandidateForm = (props) => (
@@ -37,21 +37,7 @@ const CandidateForm = (props) => (
                 <br />
                 <CandidatePersonalData />
                 <br />
-            </WizardStep>
-            <WizardStep
-                onSubmit={() => console.log('Step2 onSubmit')}
-                validationSchema={Yup.object({
-                    cName: Yup.string().required('Campo Requerido').max(30, 'La longitud máxima es de 30 caracteres'),
-                    cPhone: Yup.string().required('Campo Requerido').max(30, 'La longitud máxima es de 30 caracteres'),
-                    address: Yup.string().required('Campo Requerido').max(100, 'La longitud máxima es de 30 caracteres'),
-                    neighborhood: Yup.string().required('Campo Requerido').max(30, 'La longitud máxima es de 30 caracteres'),
-                    shopType: Yup.string().required('Campo Requerido'),
-                })}
-            >
-                <br />
-                <CandidateShopData />
-                <br />
-            </WizardStep>
+            </WizardStep>            
             <WizardStep
                 onSubmit={() => console.log('Step2 onSubmit')}
                 validationSchema={Yup.object({
@@ -64,6 +50,22 @@ const CandidateForm = (props) => (
             >
                 <br />
                 <CandidateContactPerson />
+                <br />
+            </WizardStep>
+            <WizardStep
+                onSubmit={() => console.log('Step3 onSubmit')}
+                validationSchema={Yup.object({
+                    cName: Yup.string().required('Campo Requerido').max(30, 'La longitud máxima es de 30 caracteres'),
+                    cPhone: Yup.string().required('Campo Requerido').max(30, 'La longitud máxima es de 30 caracteres'),
+                    address: Yup.string().required('Campo Requerido').max(100, 'La longitud máxima es de 30 caracteres'),
+                    neighborhood: Yup.string().required('Campo Requerido').max(30, 'La longitud máxima es de 30 caracteres'),
+                    shopType: Yup.string().required('Campo Requerido'),
+                    latitude: Yup.number().required('Ingrese el punto en el mapa'),
+                    longitude: Yup.number().required()
+                })}
+            >
+                <br />
+                <CandidateShopData />
                 <br />
             </WizardStep>
         </Wizard>
