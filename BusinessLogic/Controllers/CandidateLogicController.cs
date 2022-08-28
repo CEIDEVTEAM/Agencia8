@@ -1,6 +1,7 @@
 ﻿using BusinessLogic.DataModel;
 using BusinessLogic.DTOs.Candidate;
 using BusinessLogic.DTOs.Generals;
+using BusinessLogic.Mappers;
 using Microsoft.Extensions.Configuration;
 
 namespace BusinessLogic.Controllers
@@ -9,17 +10,21 @@ namespace BusinessLogic.Controllers
     {
         private IConfiguration _configuration;
         private string _application;
+        private CandidateMapper _mapper;
 
         public CandidateLogicController(IConfiguration configuration, string application)
         {
             this._configuration = configuration;
             this._application = application;
+            this._mapper = new CandidateMapper();
         }
 
-        public async Task<GenericResponse> AddCandidate(CandidateCreationDTO dto, int userId)
+        public async Task<GenericResponse> AddCandidate(CandidateCreationFrontDTO frontDto, int userId)
         {
             List<string> errors = new List<string>();
             bool successful = false;
+
+            CandidateCreationDTO dto = _mapper.MapToObject(frontDto);
 
             using (var uow = new UnitOfWork(_configuration, _application))
             {
@@ -31,17 +36,15 @@ namespace BusinessLogic.Controllers
 
                     if (!errors.Any())
                     {
-                        uow.CandidateRepository.AddCandidate(dto, uow, userId);
+                        decimal idCandidate = uow.CandidateRepository.AddCandidate(dto, uow, userId);
 
                         if (dto.ShopData != null)
                         {
-                            dto.ShopData.IdCandidate = dto.Id; //VER SI ES NECESARIO
+                            dto.ShopData.IdCandidate = idCandidate;
                             uow.ShopDataRepository.AddShopData(dto.ShopData, uow, userId);
                         }
 
-                        //EDU
-                        //FALTA IMPLEMENTACION EN LA BASE
-                        //dto.ContactPerson.IdCandidate = dto.Id; 
+                        dto.ContactPerson.IdCandidate = idCandidate; 
                         uow.ContactPersonRepository.AddContactPerson(dto.ContactPerson);
 
                         uow.SaveChanges();

@@ -20,13 +20,15 @@ namespace BusinessLogic.DataModel.Repository
 
         #region ADD
 
-        public async void AddCandidate(CandidateCreationDTO dto, UnitOfWork uow, decimal userId)
+        public decimal AddCandidate(CandidateCreationDTO dto, UnitOfWork uow, decimal userId)
         {
             Candidate entity = _mapper.MapToEntity(dto);
             entity.AddRow = DateTime.Now;
 
-            await _context.Candidate.AddAsync(entity);
+            _context.Candidate.AddAsync(entity);
             uow.LogRepository.LogCandidate(entity, userId, CActions.add);
+
+            return entity.Id;
         }
 
         #endregion
