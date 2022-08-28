@@ -3,6 +3,7 @@ using BusinessLogic.Mappers;
 using CommonSolution.Constants;
 using DataAccess.Context;
 using DataAccess.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace BusinessLogic.DataModel.Repository
 {
@@ -71,7 +72,7 @@ namespace BusinessLogic.DataModel.Repository
 
         public IQueryable<Candidate> GetCandidates()
         {
-            return _context.Candidate.AsQueryable();
+            return _context.Candidate.Include(x=>x.ContactPerson).Include(x=>x.ShopData).AsQueryable();
         }
 
         public Candidate GetCandidateById(decimal id)

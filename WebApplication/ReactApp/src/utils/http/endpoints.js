@@ -12,3 +12,4 @@ export const urerUrlEdit = `${apiURL}/user/edit`;
 export const urlNewUser = `${apiURL}/user/AddUser`;
 
 export const candidateUrl = `${apiURL}/candidate`;
+export const urlNewcandidate = `${apiURL}/candidate/addCandidate`;
