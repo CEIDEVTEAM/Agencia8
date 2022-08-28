@@ -25,7 +25,7 @@ namespace BusinessLogic.Mappers
             {
                 Number = dto.Number,
                 Name = dto.Name,
-                LastName = dto.Name,
+                LastName = dto.LastName,
                 BirthDate = dto.BirthDate,
                 PersonalDocument = dto.PersonalDocument,
                 Gender = dto.Gender,
@@ -33,7 +33,7 @@ namespace BusinessLogic.Mappers
                 PersonalAddress = dto.PersonalAddress,
                 Phone = dto.Phone,
                 Condition = dto.Condition,
-                Status = dto.Condition,
+                Status = dto.Status,
                 IdDecisionSupport = dto.IdDecisionSupport,
             };
         }
@@ -55,7 +55,7 @@ namespace BusinessLogic.Mappers
                 Phone = entity.Phone,
                 Condition = entity.Condition,
                 Id = (int)entity.Id,
-                Status = entity.Condition,
+                Status = entity.Status,
                 IdDecisionSupport = entity.IdDecisionSupport,
             };
         }
@@ -78,7 +78,7 @@ namespace BusinessLogic.Mappers
                 Phone = entity.Phone,
                 Condition = entity.Condition,
                 Id = entity.Id,
-                Status = entity.Condition,
+                Status = entity.Status,
                 IdDecisionSupport = entity.IdDecisionSupport,
             };
         }
@@ -89,7 +89,7 @@ namespace BusinessLogic.Mappers
                 throw new Exception("No hay objeto/entidad para mapear");
 
             entity.Name = dto.Name;
-            entity.LastName = dto.Name;
+            entity.LastName = dto.LastName;
             entity.BirthDate = dto.BirthDate;
             entity.PersonalDocument = dto.PersonalDocument;
             entity.Gender = dto.Gender;
@@ -97,7 +97,7 @@ namespace BusinessLogic.Mappers
             entity.PersonalAddress = dto.PersonalAddress;
             entity.Phone = dto.Phone;
             entity.Condition = dto.Condition;
-            entity.Status = dto.Condition;
+            entity.Status = dto.Status;
             entity.Number = dto.Number;
             entity.IdDecisionSupport = dto.IdDecisionSupport;
 

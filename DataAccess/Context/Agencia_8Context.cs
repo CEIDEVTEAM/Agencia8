@@ -107,7 +107,7 @@ namespace DataAccess.Context
                     .IsUnicode(false);
 
                 entity.Property(e => e.Status)
-                    .HasMaxLength(1)
+                    .HasMaxLength(15)
                     .IsUnicode(false);
 
                 entity.Property(e => e.UpdRow)
@@ -479,7 +479,7 @@ namespace DataAccess.Context
                     .IsUnicode(false);
 
                 entity.Property(e => e.Status)
-                    .HasMaxLength(1)
+                    .HasMaxLength(15)
                     .IsUnicode(false);
             });
 

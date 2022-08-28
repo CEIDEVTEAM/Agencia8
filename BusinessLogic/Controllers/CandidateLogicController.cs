@@ -42,6 +42,7 @@ namespace BusinessLogic.Controllers
                         {
                             dto.ShopData.IdCandidate = idCandidate;
                             uow.ShopDataRepository.AddShopData(dto.ShopData, uow, userId);
+
                         }
 
                         dto.ContactPerson.IdCandidate = idCandidate; 
