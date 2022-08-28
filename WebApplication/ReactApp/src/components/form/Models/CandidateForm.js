@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import * as Yup from 'yup';
-import Wizard, { sleep } from '../form-groups/Wizard';
-import FormText from '../form-groups/FormText'
+import Wizard from '../form-groups/Wizard';
 import CandidatePersonalData from './CandidateSteps/CandidatePersonalData';
 import CandidateShopData from './CandidateSteps/CandidateShopData';
 import CandidateContactPerson from './CandidateSteps/CandidateContactPerson';
@@ -14,7 +13,10 @@ const stepsNames = [
     "Información del Comercio"
 ];
 
-const CandidateForm = (props) => (
+
+export default function CandidateForm (props){
+    const [conditionState, setCondition] = useState();
+    return(
     <div>
         <Wizard
             initialValues={props.model}
@@ -22,7 +24,10 @@ const CandidateForm = (props) => (
             stepsNames={stepsNames}
         >
             <WizardStep
-                onSubmit={() => console.log('Step1 onSubmit')}
+                onSubmit={(values) => {console.log('Step1 onSubmit')
+                setCondition(values["condition"])
+                console.log(conditionState)
+            }}
                 validationSchema={Yup.object({
                     name: Yup.string().required('Campo Requerido').max(30, 'La longitud máxima es de 30 caracteres'),
                     lastName: Yup.string().required('Campo Requerido').max(30, 'La longitud máxima es de 30 caracteres'),
@@ -32,6 +37,7 @@ const CandidateForm = (props) => (
                     gender: Yup.string().required('Campo Requerido').max(15, 'La longitud máxima es de 30 caracteres'),
                     phone: Yup.string().required('Campo Requerido').max(15, 'La longitud máxima es de 30 caracteres'),
                     maritalStatus: Yup.string().required('Campo Requerido').max(30, 'La longitud máxima es de 30 caracteres'),
+                    condition: Yup.string().required('Campo Requerido').max(30, 'La longitud máxima es de 30 caracteres'),
                 })}
             >
                 <br />
@@ -70,6 +76,6 @@ const CandidateForm = (props) => (
             </WizardStep>
         </Wizard>
     </div>
-);
+    )
+}
 
-export default CandidateForm;

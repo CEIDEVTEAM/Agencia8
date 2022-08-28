@@ -8,6 +8,7 @@ import FormDatePicker from "../../form-groups/FormDatePicker";
 
 export default function CandidatePersonalData(props) {
     const [options, setOptions] = useState([{ id: 1, name: "Masculino" }, { id: 2, name: "Femenino" }, { id: 3, name: "Otro" }])
+    const [optionsCond, setOptionsCond] = useState([{ id: 1, name: "SubAgente" }, { id: 2, name: "Corredor" }])
 
     return (
         <div >
@@ -16,7 +17,8 @@ export default function CandidatePersonalData(props) {
                 <FormText campo="lastName" label="Apellidos" />
             </div>
             <FormText campo="personalAddress" label="Dirección Particular" />
-            <div className="grid md:grid-cols-2 md:gap-6">
+            <div className="grid md:grid-cols-3 md:gap-6">
+                <FormSelect options={optionsCond} campo="condition" label="Condición" />
                 <FormText campo="personalDocument" label="Cédula" />
                 <FormDate campo="birthDate" label="Fecha de Nacimiento" />
             </div>
