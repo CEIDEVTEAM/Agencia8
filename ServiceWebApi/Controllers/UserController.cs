@@ -45,11 +45,8 @@ namespace ServiceWebApi.Controllers
                 
                 await HttpContext.InsertHeaderPaginationParams(queryable);
                 var users = await queryable.OrderBy(x => x.Name).Paginate(dto).ToListAsync();
-                List<UserDTO> resp = new List<UserDTO>();
-                foreach (var item in users)
-                {
-                    resp.Add(_userMapper.MapToObject(item));
-                }
+                List<UserDTO> resp = _userMapper.MapToObjoct(users);
+
                 return resp;
             }
 

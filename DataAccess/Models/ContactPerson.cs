@@ -5,14 +5,17 @@ namespace DataAccess.Models
 {
     public partial class ContactPerson
     {
-        public decimal Number { get; set; }
+        public decimal Id { get; set; }
         public string Name { get; set; } = null!;
         public string LastName { get; set; } = null!;
         public string Phone { get; set; } = null!;
         public string Bond { get; set; } = null!;
         public DateTime? AddRow { get; set; }
         public DateTime? UpdRow { get; set; }
+        public decimal? IdDependent { get; set; }
+        public decimal? IdCandidate { get; set; }
 
-        public virtual Dependent NumberNavigation { get; set; } = null!;
+        public virtual Dependent Id1 { get; set; } = null!;
+        public virtual Candidate IdNavigation { get; set; } = null!;
     }
 }

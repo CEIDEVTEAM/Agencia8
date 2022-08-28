@@ -45,7 +45,7 @@ namespace BusinessLogic.DataModel.Repository
 
         public void UpdateContactPerson(ContactPersonCreationDTO contactPerson)
         {
-            ContactPerson entity = this.GetContactPersonByNumber(contactPerson.Number);
+            ContactPerson entity = this.GetContactPersonByNumber(contactPerson.Id);
             entity = _mapper.MapToEditEntity(contactPerson, entity);
 
             entity.UpdRow = DateTime.Now;
@@ -69,7 +69,7 @@ namespace BusinessLogic.DataModel.Repository
 
         public bool ExistContactPersonByNumber(decimal number)
         {
-            return _context.ContactPerson.Any(x => x.Number == number);
+            return _context.ContactPerson.Any(x => x.Id == number);
         }
 
         #endregion
@@ -78,7 +78,7 @@ namespace BusinessLogic.DataModel.Repository
 
         public ContactPerson GetContactPersonByNumber(decimal number)
         {
-            return _context.ContactPerson.FirstOrDefault(x => x.Number == number);
+            return _context.ContactPerson.FirstOrDefault(x => x.Id == number);
         }
 
         #endregion

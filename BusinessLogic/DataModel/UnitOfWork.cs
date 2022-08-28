@@ -25,6 +25,7 @@ namespace BusinessLogic.DataModel
         public CandidateRepository CandidateRepository { get; set; }
         public ShopDataRepository ShopDataRepository { get; set; }
         public ContactPersonRepository ContactPersonRepository { get; set; }
+        public DecisionParamRepository DecisionParamRepository { get; set; }
 
         #endregion
 
@@ -38,6 +39,7 @@ namespace BusinessLogic.DataModel
             this.CandidateRepository = new CandidateRepository(this._context);
             this.ShopDataRepository = new ShopDataRepository(this._context);
             this.ContactPersonRepository = new ContactPersonRepository(this._context);
+            this.DecisionParamRepository = new DecisionParamRepository(this._context);
         }
 
         public void BeginTransaction()

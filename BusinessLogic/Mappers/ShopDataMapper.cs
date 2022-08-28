@@ -25,7 +25,7 @@ namespace BusinessLogic.Mappers
                 ShopType = dto.ShopType,
                 Latitude = dto.Latitude,
                 Longitude = dto.Longitude,
-                NumberDependent = dto.NumberDependent,
+                IdDependent = dto.IdDependent,
                 IdCandidate = dto.IdCandidate,
             };
         }
@@ -45,7 +45,7 @@ namespace BusinessLogic.Mappers
                 ShopType = entity.ShopType,
                 Latitude = entity.Latitude,
                 Longitude = entity.Longitude,
-                NumberDependent = entity.NumberDependent,
+                IdDependent = entity.IdDependent,
                 IdCandidate = entity.IdCandidate,
             };
         }
@@ -62,6 +62,8 @@ namespace BusinessLogic.Mappers
             entity.ShopType = dto.ShopType;
             entity.Latitude = dto.Latitude;
             entity.Longitude = dto.Longitude;
+            entity.IdDependent = dto.IdDependent;
+            entity.IdCandidate = dto.IdCandidate;
 
             return entity;
         }

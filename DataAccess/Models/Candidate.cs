@@ -27,6 +27,7 @@ namespace DataAccess.Models
         public DateTime? UpdRow { get; set; }
 
         public virtual DecisionSupport? IdDecisionSupportNavigation { get; set; }
+        public virtual ContactPerson ContactPerson { get; set; } = null!;
         public virtual ProcedureStep ProcedureStep { get; set; } = null!;
         public virtual ICollection<ShopData> ShopData { get; set; }
     }
