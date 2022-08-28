@@ -44,7 +44,7 @@ namespace BusinessLogic.Mappers
                 Number = entity.Number,
                 Name = entity.Name,
                 LastName = entity.Name,
-                BirthDate = entity.BirthDate.ToString(new CultureInfo("es-Uy")),
+                BirthDate = entity.BirthDate.ToString(),
                 PersonalDocument = entity.PersonalDocument,
                 Gender = entity.Gender,
                 MaritalStatus = entity.MaritalStatus,

@@ -21,7 +21,7 @@ export default function TestForm1(props) {
             </div>
             <br/>
             <div className="grid md:grid-cols-1 md:gap-6"> 
-                <FormMap campoLat="latitude" campoLng="longitude"/> 
+                <FormMap colection = {[{lat:-34.912336,lng:-54.950890},{lat:-34.909440,lng:-54.953549}]} campoLat="latitude" campoLng="longitude"/> 
             </div>       
             
         </div>

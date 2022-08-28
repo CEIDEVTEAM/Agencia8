@@ -21,7 +21,7 @@ export default function Map(props) {
             center={[-34.910051, -54.953425]} zoom={14}
             style={{ height: props.height }}
         >
-            <TileLayer attribution="React Películas"
+            <TileLayer attribution="Agencia 8"
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
             {props.soloLectura ? null : <ClickMap setPunto={coords => {
@@ -32,6 +32,11 @@ export default function Map(props) {
             {coords.map(coord => <Mark key={coord.lat + coord.lng}
                 {...coord}
             />)}
+
+            {props.colection.map(coord => <Mark key={coord.lat + coord.lng}
+                {...coord}
+            />)}
+            
         </MapContainer>
     )
 }
@@ -56,4 +61,13 @@ function Mark(props) {
         </Marker>
     )
 }
+
+// function PopulateMarkes(props) {
+//     return (
+//         props.colection.map(position =>
+//             <Marker position={[position.lat, position.lng]}>
+//                 {props.nombre ? <Popup>{props.nombre}</Popup> : null}
+//             </Marker>)
+//     )
+// }
 
