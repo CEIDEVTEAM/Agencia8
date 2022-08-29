@@ -11,14 +11,14 @@ namespace BusinessLogic.DTOs.Candidate
         public decimal id { get; set; }
         public string name { get; set; }
         public string lastName { get; set; }
-        public DateTime birthDate { get; set; }
+        public string birthDate { get; set; }
         public string personalDocument { get; set; }
         public string Gender { get; set; }
         public string MaritalStatus { get; set; }
         public string personalAddress { get; set; }
         public string phone { get; set; }
         public string condition { get; set; }
-        public string status { get; set; }
+        //public string status { get; set; }
         public decimal? number { get; set; }
         public decimal? idDecisionSupport { get; set; }
 

@@ -114,7 +114,7 @@ namespace BusinessLogic.Mappers
 
                 Name = frontDTO.name,
                 LastName = frontDTO.lastName,
-                BirthDate = frontDTO.birthDate,
+                BirthDate = DateTime.Parse(frontDTO.birthDate),
                 PersonalDocument = frontDTO.personalDocument,
                 Gender = frontDTO.Gender,
                 MaritalStatus = frontDTO.MaritalStatus,
