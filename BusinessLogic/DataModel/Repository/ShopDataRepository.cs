@@ -85,9 +85,9 @@ namespace BusinessLogic.DataModel.Repository
         #region GET
 
 
-        public ShopData GetShopDataByNumber(decimal number)
+        public ShopData GetShopDataByNumber(decimal id)
         {
-            return _context.ShopData.FirstOrDefault(x => x.Id == number);
+            return _context.ShopData.FirstOrDefault(x => x.IdDependent == id);
         }
 
         public ShopData GetShopDataByIdCandidate(decimal id)

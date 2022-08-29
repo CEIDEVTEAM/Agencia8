@@ -62,8 +62,6 @@ namespace BusinessLogic.Mappers
             entity.ShopType = dto.ShopType;
             entity.Latitude = dto.Latitude;
             entity.Longitude = dto.Longitude;
-            entity.IdDependent = dto.IdDependent;
-            entity.IdCandidate = dto.IdCandidate;
 
             return entity;
         }

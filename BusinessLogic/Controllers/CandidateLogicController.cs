@@ -42,7 +42,6 @@ namespace BusinessLogic.Controllers
                         {
                             dto.ShopData.IdCandidate = idCandidate;
                             uow.ShopDataRepository.AddShopData(dto.ShopData, uow, userId);
-
                         }
 
                         dto.ContactPerson.IdCandidate = idCandidate; 
@@ -68,10 +67,12 @@ namespace BusinessLogic.Controllers
 
         }
 
-        public async Task<GenericResponse> EditCandidate(CandidateCreationDTO dto, decimal userId)
+        public async Task<GenericResponse> EditCandidate(CandidateCreationFrontDTO frontDto, decimal userId)
         {
             List<string> errors = new List<string>();
             bool successful = false;
+
+            CandidateCreationDTO dto = _mapper.MapToObject(frontDto);
 
             using (var uow = new UnitOfWork(_configuration, _application))
             {
@@ -121,6 +122,9 @@ namespace BusinessLogic.Controllers
         public List<string> Validations(CandidateCreationDTO candidate, UnitOfWork uow, bool isAdd = false)
         {
             List<string> colerrors = new List<string>();
+
+            if (isAdd && uow.CandidateRepository.ExistCandidateByDocument(candidate.PersonalDocument))
+                colerrors.Add($"El documento de identidad ya está registrado.");
 
             if (!isAdd && !uow.CandidateRepository.ExistCandidateById(candidate.Id))
                 colerrors.Add($"El {candidate.Condition} no existe.");
