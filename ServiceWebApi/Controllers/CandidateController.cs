@@ -20,14 +20,14 @@ namespace ServiceWebApi.Controllers
     {
         public const string _application = "CANDIDATE";
         private readonly IConfiguration _configuration;
-        private readonly IMapper _mapper;
-        private readonly CandidateMapper _cMapper;
+        //private readonly IMapper _mapper;
+        private readonly CandidateMapper _mapper;
 
         public CandidateController(IConfiguration configuration)
         {
             this._configuration = configuration;
-            this._mapper = new Mapper(new MapperConfiguration(x => x.CreateMap<Candidate, CandidateDTO>()));
-            this._cMapper = new CandidateMapper();
+            //this._mapper = new Mapper(new MapperConfiguration(x => x.CreateMap<Candidate, CandidateDTO>()));
+            this._mapper = new CandidateMapper();
 
         }
 
@@ -40,7 +40,7 @@ namespace ServiceWebApi.Controllers
 
                 await HttpContext.InsertHeaderPaginationParams(queryable);
                 var candidates = await queryable.OrderBy(x => x.Name).Paginate(dto).ToListAsync();
-                return _mapper.Map<List<CandidateDTO>>(candidates);
+                return _mapper.MapToObject(candidates);
             }
 
         }
@@ -50,9 +50,9 @@ namespace ServiceWebApi.Controllers
         {
             using (var uow = new UnitOfWork(this._configuration, _application))
             {
-                var queryable = uow.CandidateRepository.GetCandidateById(id);
+                var queryable = uow.CandidateRepository.GetCandidateCompleteDataById(id);
 
-                return _cMapper.Map(queryable);
+                return _mapper.MapToObject(queryable);
             }
 
         }

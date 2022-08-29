@@ -77,14 +77,19 @@ namespace BusinessLogic.DataModel.Repository
 
         #region GET
 
-        public IQueryable<Candidate> GetCandidates()
+        public IQueryable<VCandidate> GetCandidates()
         {
-            return _context.Candidate.Include(x=>x.ContactPerson).Include(x=>x.ShopData).AsQueryable();
+            return _context.VCandidate.AsQueryable();
         }
 
         public Candidate GetCandidateById(decimal id)
         {
             return _context.Candidate.FirstOrDefault(x => x.Id == id);
+        }
+
+        public VCandidate GetCandidateCompleteDataById(decimal id)
+        {
+            return _context.VCandidate.FirstOrDefault(x => x.Id == id);
         }
 
         #endregion

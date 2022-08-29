@@ -37,26 +37,38 @@ namespace BusinessLogic.Mappers
                 IdDecisionSupport = dto.IdDecisionSupport,
             };
         }
-        public CandidateDTO Map(Candidate entity)
+
+        public CandidateDTO MapToObject(VCandidate entity)
         {
             if (entity == null)
                 throw new Exception("No hay entidad para mapear");
 
             return new CandidateDTO()
             {
-                Number = entity.Number,
-                Name = entity.Name,
-                LastName = entity.Name,
-                BirthDate = entity.BirthDate.ToString(),
-                PersonalDocument = entity.PersonalDocument,
+                Id = entity.Id,
+                name = entity.Name,
+                lastName = entity.LastName,
+                birthDate = entity.BirthDate,
+                personalDocument = entity.PersonalDocument,
                 Gender = entity.Gender,
                 MaritalStatus = entity.MaritalStatus,
-                PersonalAddress = entity.PersonalAddress,
-                Phone = entity.Phone,
-                Condition = entity.Condition,
-                Id = (int)entity.Id,
-                Status = entity.Status,
-                IdDecisionSupport = entity.IdDecisionSupport,
+                personalAddress = entity.PersonalAddress,
+                phone = entity.Phone,
+                status = entity.Status,
+                addRow = entity.AddRow,
+                number = entity.Number,
+                idShopData = entity.IdShopData,
+                cName = entity.NameShopData,
+                cPhone = entity.PhoneShopData,
+                cAddress = entity.Address,
+                neighborhood = entity.Neighborhood,
+                shopType = entity.ShopType,
+                latitude = entity.Latitude,
+                longitude = entity.Longitude,
+                cpName = entity.NameContactPerson,
+                cpLastName = entity.LastNameContactPerson,
+                cpPhone = entity.PhoneContactPerson,
+                bond = entity.Bond,
             };
         }
 
@@ -81,6 +93,15 @@ namespace BusinessLogic.Mappers
                 Status = entity.Status,
                 IdDecisionSupport = entity.IdDecisionSupport,
             };
+        }
+
+        public List<CandidateDTO> MapToObject(List<VCandidate> colEntity)
+        {
+            List<CandidateDTO> colObject = new List<CandidateDTO>();
+
+            colEntity.ForEach(x => colObject.Add(this.MapToObject(x)));
+
+            return colObject;
         }
 
         public Candidate MapToEditEntity(CandidateCreationDTO dto, Candidate entity)

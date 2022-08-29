@@ -8,18 +8,30 @@ namespace BusinessLogic.DTOs.Candidate
 {
     public class CandidateDTO
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public string LastName { get; set; }
-        public string BirthDate { get; set; }
-        public string PersonalDocument { get; set; }
-        public string Gender { get; set; }
-        public string MaritalStatus { get; set; }
-        public string PersonalAddress { get; set; }
-        public string Phone { get; set; }
-        public string Condition { get; set; }
-        public string Status { get; set; }
-        public decimal? Number { get; set; }
-        public decimal? IdDecisionSupport { get; set; }
+  
+        public decimal Id { get; set; }
+        public string name { get; set; } = null!;
+        public string lastName { get; set; } = null!;
+        public DateTime birthDate { get; set; }
+        public string personalDocument { get; set; } = null!;
+        public string Gender { get; set; } = null!;
+        public string MaritalStatus { get; set; } = null!;
+        public string personalAddress { get; set; } = null!;
+        public string phone { get; set; } = null!;
+        public string status { get; set; } = null!;
+        public DateTime? addRow { get; set; }
+        public decimal? number { get; set; }
+        public decimal? idShopData { get; set; }
+        public string? cName { get; set; }
+        public string? cPhone { get; set; }
+        public string? cAddress { get; set; }
+        public string? neighborhood { get; set; }
+        public string? shopType { get; set; }
+        public string? latitude { get; set; }
+        public string? longitude { get; set; }
+        public string cpName { get; set; } = null!;
+        public string cpLastName { get; set; } = null!;
+        public string cpPhone { get; set; } = null!;
+        public string bond { get; set; } = null!;
     }
 }

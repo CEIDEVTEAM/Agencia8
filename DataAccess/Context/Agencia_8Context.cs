@@ -37,6 +37,8 @@ namespace DataAccess.Context
         public virtual DbSet<Role> Role { get; set; }
         public virtual DbSet<ShopData> ShopData { get; set; }
         public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<VCandidate> VCandidate { get; set; } = null!;
+        public virtual DbSet<VDependent> VDependent { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -840,6 +842,224 @@ namespace DataAccess.Context
                     .WithMany(p => p.Users)
                     .HasForeignKey(d => d.IdRole)
                     .HasConstraintName("FK_User_Id_Role");
+            });
+
+            modelBuilder.Entity<VCandidate>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("V_Candidate");
+
+                entity.Property(e => e.AddRow)
+                    .HasColumnType("datetime")
+                    .HasColumnName("Add_Row");
+
+                entity.Property(e => e.Address)
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.BirthDate)
+                    .HasColumnType("date")
+                    .HasColumnName("Birth_Date");
+
+                entity.Property(e => e.Bond)
+                    .HasMaxLength(15)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Gender)
+                    .HasMaxLength(15)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Id).HasColumnType("numeric(10, 0)");
+
+                entity.Property(e => e.IdShopData)
+                    .HasColumnType("numeric(10, 0)")
+                    .HasColumnName("Id_Shop_Data");
+
+                entity.Property(e => e.LastName)
+                    .HasMaxLength(30)
+                    .IsUnicode(false)
+                    .HasColumnName("Last_Name");
+
+                entity.Property(e => e.LastNameContactPerson)
+                    .HasMaxLength(30)
+                    .IsUnicode(false)
+                    .HasColumnName("Last_Name_Contact_Person");
+
+                entity.Property(e => e.Latitude)
+                    .HasMaxLength(20)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Longitude)
+                    .HasMaxLength(20)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.MaritalStatus)
+                    .HasMaxLength(15)
+                    .IsUnicode(false)
+                    .HasColumnName("Marital_Status");
+
+                entity.Property(e => e.Name)
+                    .HasMaxLength(30)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.NameContactPerson)
+                    .HasMaxLength(30)
+                    .IsUnicode(false)
+                    .HasColumnName("Name_Contact_Person");
+
+                entity.Property(e => e.NameShopData)
+                    .HasMaxLength(30)
+                    .IsUnicode(false)
+                    .HasColumnName("Name_Shop_Data");
+
+                entity.Property(e => e.Neighborhood)
+                    .HasMaxLength(30)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Number).HasColumnType("numeric(10, 0)");
+
+                entity.Property(e => e.PersonalAddress)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("Personal_Address");
+
+                entity.Property(e => e.PersonalDocument)
+                    .HasMaxLength(15)
+                    .IsUnicode(false)
+                    .HasColumnName("Personal_Document");
+
+                entity.Property(e => e.Phone)
+                    .HasMaxLength(15)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.PhoneContactPerson)
+                    .HasMaxLength(15)
+                    .IsUnicode(false)
+                    .HasColumnName("Phone_Contact_Person");
+
+                entity.Property(e => e.PhoneShopData)
+                    .HasMaxLength(30)
+                    .IsUnicode(false)
+                    .HasColumnName("Phone_Shop_Data");
+
+                entity.Property(e => e.ShopType)
+                    .HasMaxLength(30)
+                    .IsUnicode(false)
+                    .HasColumnName("Shop_Type");
+
+                entity.Property(e => e.Status)
+                    .HasMaxLength(1)
+                    .IsUnicode(false);
+            });
+
+            modelBuilder.Entity<VDependent>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("V_Dependent");
+
+                entity.Property(e => e.AddRow)
+                    .HasColumnType("datetime")
+                    .HasColumnName("Add_Row");
+
+                entity.Property(e => e.Address)
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.BirthDate)
+                    .HasColumnType("date")
+                    .HasColumnName("Birth_Date");
+
+                entity.Property(e => e.Bond)
+                    .HasMaxLength(15)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Gender)
+                    .HasMaxLength(15)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Id).HasColumnType("numeric(10, 0)");
+
+                entity.Property(e => e.IdShopData)
+                    .HasColumnType("numeric(10, 0)")
+                    .HasColumnName("Id_Shop_Data");
+
+                entity.Property(e => e.LastName)
+                    .HasMaxLength(30)
+                    .IsUnicode(false)
+                    .HasColumnName("Last_Name");
+
+                entity.Property(e => e.LastNameContactPerson)
+                    .HasMaxLength(30)
+                    .IsUnicode(false)
+                    .HasColumnName("Last_Name_Contact_Person");
+
+                entity.Property(e => e.Latitude)
+                    .HasMaxLength(20)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Longitude)
+                    .HasMaxLength(20)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.MaritalStatus)
+                    .HasMaxLength(15)
+                    .IsUnicode(false)
+                    .HasColumnName("Marital_Status");
+
+                entity.Property(e => e.Name)
+                    .HasMaxLength(30)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.NameContactPerson)
+                    .HasMaxLength(30)
+                    .IsUnicode(false)
+                    .HasColumnName("Name_Contact_Person");
+
+                entity.Property(e => e.NameShopData)
+                    .HasMaxLength(30)
+                    .IsUnicode(false)
+                    .HasColumnName("Name_Shop_Data");
+
+                entity.Property(e => e.Neighborhood)
+                    .HasMaxLength(30)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Number).HasColumnType("numeric(10, 0)");
+
+                entity.Property(e => e.PatentNamber)
+                    .HasColumnType("numeric(10, 0)")
+                    .HasColumnName("Patent_Namber");
+
+                entity.Property(e => e.PersonalAddress)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("Personal_Address");
+
+                entity.Property(e => e.PersonalDocument)
+                    .HasMaxLength(15)
+                    .IsUnicode(false)
+                    .HasColumnName("Personal_Document");
+
+                entity.Property(e => e.Phone)
+                    .HasMaxLength(15)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.PhoneContactPerson)
+                    .HasMaxLength(15)
+                    .IsUnicode(false)
+                    .HasColumnName("Phone_Contact_Person");
+
+                entity.Property(e => e.PhoneShopData)
+                    .HasMaxLength(30)
+                    .IsUnicode(false)
+                    .HasColumnName("Phone_Shop_Data");
+
+                entity.Property(e => e.ShopType)
+                    .HasMaxLength(30)
+                    .IsUnicode(false)
+                    .HasColumnName("Shop_Type");
             });
 
             OnModelCreatingPartial(modelBuilder);
