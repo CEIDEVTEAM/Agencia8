@@ -7,8 +7,8 @@ import FormDatePicker from "../../form-groups/FormDatePicker";
 
 
 export default function CandidatePersonalData(props) {
-    const [options, setOptions] = useState([{ id: 1, name: "Masculino" }, { id: 2, name: "Femenino" }, { id: 3, name: "Otro" }])
-    const [optionsCond, setOptionsCond] = useState([{ id: 1, name: "SubAgente" }, { id: 2, name: "Corredor" }])
+    const [options, setOptions] = useState([{ id: "M", name: "Masculino" }, { id: "F", name: "Femenino" }])
+    const [optionsCond, setOptionsCond] = useState([{ id: "SubAgente", name: "SubAgente" }, { id: "Corredor", name: "Corredor" }])
 
     return (
         <div >
