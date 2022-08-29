@@ -7,8 +7,8 @@ import { ErrorMessage } from "formik";
 
 export default function FormDate(props) {
     const { values, validateForm, touched, errors } = useFormikContext();
-    console.log('values', values);
-    console.log('props.campo', values[props.campo]);
+    // console.log('values', values);
+    // console.log('props.campo', values[props.campo]);
     const date = new Date(values[props.campo])
     return (
         
@@ -18,7 +18,7 @@ export default function FormDate(props) {
                 name={props.campo}
                 defaultValue={date.toLocaleDateString('en-CA')}
                 onChange={e => {
-                    const fecha = new Date(e.currentTarget.value + 'T00:00:00');
+                    const fecha = new Date(e.currentTarget.value + 'T00:00:00').toDateString();
                     values[props.campo] = fecha;
                     validateForm();
                 }}

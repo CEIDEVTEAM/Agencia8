@@ -12,11 +12,6 @@ function NewUser() {
     const history = useHistory();
     const [errors, setErrors] = useState([]);
     const [model, setModel] = useState({ name: '', userName: '', password: '', email: '', address: '', phone: '', idRole: '' });
-    
-
-    function updateState(state){
-        setErrors(state)
-    }
         
     async function New(values) {
         try {

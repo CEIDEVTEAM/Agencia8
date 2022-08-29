@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import * as Yup from 'yup';
 import Wizard from '../form-groups/Wizard';
 import CandidatePersonalData from './CandidateSteps/CandidatePersonalData';
@@ -15,7 +15,12 @@ const stepsNames = [
 
 
 export default function CandidateForm (props){
-    const [conditionState, setCondition] = useState();
+    const [conditionState, setconditionState] = useState();
+    useEffect(() => {
+        setconditionState("1");
+        
+    }, [])
+    
     return(
     <div>
         <Wizard
@@ -25,8 +30,8 @@ export default function CandidateForm (props){
         >
             <WizardStep
                 onSubmit={(values) => {console.log('Step1 onSubmit')
-                setCondition(values["condition"])
-                console.log(conditionState)
+                setconditionState (values["condition"])
+                console.log("stado" + conditionState)
             }}
                 validationSchema={Yup.object({
                     name: Yup.string().required('Campo Requerido').max(30, 'La longitud máxima es de 30 caracteres'),
@@ -34,9 +39,9 @@ export default function CandidateForm (props){
                     personalAddress: Yup.string().required('Campo Requerido').max(100, 'La longitud máxima es de 30 caracteres'),
                     personalDocument: Yup.string().required('Campo Requerido').max(30, 'La longitud máxima es de 30 caracteres'),
                     birthDate: Yup.string().required('Campo Requerido'),
-                    gender: Yup.string().required('Campo Requerido').max(15, 'La longitud máxima es de 30 caracteres'),
+                    Gender: Yup.string().required('Campo Requerido').max(15, 'La longitud máxima es de 30 caracteres'),
                     phone: Yup.string().required('Campo Requerido').max(15, 'La longitud máxima es de 30 caracteres'),
-                    maritalStatus: Yup.string().required('Campo Requerido').max(30, 'La longitud máxima es de 30 caracteres'),
+                    MaritalStatus: Yup.string().required('Campo Requerido').max(30, 'La longitud máxima es de 30 caracteres'),
                     condition: Yup.string().required('Campo Requerido').max(30, 'La longitud máxima es de 30 caracteres'),
                 })}
             >
@@ -58,6 +63,7 @@ export default function CandidateForm (props){
                 <CandidateContactPerson />
                 <br />
             </WizardStep>
+            {conditionState === "1" ? 
             <WizardStep
                 onSubmit={() => console.log('Step3 onSubmit')}
                 validationSchema={Yup.object({
@@ -68,12 +74,19 @@ export default function CandidateForm (props){
                     shopType: Yup.string().required('Campo Requerido'),
                     latitude: Yup.number().required('Ingrese el punto en el mapa'),
                     longitude: Yup.number().required()
-                })}
+                })}            
             >
                 <br />
                 <CandidateShopData />
                 <br />
+            </WizardStep> :<WizardStep
+                onSubmit={() => console.log('Step3 onSubmit')}                          
+            >
+                <br />
+                No hay lola
+                <br />
             </WizardStep>
+            }
         </Wizard>
     </div>
     )
