@@ -74,7 +74,7 @@ namespace ServiceWebApi.Controllers
         }
 
         [HttpPut("{id:int}")]
-        public async Task<ActionResult<GenericResponse>> EditCandidate([FromBody] CandidateCreationDTO dto)
+        public async Task<ActionResult<GenericResponse>> EditCandidate([FromBody] CandidateCreationFrontDTO dto)
         {
             try
             {

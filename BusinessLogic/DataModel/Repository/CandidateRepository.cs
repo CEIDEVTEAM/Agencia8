@@ -68,6 +68,11 @@ namespace BusinessLogic.DataModel.Repository
             return _context.Candidate.Any(x => x.Id == id);
         }
 
+        public bool ExistCandidateByDocument(string document)
+        {
+            return _context.Candidate.Any(x => x.PersonalDocument == document);
+        }
+
         #endregion
 
         #region GET
