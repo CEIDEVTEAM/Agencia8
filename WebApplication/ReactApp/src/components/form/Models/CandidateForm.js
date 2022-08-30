@@ -42,9 +42,9 @@ export default function CandidateForm(props) {
                         personalAddress: Yup.string().required('Campo Requerido').max(100, 'La longitud máxima es de 30 caracteres'),
                         personalDocument: Yup.string().required('Campo Requerido').max(30, 'La longitud máxima es de 30 caracteres'),
                         birthDate: Yup.string().required('Campo Requerido'),
-                        Gender: Yup.string().required('Campo Requerido').max(15, 'La longitud máxima es de 30 caracteres'),
+                        gender: Yup.string().required('Campo Requerido').max(15, 'La longitud máxima es de 30 caracteres'),
                         phone: Yup.string().required('Campo Requerido').max(15, 'La longitud máxima es de 30 caracteres'),
-                        MaritalStatus: Yup.string().required('Campo Requerido').max(30, 'La longitud máxima es de 30 caracteres'),
+                        maritalStatus: Yup.string().required('Campo Requerido').max(30, 'La longitud máxima es de 30 caracteres'),
                         condition: Yup.string().required('Campo Requerido').max(30, 'La longitud máxima es de 30 caracteres'),
                     })}
                 >
@@ -76,11 +76,11 @@ export default function CandidateForm(props) {
                             neighborhood: Yup.string().required('Campo Requerido').max(30, 'La longitud máxima es de 30 caracteres'),
                             shopType: Yup.string().required('Campo Requerido'),
                             latitude: Yup.number().required('Ingrese el punto en el mapa'),
-                            longitude: Yup.number().required()
+                            longitude: Yup.number().required('Ingrese el punto en el mapa')
                         })}
                     >
                         <br />
-                        <CandidateShopData />
+                        <CandidateShopData props={props.model}/>
                         <br />
                     </WizardStep> : <WizardStep
                         onSubmit={() => console.log('Step3 onSubmit')}

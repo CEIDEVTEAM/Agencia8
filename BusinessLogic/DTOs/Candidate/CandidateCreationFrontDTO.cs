@@ -34,7 +34,7 @@ namespace BusinessLogic.DTOs.Candidate
         public string? address { get; set; }
         public string? neighborhood { get; set; }
         public string? shopType { get; set; }
-        public decimal? latitude { get; set; }
-        public decimal? longitude { get; set; }
+        public double? latitude { get; set; }
+        public double? longitude { get; set; }
     }
 }

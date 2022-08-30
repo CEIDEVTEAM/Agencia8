@@ -16,7 +16,7 @@ export default function FormMap(props){
         <>
         <Map
             colection = {props.colection}
-            coordenadas={props.coordenadas}
+            coordenadas = {props.coordenadas}
             manejarClickMapa={actualizarCampos}
         />
         <ErrorMessage name={props.campoLat}>{mensaje =>                
