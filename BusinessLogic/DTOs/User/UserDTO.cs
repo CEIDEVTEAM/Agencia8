@@ -10,7 +10,6 @@ namespace BusinessLogic.DTOs.User
     {
         public decimal Id { get; set; }
         public string UserName { get; set; }        
-        public string Password { get; set; }
         public string Email { get; set; }
         public string Name { get; set; }
         public string? Address { get; set; }
@@ -18,7 +17,6 @@ namespace BusinessLogic.DTOs.User
         public decimal? IdRole { get; set; }
         public string? AddRow { get; set; }
         public string? UpdRow { get; set; }
-        public string? ActiveFlag { get; set; }
 
         public List<string> Resources { get; set; } = null;
         public string RoleName { get; set; } = null;

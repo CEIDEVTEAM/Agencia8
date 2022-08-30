@@ -22,7 +22,7 @@ namespace DataAccess.Context
 
         public virtual DbSet<Candidate> Candidate { get; set; }
         public virtual DbSet<ContactPerson> ContactPerson { get; set; }
-        public virtual DbSet<DecisionParam> DecisionParam { get; set; } 
+        public virtual DbSet<DecisionParam> DecisionParam { get; set; }
         public virtual DbSet<DecisionSupport> DecisionSupport { get; set; }
         public virtual DbSet<DependentFact> DependentFact { get; set; }
         public virtual DbSet<Dependent> Dependent { get; set; }
@@ -39,6 +39,7 @@ namespace DataAccess.Context
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<VCandidate> VCandidate { get; set; } = null!;
         public virtual DbSet<VDependent> VDependent { get; set; } = null!;
+        public virtual DbSet<VUser> VUsers { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -1068,6 +1069,51 @@ namespace DataAccess.Context
                     .HasMaxLength(30)
                     .IsUnicode(false)
                     .HasColumnName("Shop_Type");
+            });
+
+            modelBuilder.Entity<VUser>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("V_User");
+
+                entity.Property(e => e.Id)
+                    .HasColumnType("numeric(10, 0)")
+                    .HasColumnName("Id");
+
+                entity.Property(e => e.AddRow)
+                    .HasColumnType("datetime")
+                    .HasColumnName("Add_Row");
+
+                entity.Property(e => e.Address)
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Email)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Name)
+                    .HasMaxLength(30)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Phone)
+                    .HasMaxLength(15)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.RoleName)
+                    .HasMaxLength(30)
+                    .IsUnicode(false)
+                    .HasColumnName("Role_Name");
+
+                entity.Property(e => e.UpdRow)
+                    .HasColumnType("datetime")
+                    .HasColumnName("Upd_Row");
+
+                entity.Property(e => e.UserName)
+                    .HasMaxLength(30)
+                    .IsUnicode(false)
+                    .HasColumnName("User_Name");
             });
 
             OnModelCreatingPartial(modelBuilder);

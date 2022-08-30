@@ -70,9 +70,9 @@ namespace BusinessLogic.DataModel.Repository
             return resources;
         }
 
-        public IQueryable<User> GetUsers()
+        public IQueryable<VUser> GetUsers()
         {
-            return _context.Users.Where(x => x.ActiveFlag == "S").AsQueryable();
+            return _context.VUsers.AsQueryable();
         }
       
         public User GetUserById(decimal userId)

@@ -23,16 +23,13 @@ namespace ServiceWebApi.Controllers
     {
         public const string _application = "USER";
         private readonly IConfiguration _configuration;
-        private readonly IMapper _mapper;
-        private readonly UserMapper _userMapper;
+        private readonly UserMapper _mapper;
         readonly ITokenAcquisition tokenAcquisition;
 
         public UserController(IConfiguration configuration)
         {
             this._configuration = configuration;
-            this._mapper = new Mapper(new MapperConfiguration(x => x.CreateMap<User, UserDTO>()));
-            this._userMapper = new UserMapper();
-
+            this._mapper = new UserMapper();
         }
 
         [HttpGet()]
@@ -46,7 +43,7 @@ namespace ServiceWebApi.Controllers
                 
                 await HttpContext.InsertHeaderPaginationParams(queryable);
                 var users = await queryable.OrderBy(x => x.Name).Paginate(dto).ToListAsync();
-                List<UserDTO> resp = _userMapper.MapToObject(users);
+                List<UserDTO> resp = _mapper.MapToObject(users);
 
                 return resp;
             }
@@ -54,15 +51,14 @@ namespace ServiceWebApi.Controllers
         }
 
         [HttpGet("{id:int}")]
-        public async Task<ActionResult<UserDTO>> Get(int id)
+        public async Task<ActionResult<UserCreationDTO>> Get(int id)
         {
             using (var uow = new UnitOfWork(this._configuration, _application))
             {
                 var queryable = uow.UserRepository.GetUserById(id);
 
-                return _mapper.Map<UserDTO>(queryable);
+                return _mapper.MapToObject(queryable);
             }
-
         }
 
 

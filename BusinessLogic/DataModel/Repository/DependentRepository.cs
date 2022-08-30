@@ -72,9 +72,9 @@ namespace BusinessLogic.DataModel.Repository
 
         #region GET
 
-        public IQueryable<Dependent> GetDependents()
+        public IQueryable<VDependent> GetDependents()
         {
-            return _context.Dependent.AsQueryable();
+            return _context.VDependent.AsQueryable();
         }
 
         public Dependent GetDependentByNumber(decimal number)
