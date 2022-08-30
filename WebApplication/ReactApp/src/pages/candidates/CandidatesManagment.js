@@ -10,9 +10,10 @@ import {
   TableContainer,
   Button,
   Pagination,
+  Input
 } from '@windmill/react-ui'
 
-import { EditIcon, TrashIcon } from '../../icons'
+import { EditIcon, TrashIcon,SearchIcon } from '../../icons'
 import { candidateUrl } from '../../utils/http/endpoints';
 import PageTitle from '../../components/Typography/PageTitle';
 import confirmation from '../../utils/generals/confirmation';
@@ -28,27 +29,25 @@ export default function CandidatesManagment () {
 
   const [openModal, setModalOpen] = useState(false)
   const [id, setId] = useState(0)
-
+  const [search, setSearch] = useState(null)
 
 
   useEffect(() => {   
     loadData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
 
-  }, [page, setPage, openModal])
+  }, [page, setPage, openModal, search])
 
   function loadData() {
     axios.get(candidateUrl, {
-      params: { page, recordsPerPage }
+      params: { page, recordsPerPage, search }
     })
-      .then((response) => {
-        const totalRecords =
-          parseInt(response.headers['totalrecords'], 10);
-        setDataTable(response.data);
-        setTotalResults(Math.ceil(totalRecords / recordsPerPage))
-        console.log(response)
-        console.log(totalRecords)
-        console.log(totalRecords)        
+    .then((response) => {
+      const totalRecords =
+        parseInt(response.headers['totalrecords'], 10);
+      setDataTable(response.data);
+      setTotalResults(Math.ceil(totalRecords))
+      console.log(response)       
       })
   }
 
@@ -76,12 +75,29 @@ export default function CandidatesManagment () {
   }
 
 
-  const labels = ["Nombre","Apellido","Dirección Personal"]
-  const columns = ["name","lastName","personalAddress"]
+  const labels = ["Documento","Nombres","Apellidos",
+  "Condición","Dirección","Teléfonos","Teléfonos comercio",
+  "Dirección Personal","Inscripción"]
+  const columns = ["personalDocument","name","lastName",
+  "condition","address","phone","cPhone","personalAddress","addRow"]
 
   return (
     <>
     <PageTitle>Gestión de Aspirantes</PageTitle>
+    <div className="absolute inset-y-0 flex items-center pl-2">
+          <SearchIcon className="w-4 h-4" aria-hidden="true" />
+        </div>
+        <Input
+          className="pl-8 text-gray-700"
+          placeholder="Búsqueda por Apellido"
+          aria-label="Búsqueda"
+          onChange={(e) => {
+            if (e.target.value === "") {
+              setSearch(null)
+            } else { setSearch(e.target.value.toLowerCase()) }
+          }}
+        />
+        <br/>
     <TableContainer className="mb-8">
       <Table>
         <TableHeader>

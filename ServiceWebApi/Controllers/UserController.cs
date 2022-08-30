@@ -37,7 +37,7 @@ namespace ServiceWebApi.Controllers
         {
             using (var uow = new UnitOfWork(this._configuration, _application))
             {
-                var queryable = uow.UserRepository.GetUsers();
+                var queryable = uow.UserRepository.GetUsers(dto.Search);
                 var value = HttpContext.User.Claims.FirstOrDefault(x => x.Type == "userName").Value;
                 UserDTO userDto = uow.UserRepository.GetUserByUserName(value);
                 

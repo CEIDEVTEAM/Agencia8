@@ -48,7 +48,7 @@ namespace BusinessLogic.DataModel.Repository
             }
 
             return user;
-        }
+        }      
 
         public async void AddUser(User user)
         {
@@ -70,9 +70,9 @@ namespace BusinessLogic.DataModel.Repository
             return resources;
         }
 
-        public IQueryable<VUser> GetUsers()
+        public IQueryable<VUser> GetUsers(string search)
         {
-            return _context.VUsers.AsQueryable();
+            return _context.VUsers.AsNoTracking().Where(x=>x.Name.ToLower().Contains(search.ToLower())).AsQueryable();
         }
       
         public User GetUserById(decimal userId)

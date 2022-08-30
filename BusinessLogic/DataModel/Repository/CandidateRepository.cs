@@ -77,9 +77,9 @@ namespace BusinessLogic.DataModel.Repository
 
         #region GET
 
-        public IQueryable<VCandidate> GetCandidates()
+        public IQueryable<VCandidate> GetCandidates(string search)
         {
-            return _context.VCandidate.AsQueryable();
+            return _context.VCandidate.AsNoTracking().Where(x => x.LastName.ToLower().Contains(search.ToLower())).AsQueryable();
         }
 
         public Candidate GetCandidateById(decimal id)
