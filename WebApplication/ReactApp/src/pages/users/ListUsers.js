@@ -10,10 +10,11 @@ import {
   TableContainer,
   Button,
   Pagination,
+  Input
 } from '@windmill/react-ui'
 import EditUser from './EditUser';
 
-import { EditIcon, TrashIcon } from '../../icons'
+import { EditIcon, TrashIcon, SearchIcon } from '../../icons'
 import { userUrl } from '../../utils/http/endpoints';
 import PageTitle from '../../components/Typography/PageTitle';
 import confirmation from '../../utils/generals/confirmation';
@@ -29,23 +30,24 @@ export default function ListUsers () {
   const [openModal, setModalOpen] = useState(false)
   const [id, setId] = useState(0)
 
-
-
+  const [search, setSearch] = useState(null)
+  
   useEffect(() => {   
     loadData();
+    console.log(search)
     // eslint-disable-next-line react-hooks/exhaustive-deps
 
-  }, [page, setPage, openModal])
+  }, [page, setPage, openModal, search])
 
   function loadData() {
     axios.get(userUrl, {
-      params: { page, recordsPerPage }
+      params: {page, recordsPerPage, search }
     })
       .then((response) => {
         const totalRecords =
           parseInt(response.headers['totalrecords'], 10);
         setDataTable(response.data);
-        setTotalResults(Math.ceil(totalRecords / recordsPerPage))
+        setTotalResults(Math.ceil(totalRecords))
         console.log(response)
         console.log(totalRecords)
         console.log(totalRecords)        
@@ -82,6 +84,17 @@ export default function ListUsers () {
   return (
     <>
     <PageTitle>Listado de Usuarios</PageTitle>
+    <div className="relative w-full max-w-xl mr-6 focus-within:text-purple-500">
+            <div className="absolute inset-y-0 flex items-center pl-2">
+              <SearchIcon className="w-4 h-4" aria-hidden="true" />
+            </div> 
+            <Input
+              className="pl-8 text-gray-700"
+              placeholder="Search for projects"
+              aria-label="Search"
+              onChange={(e) => setSearch(e.target.value.toLowerCase())}
+            /> 
+          </div>
     <TableContainer className="mb-8">
       <Table>
         <TableHeader>

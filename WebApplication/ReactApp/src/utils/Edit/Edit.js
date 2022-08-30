@@ -15,6 +15,7 @@ export default function Edit(props) {
     const [errors, setErrors] = useState([]);
     const [success, setSuccess] = useState();
     const history = useHistory();
+    console.log(entity)
 
     useEffect(() => {
         axios.get(`${props.url}/${id}`)

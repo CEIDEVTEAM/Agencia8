@@ -34,23 +34,24 @@ export default function NewCandidate() {
             <PageTitle>Registro de Aspirante</PageTitle>
             <ToastyErrors errors={errors}/>
             <CandidateForm model={{ name: '',
-                    lastName:'',
-                    personalAddress:'',
-                    personalDocument:'',
-                    birthDate:'',
-                    Gender:'',
-                    phone: '',
-                    condition: '',
-                    MaritalStatus:'',
-                    cName:'',
-                    cPhone:'',
-                    address:'',
-                    neighborhood:'',
-                    shopType:'', 
-                    cpName:'', 
-                    cpLastName:'', 
-                    cpPhone:'',
-                    bond:''       
+                        lastName:'',
+                        personalAddress:'',
+                        personalDocument:'',
+                        birthDate:'',
+                        gender:'',
+                        phone: '',
+                        condition: '',
+                        maritalStatus:'',
+                        cName:'',
+                        cPhone:'',
+                        address:'',
+                        neighborhood:'',
+                        shopType:'', 
+                        cpName:'', 
+                        cpLastName:'', 
+                        cpPhone:'',
+                        bond:'',
+                             
                     }}
                    
                 onSubmit={async (values, { resetForm }) => {

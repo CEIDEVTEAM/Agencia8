@@ -24,8 +24,8 @@ export default function CandidatePersonalData(props) {
             </div>
             <div className="grid md:grid-cols-3 md:gap-6">
                 <FormText campo="phone" label="Telefono" />
-                <FormText campo="MaritalStatus" label="Estado Civil" />
-                <FormSelect options={options} campo="Gender" label="Género" />
+                <FormText campo="maritalStatus" label="Estado Civil" />
+                <FormSelect options={options} campo="gender" label="Género" />
             </div>
         </div>
     )

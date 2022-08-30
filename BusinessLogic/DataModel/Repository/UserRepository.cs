@@ -74,7 +74,7 @@ namespace BusinessLogic.DataModel.Repository
         {
             return _context.Users.Where(x => x.ActiveFlag == "S").AsQueryable();
         }
-
+      
         public User GetUserById(decimal userId)
         {
             return _context.Users.FirstOrDefault(x => x.Id == userId);

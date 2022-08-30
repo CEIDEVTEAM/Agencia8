@@ -24,11 +24,11 @@ namespace BusinessLogic.DTOs.Candidate
         public decimal? idShopData { get; set; }
         public string? cName { get; set; }
         public string? cPhone { get; set; }
-        public string? cAddress { get; set; }
+        public string? address { get; set; }
         public string? neighborhood { get; set; }
         public string? shopType { get; set; }
-        public string? latitude { get; set; }
-        public string? longitude { get; set; }
+        public double? latitude { get; set; }
+        public double? longitude { get; set; }
         public string cpName { get; set; } = null!;
         public string cpLastName { get; set; } = null!;
         public string cpPhone { get; set; } = null!;

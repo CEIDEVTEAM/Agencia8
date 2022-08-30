@@ -33,9 +33,9 @@ export default function Map(props) {
                 {...coord}
             />)}
 
-            {props.colection.map(coord => <Mark key={coord.lat + coord.lng}
+            {/* {coords.map(coord => <Mark key={coord.lat + coord.lng}
                 {...coord}
-            />)}
+            />)} */}
             
         </MapContainer>
     )
