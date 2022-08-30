@@ -46,7 +46,7 @@ export default function CandidatesManagment () {
       const totalRecords =
         parseInt(response.headers['totalrecords'], 10);
       setDataTable(response.data);
-      setTotalResults(Math.ceil(totalRecords))
+      setTotalResults(totalRecords)
       console.log(response)       
       })
   }
@@ -84,12 +84,13 @@ export default function CandidatesManagment () {
   return (
     <>
     <PageTitle>Gestión de Aspirantes</PageTitle>
-    <div className="absolute inset-y-0 flex items-center pl-2">
+    <div className="relative w-full max-w-xl mr-6 focus-within:text-purple-500">
+        <div className="absolute inset-y-0 flex items-center pl-2">
           <SearchIcon className="w-4 h-4" aria-hidden="true" />
         </div>
         <Input
           className="pl-8 text-gray-700"
-          placeholder="Búsqueda por Apellido"
+          placeholder="Búsqueda por documento o nombre"
           aria-label="Búsqueda"
           onChange={(e) => {
             if (e.target.value === "") {
@@ -97,7 +98,8 @@ export default function CandidatesManagment () {
             } else { setSearch(e.target.value.toLowerCase()) }
           }}
         />
-        <br/>
+      </div>
+      <br />
     <TableContainer className="mb-8">
       <Table>
         <TableHeader>

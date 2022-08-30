@@ -22,7 +22,7 @@ import confirmation from '../../utils/generals/confirmation';
 
 export default function ListUsers() {
 
-  const recordsPerPage = 30
+  const recordsPerPage = 2
   const [totalResults, setTotalResults] = useState(0);
   const [page, setPage] = useState(1)
   const [dataTable, setDataTable] = useState([])
@@ -37,7 +37,7 @@ export default function ListUsers() {
     console.log(search)
     // eslint-disable-next-line react-hooks/exhaustive-deps
 
-  }, [page, setPage, openModal, search])
+  }, [page, openModal, search])
 
   function loadData() {
     axios.get(userUrl, {
@@ -45,9 +45,9 @@ export default function ListUsers() {
     })
       .then((response) => {
         const totalRecords =
-          parseInt(response.headers['totalrecords'], 10);
+          parseInt(response.headers['totalrecords']);
         setDataTable(response.data);
-        setTotalResults(Math.ceil(totalRecords))
+        setTotalResults((totalRecords))
         console.log(response)        
       })
   }
@@ -130,7 +130,7 @@ export default function ListUsers() {
             totalResults={totalResults}
             resultsPerPage={recordsPerPage}
             onChange={onPageChangeTable}
-          //label="Table navigation"
+            label="Table navigation"
           />
         </TableFooter>
       </TableContainer>
