@@ -1041,6 +1041,10 @@ namespace DataAccess.Context
                     .HasColumnType("numeric(10, 0)")
                     .HasColumnName("Patent_Namber");
 
+                entity.Property(e => e.Condition)
+                    .HasMaxLength(15)
+                    .IsUnicode(false);
+
                 entity.Property(e => e.PersonalAddress)
                     .HasMaxLength(100)
                     .IsUnicode(false)
@@ -1069,6 +1073,10 @@ namespace DataAccess.Context
                     .HasMaxLength(30)
                     .IsUnicode(false)
                     .HasColumnName("Shop_Type");
+
+                entity.Property(e => e.IdContactPerson)
+                    .HasColumnType("numeric(10, 0)")
+                    .HasColumnName("Id_Contact_Person");
             });
 
             modelBuilder.Entity<VUser>(entity =>

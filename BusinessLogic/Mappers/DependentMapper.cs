@@ -1,4 +1,6 @@
-﻿using BusinessLogic.DTOs.Dependent;
+﻿using BusinessLogic.DTOs.ContactPerson;
+using BusinessLogic.DTOs.Dependent;
+using BusinessLogic.DTOs.ShopData;
 using DataAccess.Models;
 using System;
 using System.Collections.Generic;
@@ -66,6 +68,40 @@ namespace BusinessLogic.Mappers
             };
         }
 
+        public DependentCreationFrontDTO MapToEditObject(VDependent entity)
+        {
+            if (entity == null)
+                throw new Exception("No hay entidad para mapear");
+
+            return new DependentCreationFrontDTO()
+            {
+                Id = entity.Id,
+                Name = entity.Name,
+                LastName = entity.LastName,
+                BirthDate = entity.BirthDate.ToString(),
+                PersonalDocument = entity.PersonalDocument,
+                Gender = entity.Gender,
+                MaritalStatus = entity.MaritalStatus,
+                PersonalAddress = entity.PersonalAddress,
+                Phone = entity.Phone,
+                Number = entity.Number,
+                PatentNamber = entity.PatentNamber,
+                Condition = entity.Condition,
+                IdShopData = entity.IdShopData,
+                NameShopData = entity.NameShopData,
+                PhoneShopData = entity.PhoneShopData,
+                Address = entity.Address,
+                Neighborhood = entity.Neighborhood,
+                ShopType = entity.ShopType,
+                Latitude = entity.Latitude == null ? null : double.Parse(entity.Latitude),
+                Longitude = entity.Longitude == null ? null : double.Parse(entity.Longitude),
+                NameContactPerson = entity.NameContactPerson,
+                LastNameContactPerson = entity.LastNameContactPerson,
+                PhoneContactPerson = entity.PhoneContactPerson,
+                Bond = entity.Bond
+            };
+        }
+
         public List<DependentDTO> MapToObject(List<VDependent> colEntity)
         {
             List<DependentDTO> col = new List<DependentDTO>();
@@ -93,6 +129,46 @@ namespace BusinessLogic.Mappers
 
             return entity;
         }
+        public DependentCreationDTO MapToObject(DependentCreationFrontDTO frontDTO)
+        {
+            if (frontDTO == null)
+                throw new Exception("No hay objeto/entidad para mapear");
 
+            return new DependentCreationDTO
+            {
+                Id = frontDTO.Id ?? 0,
+                Name = frontDTO.Name,
+                LastName = frontDTO.LastName,
+                BirthDate = DateTime.Parse(frontDTO.BirthDate),
+                PersonalDocument = frontDTO.PersonalDocument,
+                Gender = frontDTO.Gender,
+                MaritalStatus = frontDTO.MaritalStatus,
+                PersonalAddress = frontDTO.PersonalAddress,
+                Phone = frontDTO.Phone,
+                Condition = frontDTO.Condition,
+                Number = frontDTO.Number,
+
+                ContactPerson = new ContactPersonCreationDTO
+                {
+                    Id = frontDTO.IdContactPerson,
+                    Name = frontDTO.NameContactPerson,
+                    LastName = frontDTO.LastNameContactPerson,
+                    Phone = frontDTO.PhoneContactPerson,
+                    Bond = frontDTO.Bond
+                },
+
+                ShopData = string.IsNullOrEmpty(frontDTO.NameShopData) ? null : new ShopDataCreationDTO
+                {
+                    Id = frontDTO.IdShopData ?? 0,
+                    Name = frontDTO.NameShopData,
+                    Phone = frontDTO.PhoneShopData,
+                    Address = frontDTO.Address,
+                    Neighborhood = frontDTO.Neighborhood,
+                    ShopType = frontDTO.ShopType,
+                    Latitude = frontDTO.Latitude.ToString(),
+                    Longitude = frontDTO.Longitude.ToString(),
+                }
+            };
+        }
     }
 }

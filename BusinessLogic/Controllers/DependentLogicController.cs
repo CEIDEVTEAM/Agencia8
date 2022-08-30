@@ -1,6 +1,7 @@
 ﻿using BusinessLogic.DataModel;
 using BusinessLogic.DTOs.Dependent;
 using BusinessLogic.DTOs.Generals;
+using BusinessLogic.Mappers;
 using Microsoft.Extensions.Configuration;
 
 namespace BusinessLogic.Controllers
@@ -9,17 +10,21 @@ namespace BusinessLogic.Controllers
     {
         private IConfiguration _configuration;
         private string _application;
+        private DependentMapper _mapper;
 
         public DependentLogicController(IConfiguration configuration, string application)
         {
             this._configuration = configuration;
             this._application = application;
+            this._mapper = new DependentMapper();
         }
 
-        public async Task<GenericResponse> AddDependent(DependentCreationDTO dto, int userId)
+        public async Task<GenericResponse> AddDependent(DependentCreationFrontDTO frontDto, int userId)
         {
             List<string> errors = new List<string>();
             bool successful = false;
+
+            DependentCreationDTO dto = _mapper.MapToObject(frontDto);
 
             using (var uow = new UnitOfWork(_configuration, _application))
             {
@@ -62,10 +67,12 @@ namespace BusinessLogic.Controllers
 
         }
 
-        public async Task<GenericResponse> EditDependent(DependentCreationDTO dto, decimal userId)
+        public async Task<GenericResponse> EditDependent(DependentCreationFrontDTO frontDto, decimal userId)
         {
             List<string> errors = new List<string>();
             bool successful = false;
+
+            DependentCreationDTO dto = _mapper.MapToObject(frontDto);
 
             using (var uow = new UnitOfWork(_configuration, _application))
             {
@@ -81,11 +88,9 @@ namespace BusinessLogic.Controllers
 
                         if (dto.ShopData != null)
                         {
-                            //dto.ShopData.IdDependent = dto.IdDependent;  //VER SI ES NECESARIO
                             uow.ShopDataRepository.UpdateShopData(dto.ShopData, uow, userId);
                         }
 
-                        //dto.ContactPerson.IdDependent = dto.IdDependent; //VER SI ES NECESARIO
                         uow.ContactPersonRepository.UpdateContactPerson(dto.ContactPerson);
 
                         uow.SaveChanges();

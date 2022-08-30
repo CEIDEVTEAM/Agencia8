@@ -1,6 +1,5 @@
 ﻿using BusinessLogic.DTOs.Candidate;
 using BusinessLogic.DTOs.ContactPerson;
-using BusinessLogic.DTOs.Dependent;
 using BusinessLogic.DTOs.ShopData;
 using CommonSolution.Constants;
 using DataAccess.Models;
@@ -203,5 +202,6 @@ namespace BusinessLogic.Mappers
                 }
             };
         }
+        
     }
 }

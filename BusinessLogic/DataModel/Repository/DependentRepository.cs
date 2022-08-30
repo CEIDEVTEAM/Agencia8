@@ -59,6 +59,11 @@ namespace BusinessLogic.DataModel.Repository
             uow.LogRepository.LogDependent(entity, userId, CActions.edit);
         }
 
+        public VDependent GetDependentCompleteById(int id)
+        {
+            return _context.VDependent.FirstOrDefault(x => x.Id == id);
+        }
+
 
         #endregion
 

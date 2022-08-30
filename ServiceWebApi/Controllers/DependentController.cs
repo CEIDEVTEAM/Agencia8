@@ -40,20 +40,20 @@ namespace ServiceWebApi.Controllers
             }
         }
 
-        //[HttpGet("{id:int}")]
-        //public async Task<ActionResult<DependentCreationDTO>> Get(int id)
-        //{
-        //    using (var uow = new UnitOfWork(this._configuration, _application))
-        //    {
-        //        var queryable = uow.UserRepository.GetUserById(id);
+        [HttpGet("{id:int}")]
+        public async Task<ActionResult<DependentCreationFrontDTO>> Get(int id)
+        {
+            using (var uow = new UnitOfWork(this._configuration, _application))
+            {
+                var queryable = uow.DependentRepository.GetDependentCompleteById(id);
 
-        //        return _mapper.MapToObject(queryable);
-        //    }
-        //}
+                return _mapper.MapToEditObject(queryable);
+            }
+        }
 
 
         [HttpPost("addDependent")]
-        public async Task<ActionResult<GenericResponse>> AddDependent([FromBody] DependentCreationDTO dto)
+        public async Task<ActionResult<GenericResponse>> AddDependent([FromBody] DependentCreationFrontDTO dto)
         {
             try
             {
@@ -69,7 +69,7 @@ namespace ServiceWebApi.Controllers
         }
 
         [HttpPost("editDependent")]
-        public async Task<ActionResult<GenericResponse>> EditDependent([FromBody] DependentCreationDTO dto)
+        public async Task<ActionResult<GenericResponse>> EditDependent([FromBody] DependentCreationFrontDTO dto)
         {
             try
             {
