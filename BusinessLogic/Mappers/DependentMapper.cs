@@ -32,25 +32,47 @@ namespace BusinessLogic.Mappers
             };
         }
 
-        public DependentCreationDTO MapToObject(Dependent entity)
+        public DependentDTO MapToObject(VDependent entity)
         {
             if (entity == null)
                 throw new Exception("No hay entidad para mapear");
 
-            return new DependentCreationDTO()
+            return new DependentDTO()
             {
-                Number = entity.Number,
+                Id = entity.Id,
                 Name = entity.Name,
-                LastName = entity.Name,
+                LastName = entity.LastName,
                 BirthDate = entity.BirthDate,
                 PersonalDocument = entity.PersonalDocument,
                 Gender = entity.Gender,
                 MaritalStatus = entity.MaritalStatus,
                 PersonalAddress = entity.PersonalAddress,
                 Phone = entity.Phone,
-                Condition = entity.Condition,
-                PatentNamber = entity.PatentNamber
+                AddRow = entity.AddRow,
+                Number = entity.Number,
+                PatentNamber = entity.PatentNamber,
+                IdShopData = entity.IdShopData,
+                NameShopData = entity.NameShopData,
+                PhoneShopData = entity.PhoneShopData,
+                Address = entity.Address,
+                Neighborhood = entity.Neighborhood,
+                ShopType = entity.ShopType,
+                Latitude = entity.Latitude,
+                Longitude = entity.Longitude,
+                NameContactPerson = entity.NameContactPerson,
+                LastNameContactPerson = entity.LastNameContactPerson,
+                PhoneContactPerson = entity.PhoneContactPerson,
+                Bond = entity.Bond
             };
+        }
+
+        public List<DependentDTO> MapToObject(List<VDependent> colEntity)
+        {
+            List<DependentDTO> col = new List<DependentDTO>();
+
+            colEntity.ForEach(x => col.Add(MapToObject(x)));
+
+            return col;
         }
 
         public Dependent MapToEditEntity(DependentCreationDTO dto, Dependent entity)

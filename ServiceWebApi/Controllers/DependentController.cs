@@ -3,6 +3,7 @@ using BusinessLogic.Controllers;
 using BusinessLogic.DataModel;
 using BusinessLogic.DTOs.Dependent;
 using BusinessLogic.DTOs.Generals;
+using BusinessLogic.Mappers;
 using BusinessLogic.Utils;
 using DataAccess.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -19,12 +20,11 @@ namespace ServiceWebApi.Controllers
     {
         public const string _application = "DEPENDENT";
         private readonly IConfiguration _configuration;
-        private readonly IMapper _mapper;
+        private readonly DependentMapper _mapper;
 
         public DependentController(IConfiguration configuration)
         {
             this._configuration = configuration;
-            this._mapper = new Mapper(new MapperConfiguration(x => x.CreateMap<Dependent, DependentDTO>()));
         }
 
         [HttpGet("dependentList")]
@@ -36,10 +36,20 @@ namespace ServiceWebApi.Controllers
 
                 await HttpContext.InsertHeaderPaginationParams(queryable);
                 var dependents = await queryable.OrderBy(x => x.Name).Paginate(dto).ToListAsync();
-                return _mapper.Map<List<DependentDTO>>(dependents);
+                return _mapper.MapToObject(dependents);
             }
-
         }
+
+        //[HttpGet("{id:int}")]
+        //public async Task<ActionResult<DependentCreationDTO>> Get(int id)
+        //{
+        //    using (var uow = new UnitOfWork(this._configuration, _application))
+        //    {
+        //        var queryable = uow.UserRepository.GetUserById(id);
+
+        //        return _mapper.MapToObject(queryable);
+        //    }
+        //}
 
 
         [HttpPost("addDependent")]
