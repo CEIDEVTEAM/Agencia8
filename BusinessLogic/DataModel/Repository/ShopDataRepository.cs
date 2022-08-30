@@ -46,10 +46,7 @@ namespace BusinessLogic.DataModel.Repository
 
         public void UpdateShopData(ShopDataCreationDTO shopData, UnitOfWork uow, decimal userId)
         {
-            ShopData entity = this.GetShopDataByNumber(shopData.NumberDependent ?? -1);
-
-            if (entity == null)
-                entity = this.GetShopDataByIdCandidate(shopData.IdCandidate ?? -1);
+            ShopData entity = this.GetShopDataById(shopData.Id);
 
             entity = _mapper.MapToEditEntity(shopData, entity);
             entity.UpdRow = DateTime.Now;
@@ -65,7 +62,7 @@ namespace BusinessLogic.DataModel.Repository
 
         public void DeleteShopData(decimal number, UnitOfWork uow, decimal userId)
         {
-            ShopData entity = this.GetShopDataByNumber(number);
+            ShopData entity = this.GetShopDataById(number);
 
             _context.ShopData.Remove(entity);
             uow.LogRepository.LogShopData(entity, userId, CActions.delete);
@@ -85,7 +82,7 @@ namespace BusinessLogic.DataModel.Repository
         #region GET
 
 
-        public ShopData GetShopDataByNumber(decimal id)
+        public ShopData GetShopDataById(decimal id)
         {
             return _context.ShopData.FirstOrDefault(x => x.IdDependent == id);
         }

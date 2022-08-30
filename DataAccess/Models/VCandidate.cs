@@ -30,5 +30,7 @@ namespace DataAccess.Models
         public string LastNameContactPerson { get; set; } = null!;
         public string PhoneContactPerson { get; set; } = null!;
         public string Bond { get; set; } = null!;
+        public decimal? IdContactPerson { get; set; }
+
     }
 }

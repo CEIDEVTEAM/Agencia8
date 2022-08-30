@@ -34,5 +34,7 @@ namespace BusinessLogic.DTOs.Candidate
         public string cpLastName { get; set; } = null!;
         public string cpPhone { get; set; } = null!;
         public string bond { get; set; } = null!;
+        public decimal? idContactPerson { get; set; }
+
     }
 }

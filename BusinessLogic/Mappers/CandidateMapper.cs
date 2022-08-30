@@ -70,6 +70,7 @@ namespace BusinessLogic.Mappers
                 cpLastName = entity.LastNameContactPerson,
                 cpPhone = entity.PhoneContactPerson,
                 bond = entity.Bond,
+                idContactPerson = entity.IdContactPerson,
             };
         }
 
@@ -133,7 +134,7 @@ namespace BusinessLogic.Mappers
 
             return new CandidateCreationDTO
             {
-
+                Id = decimal.Parse(frontDTO.id),
                 Name = frontDTO.name,
                 LastName = frontDTO.lastName,
                 BirthDate = DateTime.Parse(frontDTO.birthDate),
@@ -147,14 +148,16 @@ namespace BusinessLogic.Mappers
 
                 ContactPerson = new ContactPersonCreationDTO
                 {
+                    Id = decimal.Parse(frontDTO.idContactPerson),
                     Name = frontDTO.cpName,
                     LastName = frontDTO.cpLastName,
                     Phone = frontDTO.cpPhone,
                     Bond = frontDTO.bond
                 },
+
                 ShopData = string.IsNullOrEmpty(frontDTO.cName) ? null : new ShopDataCreationDTO
                 {
-
+                    Id = decimal.Parse(frontDTO.idShopData),
                     Name = frontDTO.cName,
                     Phone = frontDTO.cPhone,
                     Address = frontDTO.address,
@@ -163,11 +166,7 @@ namespace BusinessLogic.Mappers
                     Latitude = frontDTO.latitude.ToString(),
                     Longitude = frontDTO.longitude.ToString(),
                 }
-
-
             };
-
         }
-
     }
 }

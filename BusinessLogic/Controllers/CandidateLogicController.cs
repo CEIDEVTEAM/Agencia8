@@ -88,13 +88,9 @@ namespace BusinessLogic.Controllers
 
                         if (dto.ShopData != null)
                         {
-                            dto.ShopData.IdCandidate = dto.Id;  //VER SI ES NECESARIO
                             uow.ShopDataRepository.UpdateShopData(dto.ShopData, uow, userId);
                         }
 
-                        //EDU
-                        //FALTA IMPLEMENTACION EN LA BASE
-                        //dto.ContactPerson.IdCandidate = dto.Id; 
                         uow.ContactPersonRepository.UpdateContactPerson(dto.ContactPerson);
 
                         uow.SaveChanges();

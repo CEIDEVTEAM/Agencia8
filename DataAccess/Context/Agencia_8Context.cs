@@ -955,6 +955,10 @@ namespace DataAccess.Context
                 entity.Property(e => e.Status)
                     .HasMaxLength(1)
                     .IsUnicode(false);
+
+                entity.Property(e => e.IdContactPerson)
+                    .HasColumnType("numeric(10, 0)")
+                    .HasColumnName("Id_Contact_Person");
             });
 
             modelBuilder.Entity<VDependent>(entity =>

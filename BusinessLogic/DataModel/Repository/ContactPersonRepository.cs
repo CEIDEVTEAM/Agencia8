@@ -45,7 +45,7 @@ namespace BusinessLogic.DataModel.Repository
 
         public void UpdateContactPerson(ContactPersonCreationDTO contactPerson)
         {
-            ContactPerson entity = this.GetContactPersonByNumber(contactPerson.Id);
+            ContactPerson entity = this.GetContactPersonById(contactPerson.Id);
             entity = _mapper.MapToEditEntity(contactPerson, entity);
 
             entity.UpdRow = DateTime.Now;
@@ -56,9 +56,9 @@ namespace BusinessLogic.DataModel.Repository
 
         #region DELETE
 
-        public void DeleteContactPerson(decimal number)
+        public void DeleteContactPerson(decimal id)
         {
-            ContactPerson entity = this.GetContactPersonByNumber(number);
+            ContactPerson entity = this.GetContactPersonById(id);
 
             _context.ContactPerson.Remove(entity);
         }
@@ -76,9 +76,9 @@ namespace BusinessLogic.DataModel.Repository
 
         #region GET
 
-        public ContactPerson GetContactPersonByNumber(decimal number)
+        public ContactPerson GetContactPersonById(decimal id)
         {
-            return _context.ContactPerson.FirstOrDefault(x => x.Id == number);
+            return _context.ContactPerson.FirstOrDefault(x => x.Id == id);
         }
 
         #endregion
