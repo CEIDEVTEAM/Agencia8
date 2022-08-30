@@ -46,13 +46,13 @@ namespace ServiceWebApi.Controllers
         }
 
         [HttpGet("{id:int}")]
-        public async Task<ActionResult<CandidateDTO>> Get(int id)
+        public async Task<ActionResult<CandidateCreationFrontDTO>> Get(int id)
         {
             using (var uow = new UnitOfWork(this._configuration, _application))
             {
                 var queryable = uow.CandidateRepository.GetCandidateCompleteDataById(id);
 
-                return _mapper.MapToObject(queryable);
+                return _mapper.MapToEditObject(queryable);
             }
         }
 

@@ -74,6 +74,40 @@ namespace BusinessLogic.Mappers
             };
         }
 
+        public CandidateCreationFrontDTO MapToEditObject(VCandidate entity)
+        {
+            if (entity == null)
+                throw new Exception("No hay entidad para mapear");
+
+            return new CandidateCreationFrontDTO()
+            {
+                id = entity.Id,
+                name = entity.Name,
+                lastName = entity.LastName,
+                birthDate = entity.BirthDate.ToString(),
+                personalDocument = entity.PersonalDocument,
+                Gender = entity.Gender,
+                MaritalStatus = entity.MaritalStatus,
+                personalAddress = entity.PersonalAddress,
+                phone = entity.Phone,
+                number = entity.Number,
+                condition = entity.Condition,
+                idShopData = entity.IdShopData,
+                cName = entity.NameShopData,
+                cPhone = entity.PhoneShopData,
+                address = entity.Address,
+                neighborhood = entity.Neighborhood,
+                shopType = entity.ShopType,
+                latitude = entity.Latitude == null ? null : double.Parse(entity.Latitude),
+                longitude = entity.Longitude == null ? null : double.Parse(entity.Longitude),
+                cpName = entity.NameContactPerson,
+                cpLastName = entity.LastNameContactPerson,
+                cpPhone = entity.PhoneContactPerson,
+                bond = entity.Bond,
+                idContactPerson = entity.IdContactPerson,
+            };
+        }
+
         public CandidateCreationDTO MapToObject(Candidate entity)
         {
             if (entity == null)
@@ -134,7 +168,7 @@ namespace BusinessLogic.Mappers
 
             return new CandidateCreationDTO
             {
-                Id = decimal.Parse(frontDTO.id),
+                Id = frontDTO.id ?? 0,
                 Name = frontDTO.name,
                 LastName = frontDTO.lastName,
                 BirthDate = DateTime.Parse(frontDTO.birthDate),
@@ -145,10 +179,11 @@ namespace BusinessLogic.Mappers
                 Phone = frontDTO.phone,
                 Condition = frontDTO.condition,
                 Status = CStatus.enrolled,
+                Number = frontDTO.number,
 
                 ContactPerson = new ContactPersonCreationDTO
                 {
-                    Id = decimal.Parse(frontDTO.idContactPerson),
+                    Id = frontDTO.idContactPerson ?? 0,
                     Name = frontDTO.cpName,
                     LastName = frontDTO.cpLastName,
                     Phone = frontDTO.cpPhone,
@@ -157,7 +192,7 @@ namespace BusinessLogic.Mappers
 
                 ShopData = string.IsNullOrEmpty(frontDTO.cName) ? null : new ShopDataCreationDTO
                 {
-                    Id = decimal.Parse(frontDTO.idShopData),
+                    Id = frontDTO.idShopData ?? 0,
                     Name = frontDTO.cName,
                     Phone = frontDTO.cPhone,
                     Address = frontDTO.address,
