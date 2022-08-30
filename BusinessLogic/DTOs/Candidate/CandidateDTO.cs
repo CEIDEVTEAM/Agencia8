@@ -21,10 +21,11 @@ namespace BusinessLogic.DTOs.Candidate
         public string status { get; set; } = null!;
         public DateTime? addRow { get; set; }
         public decimal? number { get; set; }
+        public string condition { get; set; } = null!;
         public decimal? idShopData { get; set; }
         public string? cName { get; set; }
         public string? cPhone { get; set; }
-        public string? cAddress { get; set; }
+        public string? address { get; set; }
         public string? neighborhood { get; set; }
         public string? shopType { get; set; }
         public string? latitude { get; set; }

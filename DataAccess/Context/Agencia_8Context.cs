@@ -919,6 +919,10 @@ namespace DataAccess.Context
 
                 entity.Property(e => e.Number).HasColumnType("numeric(10, 0)");
 
+                entity.Property(e => e.Condition)
+                    .HasMaxLength(15)
+                    .IsUnicode(false);
+
                 entity.Property(e => e.PersonalAddress)
                     .HasMaxLength(100)
                     .IsUnicode(false)

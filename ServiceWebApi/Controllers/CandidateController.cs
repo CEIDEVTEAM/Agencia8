@@ -54,7 +54,6 @@ namespace ServiceWebApi.Controllers
 
                 return _mapper.MapToObject(queryable);
             }
-
         }
 
         [HttpPost("addCandidate")]

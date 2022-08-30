@@ -15,6 +15,7 @@ namespace DataAccess.Models
         public string PersonalAddress { get; set; } = null!;
         public string Phone { get; set; } = null!;
         public string Status { get; set; } = null!;
+        public string Condition { get; set; } = null!;
         public DateTime? AddRow { get; set; }
         public decimal? Number { get; set; }
         public decimal? IdShopData { get; set; }
