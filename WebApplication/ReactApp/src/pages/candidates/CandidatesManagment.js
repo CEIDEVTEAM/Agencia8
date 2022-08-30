@@ -21,7 +21,7 @@ import EditCandidate from './EditCandidate';
 
 export default function CandidatesManagment () {
 
-  const recordsPerPage = 30
+  const recordsPerPage = 1
   const [totalResults, setTotalResults] = useState(0);
   const [page, setPage] = useState(1)
   const [dataTable, setDataTable] = useState([])
