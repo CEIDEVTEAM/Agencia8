@@ -1,14 +1,19 @@
-﻿using System;
+﻿using BusinessLogic.DTOs.ContactPerson;
+using BusinessLogic.DTOs.ShopData;
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace DataAccess.Models
+namespace BusinessLogic.DTOs.Dependent
 {
-    public partial class VDependent
+    public class DependentCreationFrontDTO
     {
-        public decimal Id { get; set; }
+        public decimal? Id { get; set; }
         public string Name { get; set; } = null!;
         public string LastName { get; set; } = null!;
-        public DateTime BirthDate { get; set; }
+        public string BirthDate { get; set; }
         public string PersonalDocument { get; set; } = null!;
         public string Gender { get; set; } = null!;
         public string MaritalStatus { get; set; } = null!;
@@ -17,21 +22,20 @@ namespace DataAccess.Models
         public DateTime? AddRow { get; set; }
         public decimal Number { get; set; }
         public decimal? PatentNamber { get; set; }
-        public string Condition { get; set; } = null!;
-
+        public string Condition { get; set; }
         public decimal? IdShopData { get; set; }
         public string? NameShopData { get; set; }
         public string? PhoneShopData { get; set; }
         public string? Address { get; set; }
         public string? Neighborhood { get; set; }
         public string? ShopType { get; set; }
-        public string? Latitude { get; set; }
-        public string? Longitude { get; set; }
-        public string NameContactPerson { get; set; } = null!;
-        public string LastNameContactPerson { get; set; } = null!;
-        public string PhoneContactPerson { get; set; } = null!;
-        public string Bond { get; set; } = null!;
-        public decimal? IdContactPerson { get; set; }
+        public double? Latitude { get; set; }
+        public double? Longitude { get; set; }
+        public string NameContactPerson { get; set; } 
+        public string LastNameContactPerson { get; set; } 
+        public string PhoneContactPerson { get; set; }
+        public string Bond { get; set; } 
+        public decimal IdContactPerson { get; set; }
 
     }
 }

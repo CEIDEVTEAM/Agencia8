@@ -39,6 +39,7 @@ namespace BusinessLogic.Mappers
                 Address = entity.Address,
                 Phone = entity.Phone,
                 IdRole = entity.IdRole,
+                Password = entity.Password,
             };
         }
 

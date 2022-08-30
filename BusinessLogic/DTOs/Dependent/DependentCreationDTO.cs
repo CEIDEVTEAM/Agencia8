@@ -10,6 +10,8 @@ namespace BusinessLogic.DTOs.Dependent
 {
     public class DependentCreationDTO
     {
+        public decimal Id { get; set; }
+
         public decimal Number { get; set; }
         public string Name { get; set; }
         public string LastName { get; set; }
