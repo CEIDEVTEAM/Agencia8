@@ -2,11 +2,10 @@ import React, { useEffect, useState } from "react";
 import FormText from '../../form-groups/FormText'
 import FormSelect from '../../form-groups/FormSelect'
 import FormDate from "../../form-groups/FormDate";
-import FormDatePicker from "../../form-groups/FormDatePicker";
 
 
 
-export default function CandidatePersonalData(props) {
+export default function DependentPersonalData(props) {
     const [options, setOptions] = useState([{ id: "M", name: "Masculino" }, { id: "F", name: "Femenino" }])
     const [optionsCond, setOptionsCond] = useState([{ id: "SubAgente", name: "SubAgente" }, { id: "Corredor", name: "Corredor" }])
 
@@ -18,7 +17,7 @@ export default function CandidatePersonalData(props) {
             </div>
             <FormText campo="personalAddress" label="Dirección Particular" />
             <div className="grid md:grid-cols-3 md:gap-6">
-                <FormSelect disabled={props.isEdit} options={optionsCond} campo="condition" label="Condición" />
+                <FormSelect disabled = {props.isEdit} options={optionsCond} campo="condition" label="Condición" />
                 <FormText campo="personalDocument" label="Cédula" />
                 <FormDate campo="birthDate" label="Fecha de Nacimiento" />
             </div>

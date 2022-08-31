@@ -98,7 +98,7 @@ export default function ListUsers() {
         />
       </div>
       <br />
-      <TableContainer className="mb-8">
+      <TableContainer className="mb-6">
         <Table>
           <TableHeader>
             <tr>

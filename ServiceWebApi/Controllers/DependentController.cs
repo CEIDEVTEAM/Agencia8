@@ -27,7 +27,7 @@ namespace ServiceWebApi.Controllers
             this._configuration = configuration;
         }
 
-        [HttpGet("dependentList")]
+        [HttpGet]
         public async Task<ActionResult<List<DependentDTO>>> DependentList([FromQuery] PaginationDTO dto)
         {
             using (var uow = new UnitOfWork(this._configuration, _application))

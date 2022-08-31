@@ -3,8 +3,8 @@ import React, { useEffect, useState } from "react";
 import FormText from '../../form-groups/FormText'
 
 
-export default function CandidateContactPerson(props) {
-    
+export default function DependentContactPerson(props) {
+         
     return (
         <div >
             <div className="grid md:grid-cols-2 md:gap-6">

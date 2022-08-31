@@ -13,3 +13,5 @@ export const urlNewUser = `${apiURL}/user/AddUser`;
 
 export const candidateUrl = `${apiURL}/candidate`;
 export const urlNewcandidate = `${apiURL}/candidate/addCandidate`;
+
+export const dependentUrl = `${apiURL}/dependent`;

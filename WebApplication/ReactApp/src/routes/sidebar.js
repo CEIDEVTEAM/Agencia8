@@ -45,44 +45,11 @@ const routes = [
     resourse: "modals"
   },
   {
-    path: '/app/tables',
-    icon: 'TablesIcon',
-    name: 'Tables',
-    resourse: "tables"
-  },
-  {
+    path: '/app/dependent/ListDependent',
     icon: 'FortuneWheelIcon',
     name: 'Sub Agentes',
-    resourse: "subagentes",
-    routes: [
-      // submenu
-      {
-        path: '/login',
-        name: 'Login',
-        resourse: "login"
-      },
-      {
-        path: '/create-account',
-        name: 'Create account',
-        resourse: "create-account"
-      },
-      {
-        path: '/forgot-password',
-        name: 'Forgot password',
-        resourse: "forgot-password"
-      },
-      {
-        path: '/app/404',
-        name: '404',
-        resourse: "404"
-      },
-      {
-        path: '/app/blank',
-        name: 'Blank',
-        resourse: "blank"
-      },
-    ],
-  },
+    resourse: "subagentes"
+  },  
   {
     icon: 'FormsIcon',
     name: 'Aspirantes',
