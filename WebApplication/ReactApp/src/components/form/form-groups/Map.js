@@ -19,7 +19,7 @@ export default function Map(props) {
     return (
         <MapContainer
             center={[-34.910051, -54.953425]} zoom={14}
-            style={{ height: props.height }}
+            style={{ height: "250px" }}
         >
             <TileLayer attribution="Agencia 8"
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"

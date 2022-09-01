@@ -3,6 +3,7 @@ using BusinessLogic.Mappers;
 using CommonSolution.Constants;
 using DataAccess.Context;
 using DataAccess.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace BusinessLogic.DataModel.Repository
 {
@@ -77,9 +78,9 @@ namespace BusinessLogic.DataModel.Repository
 
         #region GET
 
-        public IQueryable<VDependent> GetDependents()
+        public IQueryable<VDependent> GetDependents(string search)
         {
-            return _context.VDependent.AsQueryable();
+            return _context.VDependent.AsNoTracking().Where(x => x.LastName.ToLower().Contains(search.ToLower()) || x.Number.ToString().Contains(search.ToLower())).AsQueryable();
         }
 
         public Dependent GetDependentByNumber(decimal number)

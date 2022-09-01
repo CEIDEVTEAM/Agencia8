@@ -48,6 +48,7 @@ namespace BusinessLogic.Mappers
                 PersonalDocument = entity.PersonalDocument,
                 Gender = entity.Gender,
                 MaritalStatus = entity.MaritalStatus,
+                Condition = entity.Condition,
                 PersonalAddress = entity.PersonalAddress,
                 Phone = entity.Phone,
                 AddRow = entity.AddRow,
@@ -98,7 +99,8 @@ namespace BusinessLogic.Mappers
                 NameContactPerson = entity.NameContactPerson,
                 LastNameContactPerson = entity.LastNameContactPerson,
                 PhoneContactPerson = entity.PhoneContactPerson,
-                Bond = entity.Bond
+                Bond = entity.Bond,
+                IdContactPerson = (decimal)entity.IdContactPerson
             };
         }
 

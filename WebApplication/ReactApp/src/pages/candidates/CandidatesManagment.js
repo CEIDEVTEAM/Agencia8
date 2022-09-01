@@ -22,7 +22,7 @@ import EditCandidate from './EditCandidate';
 
 export default function CandidatesManagment () {
 
-  const recordsPerPage = 1
+  const recordsPerPage = 30
   const [totalResults, setTotalResults] = useState(0);
   const [page, setPage] = useState(1)
   const [dataTable, setDataTable] = useState([])
@@ -90,7 +90,7 @@ export default function CandidatesManagment () {
         </div>
         <Input
           className="pl-8 text-gray-700"
-          placeholder="Búsqueda por documento o nombre"
+          placeholder="Búsqueda por documento o apellido"
           aria-label="Búsqueda"
           onChange={(e) => {
             if (e.target.value === "") {

@@ -33,8 +33,7 @@ export default function CandidateForm(props) {
                 <WizardStep
                     onSubmit={(values) => {
                         console.log('Step1 onSubmit')
-                        setconditionState(values["condition"])
-                        console.log("stado" + conditionState)
+                        setconditionState(values["condition"])                        
                     }}
                     validationSchema={Yup.object({
                         name: Yup.string().required('Campo Requerido').max(30, 'La longitud máxima es de 30 caracteres'),
@@ -49,7 +48,7 @@ export default function CandidateForm(props) {
                     })}
                 >
                     <br />
-                    <CandidatePersonalData />
+                    <CandidatePersonalData isEdit={props.isEdit}/>
                     <br />
                 </WizardStep>
                 <WizardStep

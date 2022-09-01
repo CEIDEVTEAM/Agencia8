@@ -39,7 +39,7 @@ namespace ServiceWebApi.Controllers
                 var queryable = uow.CandidateRepository.GetCandidates(dto.Search);
 
                 await HttpContext.InsertHeaderPaginationParams(queryable);
-                var candidates = await queryable.OrderBy(x => x.Name).Paginate(dto).ToListAsync();
+                var candidates = await queryable.OrderByDescending(x => x.AddRow).Paginate(dto).ToListAsync();
                 return _mapper.MapToObject(candidates);
             }
 

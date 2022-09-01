@@ -22,7 +22,7 @@ import confirmation from '../../utils/generals/confirmation';
 
 export default function ListUsers() {
 
-  const recordsPerPage = 2
+  const recordsPerPage = 10
   const [totalResults, setTotalResults] = useState(0);
   const [page, setPage] = useState(1)
   const [dataTable, setDataTable] = useState([])

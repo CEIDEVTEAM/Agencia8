@@ -49,7 +49,7 @@ export default function DependentForm(props) {
                     })}
                 >
                     <br />
-                    <DependentPersonalData />
+                    <DependentPersonalData isEdit={props.isEdit}/>
                     <br />
                 </WizardStep>
                 <WizardStep

@@ -22,7 +22,7 @@ import EditDependent from './EditDependent';
 
 export default function ListDependent () {
 
-  const recordsPerPage = 1
+  const recordsPerPage = 30
   const [totalResults, setTotalResults] = useState(0);
   const [page, setPage] = useState(1)
   const [dataTable, setDataTable] = useState([])
@@ -75,22 +75,22 @@ export default function ListDependent () {
   }
 
 
-  const labels = ["Documento","Nombres","Apellidos",
+  const labels = ["Numero","Documento","Nombres","Apellidos",
   "Condición","Dirección","Teléfonos","Teléfonos comercio",
   "Dirección Personal","Inscripción"]
-  const columns = ["personalDocument","name","lastName",
-  "condition","address","phone","cPhone","personalAddress","addRow"]
+  const columns = ["number","personalDocument","name","lastName",
+  "condition","address","phone","phoneShopData","personalAddress","addRow"]
 
   return (
     <>
-    <PageTitle>Gestión de Aspirantes</PageTitle>
+    <PageTitle>Sub Agentes</PageTitle>
     <div className="relative w-full max-w-xl mr-6 focus-within:text-purple-500">
         <div className="absolute inset-y-0 flex items-center pl-2">
           <SearchIcon className="w-4 h-4" aria-hidden="true" />
         </div>
         <Input
           className="pl-8 text-gray-700"
-          placeholder="Búsqueda por documento o nombre"
+          placeholder="Búsqueda por documento o número"
           aria-label="Búsqueda"
           onChange={(e) => {
             if (e.target.value === "") {

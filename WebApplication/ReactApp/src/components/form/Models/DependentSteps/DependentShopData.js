@@ -23,10 +23,10 @@ export default function DependentShopData(props) {
         <div >
             <FormText campo="address" label="Dirección del comercio" />
             <div className="grid md:grid-cols-2 md:gap-6">
-                <FormText campo="cName" label="Nombre del Comercio" />
+                <FormText campo="nameShopData" label="Nombre del Comercio" />
                 <FormSelect options={options} campo="neighborhood" label="Barrio" />
                 <FormText campo="shopType" label="Tipo de Comercio" />
-                <FormText campo="cPhone" label="Telefono de comercio" />
+                <FormText campo="phoneShopData" label="Telefono de comercio" />
             </div>
             <br />
             <div className="grid md:grid-cols-1 md:gap-6">

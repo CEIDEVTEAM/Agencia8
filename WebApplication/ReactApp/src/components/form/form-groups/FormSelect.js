@@ -8,7 +8,7 @@ const FormSelect = (props) => {
     <Label className="mt-4">
           {props.label ? <label htmlFor={props.campo}>{props.label}</label> : null}
           <Field as="select" name={props.campo} className={props.className}
-            placeholder={props.placeholder} type={props.type}>
+            disabled={props.disabled} placeholder={props.placeholder} type={props.type}>
                 <option value="0">--Seleccione--</option>
                 {props.options.map(op => <option key={op.id}
                 value={op.id}>{op.name}</option>)}

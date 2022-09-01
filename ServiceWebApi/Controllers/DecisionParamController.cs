@@ -28,7 +28,7 @@ namespace ServiceWebApi.Controllers
             this._mapper = new Mapper(new MapperConfiguration(x => x.CreateMap<DecisionParam, DecisionParamDTO>()));
         }
 
-        [HttpGet("decisionParam")]
+        [HttpGet]
         public async Task<ActionResult<List<DecisionParamDTO>>> DecisionParamList([FromQuery] PaginationDTO dto)
         {
             using (var uow = new UnitOfWork(this._configuration, _application))

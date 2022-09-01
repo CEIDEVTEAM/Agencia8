@@ -122,16 +122,13 @@ function Header() {
                 aria-hidden="true"
               />
             </button>
+            
             <Dropdown
               align="right"
               isOpen={isProfileMenuOpen}
               onClose={() => setIsProfileMenuOpen(false)}
             >
               <span>Hola, {obtenerNombreUsuario()}</span>
-              <DropdownItem tag="a" href="#">
-                <OutlinePersonIcon className="w-4 h-4 mr-3" aria-hidden="true" />
-                <span>Perfil</span>
-              </DropdownItem>
               <DropdownItem tag="a" href="#">
                 <OutlineCogIcon className="w-4 h-4 mr-3" aria-hidden="true" />
                 <span>Configuración</span>

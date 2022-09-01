@@ -25,6 +25,7 @@ namespace ServiceWebApi.Controllers
         public DependentController(IConfiguration configuration)
         {
             this._configuration = configuration;
+            this._mapper = new DependentMapper();
         }
 
         [HttpGet]
@@ -32,10 +33,10 @@ namespace ServiceWebApi.Controllers
         {
             using (var uow = new UnitOfWork(this._configuration, _application))
             {
-                var queryable = uow.DependentRepository.GetDependents();
+                var queryable = uow.DependentRepository.GetDependents(dto.Search);
 
                 await HttpContext.InsertHeaderPaginationParams(queryable);
-                var dependents = await queryable.OrderBy(x => x.Name).Paginate(dto).ToListAsync();
+                var dependents = await queryable.OrderBy(x => x.Number).Paginate(dto).ToListAsync();
                 return _mapper.MapToObject(dependents);
             }
         }
@@ -68,7 +69,7 @@ namespace ServiceWebApi.Controllers
             }
         }
 
-        [HttpPost("editDependent")]
+        [HttpPut("{id:int}")]
         public async Task<ActionResult<GenericResponse>> EditDependent([FromBody] DependentCreationFrontDTO dto)
         {
             try
