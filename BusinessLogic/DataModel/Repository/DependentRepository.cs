@@ -1,4 +1,5 @@
-﻿using BusinessLogic.DTOs.Dependent;
+﻿using AutoMapper.Execution;
+using BusinessLogic.DTOs.Dependent;
 using BusinessLogic.Mappers;
 using CommonSolution.Constants;
 using DataAccess.Context;
@@ -24,10 +25,18 @@ namespace BusinessLogic.DataModel.Repository
             Dependent entity = _mapper.MapToEntity(dto);
             entity.AddRow = DateTime.Now;
 
-            _context.Dependent.AddAsync(entity);
+            _context.Dependent.Add(entity);
             uow.LogRepository.LogDependent(entity, userId, CActions.add);
 
             return entity.Id;
+        }
+
+        public void AddDependentFact(DependentFactCreationFrontDTO dto)
+        {
+            DependentFact entity = _mapper.MapToEntity(dto);
+
+            entity.AddRow = DateTime.Now;
+            _context.DependentFact.Add(entity);
         }
 
         #endregion
@@ -36,7 +45,7 @@ namespace BusinessLogic.DataModel.Repository
 
         public void UpdateDependent(DependentCreationDTO dependent, UnitOfWork uow, decimal userId)
         {
-            Dependent entity = this.GetDependentByNumber(dependent.Number);
+            Dependent entity = _context.Dependent.FirstOrDefault(x => x.Id == dependent.Id);
 
             entity = this._mapper.MapToEditEntity(dependent, entity);
             entity.UpdRow = DateTime.Now;
@@ -51,19 +60,16 @@ namespace BusinessLogic.DataModel.Repository
 
         #region DELETE
 
-        public void DeleteDependent(decimal number, UnitOfWork uow, decimal userId)
+        public void DeleteDependent(decimal id, UnitOfWork uow, decimal userId)
         {
-            Dependent entity = GetDependentByNumber(number);
+            Dependent entity = _context.Dependent.FirstOrDefault(x => x.Id == id);
 
-            _context.Dependent.Remove(entity);
-            uow.LogRepository.LogDependent(entity, userId, CActions.edit);
+            entity.ActiveFlag = "N";
+            entity.UpdRow = DateTime.Now;
+            _context.Dependent.Update(entity);
+
+            uow.LogRepository.LogDependent(entity, userId, CActions.delete);
         }
-
-        public VDependent GetDependentCompleteById(int id)
-        {
-            return _context.VDependent.FirstOrDefault(x => x.Id == id);
-        }
-
 
         #endregion
 
@@ -73,18 +79,23 @@ namespace BusinessLogic.DataModel.Repository
             return _context.Dependent.Any(x => x.Number == number);
         }
 
+        public bool ExistDependentById(decimal id)
+        {
+            return _context.Dependent.Any(x => x.Id == id);
+        }
+
         #endregion
 
         #region GET
+        public DependentCreationFrontDTO GetDependentCompleteById(int id)
+        {
+            var x = _context.VDependent.FirstOrDefault(x => x.Id == id);
+            return _mapper.MapToEditObject(x);
+        }
 
         public IQueryable<VDependent> GetDependents()
         {
             return _context.VDependent.AsQueryable();
-        }
-
-        public Dependent GetDependentByNumber(decimal number)
-        {
-            return _context.Dependent.FirstOrDefault(x => x.Number == number);
         }
 
         #endregion

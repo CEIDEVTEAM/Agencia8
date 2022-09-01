@@ -34,6 +34,20 @@ namespace BusinessLogic.Mappers
             };
         }
 
+        public DependentFact MapToEntity(DependentFactCreationFrontDTO dto)
+        {
+            if (dto == null)
+                throw new Exception("No hay objeto para mapear");
+
+            return new DependentFact()
+            {
+                IdDependent = dto.IdDependent,
+                FactType = dto.FactType,
+                Description = dto.Description,
+                UpdUserId = dto.UpdUserId
+            };
+        }
+
         public DependentDTO MapToObject(VDependent entity)
         {
             if (entity == null)

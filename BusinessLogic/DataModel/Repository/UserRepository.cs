@@ -1,12 +1,14 @@
 ﻿using AutoMapper;
 using BusinessLogic.DTOs.Generals;
 using BusinessLogic.DTOs.User;
+using BusinessLogic.Mappers;
 using BusinessLogic.Utils;
 using DataAccess.Context;
 using DataAccess.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,12 +20,12 @@ namespace BusinessLogic.DataModel.Repository
     public class UserRepository
     {
         private readonly Agencia_8Context _context;
-        private readonly IMapper _mapper;
+        private readonly UserMapper _mapper;
 
         public UserRepository(Agencia_8Context context)
         {
             this._context = context;
-            this._mapper = new Mapper(new MapperConfiguration(x => x.CreateMap<User, UserDTO>()));
+            this._mapper = new UserMapper();
         }
 
         public bool ValidateCredentials(UserCredentials credentials)
@@ -34,12 +36,12 @@ namespace BusinessLogic.DataModel.Repository
         public UserDTO GetUserByUserName(string userName)
         {
             var x = _context.Users.FirstOrDefault(x => x.UserName == userName);
-            return _mapper.Map<UserDTO>(x);
+            return _mapper.MapToObject(x);
         }
 
         public UserDTO GetUserWhitResourcesByUserName(string userName)
         {
-            UserDTO user = _mapper.Map<UserDTO>(_context.Users.FirstOrDefault(x => x.UserName == userName));
+            UserDTO user = _mapper.MapToObject(_context.Users.FirstOrDefault(x => x.UserName == userName));
 
             if (user != null && user.IdRole != null)
             {
@@ -50,10 +52,13 @@ namespace BusinessLogic.DataModel.Repository
             return user;
         }      
 
-        public async void AddUser(User user)
+        public async void AddUser(UserCreationDTO obj)
         {
-            user.AddRow = DateTime.Now;
-            await _context.Users.AddAsync(user);
+            User entity = _mapper.MapToEntity(obj);
+
+            entity.ActiveFlag = "S";
+            entity.AddRow = DateTime.Now;
+            await _context.Users.AddAsync(entity);
         }
 
         public List<string> GetResourcesByRole(decimal roleId)
@@ -75,9 +80,10 @@ namespace BusinessLogic.DataModel.Repository
             return _context.VUsers.AsNoTracking().Where(x=>x.Name.ToLower().Contains(search.ToLower())).AsQueryable();
         }
       
-        public User GetUserById(decimal userId)
+        public UserCreationDTO GetUserById(decimal userId)
         {
-            return _context.Users.FirstOrDefault(x => x.Id == userId);
+           var x = _context.Users.FirstOrDefault(x => x.Id == userId);
+            return _mapper.MapToEditObject(x);
         }
 
         public bool ExistUsuarioByUserName(string userName)
@@ -94,10 +100,22 @@ namespace BusinessLogic.DataModel.Repository
             return _context.Role.Any(x => x.Id == roleId);
         }
 
-        public void UpdateUser(User user)
+        public void UpdateUser(UserCreationDTO dto)
         {
-            user.UpdRow = DateTime.Now;
-            _context.Users.Update(user);
+            User entity = _context.Users.FirstOrDefault(x => x.Id == dto.Id);
+            entity = this._mapper.MapToEditEntity(dto, entity);
+
+            entity.UpdRow = DateTime.Now;
+            _context.Users.Update(entity);
+        }
+
+        public void DeleteUser(decimal userId)
+        {
+            User entity = _context.Users.FirstOrDefault(x => x.Id == userId);
+
+            entity.ActiveFlag = "N";
+            entity.UpdRow = DateTime.Now;
+            _context.Users.Update(entity);
         }
     }
 }

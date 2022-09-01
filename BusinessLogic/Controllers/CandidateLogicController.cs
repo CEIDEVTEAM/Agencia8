@@ -2,6 +2,7 @@
 using BusinessLogic.DTOs.Candidate;
 using BusinessLogic.DTOs.Generals;
 using BusinessLogic.Mappers;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 
 namespace BusinessLogic.Controllers
@@ -19,7 +20,7 @@ namespace BusinessLogic.Controllers
             this._mapper = new CandidateMapper();
         }
 
-        public async Task<GenericResponse> AddCandidate(CandidateCreationFrontDTO frontDto, int userId)
+        public async Task<GenericResponse> AddCandidate(CandidateCreationFrontDTO frontDto, string userName)
         {
             List<string> errors = new List<string>();
             bool successful = false;
@@ -29,6 +30,8 @@ namespace BusinessLogic.Controllers
             using (var uow = new UnitOfWork(_configuration, _application))
             {
                 uow.BeginTransaction();
+
+                decimal userId = uow.UserRepository.GetUserByUserName(userName).Id;
 
                 try
                 {
@@ -67,7 +70,7 @@ namespace BusinessLogic.Controllers
 
         }
 
-        public async Task<GenericResponse> EditCandidate(CandidateCreationFrontDTO frontDto, decimal userId)
+        public async Task<GenericResponse> EditCandidate(CandidateCreationFrontDTO frontDto, string userName)
         {
             List<string> errors = new List<string>();
             bool successful = false;
@@ -77,6 +80,8 @@ namespace BusinessLogic.Controllers
             using (var uow = new UnitOfWork(_configuration, _application))
             {
                 uow.BeginTransaction();
+
+                decimal userId = uow.UserRepository.GetUserByUserName(userName).Id;
 
                 try
                 {
@@ -111,6 +116,14 @@ namespace BusinessLogic.Controllers
                 Successful = successful
             };
 
+        }
+
+        public CandidateCreationFrontDTO GetUserById(int id)
+        {
+            using (var uow = new UnitOfWork(_configuration, _application))
+            {
+                return uow.CandidateRepository.GetCandidateCompleteDataById(id);
+            }
         }
 
         #region VALIDATIONS

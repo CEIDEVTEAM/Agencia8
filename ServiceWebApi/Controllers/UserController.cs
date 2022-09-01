@@ -35,29 +35,34 @@ namespace ServiceWebApi.Controllers
         [HttpGet()]
         public async Task<ActionResult<List<UserDTO>>> Get([FromQuery] PaginationDTO dto)
         {
-            using (var uow = new UnitOfWork(this._configuration, _application))
+            try
             {
-                var queryable = uow.UserRepository.GetUsers(dto.Search);
-                var value = HttpContext.User.Claims.FirstOrDefault(x => x.Type == "userName").Value;
-                UserDTO userDto = uow.UserRepository.GetUserByUserName(value);
-                
-                await HttpContext.InsertHeaderPaginationParams(queryable);
-                var users = await queryable.OrderBy(x => x.Name).Paginate(dto).ToListAsync();
-                List<UserDTO> resp = _mapper.MapToObject(users);
+                using (var uow = new UnitOfWork(this._configuration, _application))
+                {
+                    var queryable = uow.UserRepository.GetUsers(dto.Search);
+                    await HttpContext.InsertHeaderPaginationParams(queryable);
+                    var users = await queryable.OrderBy(x => x.Name).Paginate(dto).ToListAsync();
 
-                return resp;
+                    return _mapper.MapToObject(users);
+                }
             }
-
+            catch (Exception ex)
+            {
+                return BadRequest("No es posible comunicarse con el proveedor.");
+            }
         }
 
         [HttpGet("{id:int}")]
         public async Task<ActionResult<UserCreationDTO>> Get(int id)
         {
-            using (var uow = new UnitOfWork(this._configuration, _application))
+            try
             {
-                var queryable = uow.UserRepository.GetUserById(id);
-
-                return _mapper.MapToObject(queryable);
+                UserLogicController lg = new UserLogicController(_configuration, _application);
+                return lg.GetUserById(id);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("No es posible comunicarse con el proveedor.");
             }
         }
 

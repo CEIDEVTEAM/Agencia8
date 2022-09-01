@@ -14,45 +14,51 @@ using System.Text;
 namespace ServiceWebApi.Controllers
 {
     [Route("api/candidate")]
-    [ApiController]    
+    [ApiController]
     //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = "isAdmin")]
     public class CandidateController : ControllerBase
     {
         public const string _application = "CANDIDATE";
         private readonly IConfiguration _configuration;
-        //private readonly IMapper _mapper;
         private readonly CandidateMapper _mapper;
 
         public CandidateController(IConfiguration configuration)
         {
             this._configuration = configuration;
-            //this._mapper = new Mapper(new MapperConfiguration(x => x.CreateMap<Candidate, CandidateDTO>()));
             this._mapper = new CandidateMapper();
-
         }
 
         [HttpGet]
         public async Task<ActionResult<List<CandidateDTO>>> CandidateList([FromQuery] PaginationDTO dto)
         {
-            using (var uow = new UnitOfWork(this._configuration, _application))
+            try
             {
-                var queryable = uow.CandidateRepository.GetCandidates(dto.Search);
+                using (var uow = new UnitOfWork(this._configuration, _application))
+                {
+                    var queryable = uow.CandidateRepository.GetCandidates(dto.Search);
 
-                await HttpContext.InsertHeaderPaginationParams(queryable);
-                var candidates = await queryable.OrderBy(x => x.Name).Paginate(dto).ToListAsync();
-                return _mapper.MapToObject(candidates);
+                    await HttpContext.InsertHeaderPaginationParams(queryable);
+                    var candidates = await queryable.OrderBy(x => x.Name).Paginate(dto).ToListAsync();
+                    return _mapper.MapToObject(candidates);
+                }
             }
-
+            catch (Exception ex)
+            {
+                return BadRequest("No es posible comunicarse con el proveedor.");
+            }
         }
 
         [HttpGet("{id:int}")]
         public async Task<ActionResult<CandidateCreationFrontDTO>> Get(int id)
         {
-            using (var uow = new UnitOfWork(this._configuration, _application))
+            try
             {
-                var queryable = uow.CandidateRepository.GetCandidateCompleteDataById(id);
-
-                return _mapper.MapToEditObject(queryable);
+                CandidateLogicController lg = new CandidateLogicController(_configuration, _application);
+                return lg.GetUserById(id);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("No es posible comunicarse con el proveedor.");
             }
         }
 
@@ -62,9 +68,9 @@ namespace ServiceWebApi.Controllers
             try
             {
                 CandidateLogicController lg = new CandidateLogicController(_configuration, _application);
-                //EDU
-                //FALTA OBTENER EL ID DEL USUARIO
-                return await lg.AddCandidate(dto, 1);
+                var userName = HttpContext.User.Claims.FirstOrDefault(x => x.Type == "userName").Value;
+
+                return await lg.AddCandidate(dto, userName);
             }
             catch (Exception ex)
             {
@@ -78,9 +84,9 @@ namespace ServiceWebApi.Controllers
             try
             {
                 CandidateLogicController lg = new CandidateLogicController(_configuration, _application);
-                //EDU
-                //FALTA OBTENER EL ID DEL USUARIO
-                return await lg.EditCandidate(dto, 1);
+                var userName = HttpContext.User.Claims.FirstOrDefault(x => x.Type == "userName").Value;
+
+                return await lg.EditCandidate(dto, userName);
             }
             catch (Exception ex)
             {

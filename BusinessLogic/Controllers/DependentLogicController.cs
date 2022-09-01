@@ -2,6 +2,7 @@
 using BusinessLogic.DTOs.Dependent;
 using BusinessLogic.DTOs.Generals;
 using BusinessLogic.Mappers;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 
 namespace BusinessLogic.Controllers
@@ -19,7 +20,7 @@ namespace BusinessLogic.Controllers
             this._mapper = new DependentMapper();
         }
 
-        public async Task<GenericResponse> AddDependent(DependentCreationFrontDTO frontDto, int userId)
+        public async Task<GenericResponse> AddDependent(DependentCreationFrontDTO frontDto, string userName)
         {
             List<string> errors = new List<string>();
             bool successful = false;
@@ -29,6 +30,7 @@ namespace BusinessLogic.Controllers
             using (var uow = new UnitOfWork(_configuration, _application))
             {
                 uow.BeginTransaction();
+                decimal userId = uow.UserRepository.GetUserByUserName(userName).Id;
 
                 try
                 {
@@ -67,7 +69,7 @@ namespace BusinessLogic.Controllers
 
         }
 
-        public async Task<GenericResponse> EditDependent(DependentCreationFrontDTO frontDto, decimal userId)
+        public async Task<GenericResponse> EditDependent(DependentCreationFrontDTO frontDto, string userName)
         {
             List<string> errors = new List<string>();
             bool successful = false;
@@ -77,6 +79,7 @@ namespace BusinessLogic.Controllers
             using (var uow = new UnitOfWork(_configuration, _application))
             {
                 uow.BeginTransaction();
+                decimal userId = uow.UserRepository.GetUserByUserName(userName).Id;
 
                 try
                 {
@@ -113,7 +116,7 @@ namespace BusinessLogic.Controllers
 
         }
 
-        public async Task<GenericResponse> DeleteDependent(decimal number, decimal userId)
+        public async Task<GenericResponse> DeleteDependent(decimal dependentId, DependentFactCreationFrontDTO dto, string userName)
         {
             List<string> errors = new List<string>();
             bool successful = false;
@@ -121,18 +124,17 @@ namespace BusinessLogic.Controllers
             using (var uow = new UnitOfWork(_configuration, _application))
             {
                 uow.BeginTransaction();
+                decimal userId = uow.UserRepository.GetUserByUserName(userName).Id;
 
                 try
                 {
-                    if (uow.DependentRepository.ExistDependentByNumber(number))
+                    if (uow.DependentRepository.ExistDependentById(dependentId))
                     {
-                        uow.DependentRepository.DeleteDependent(number, uow, userId);
+                        uow.DependentRepository.DeleteDependent(dependentId, uow, userId);
 
-                        if (uow.ShopDataRepository.ExistShopDataByNumber(number))
-                            uow.ShopDataRepository.DeleteShopData(number, uow, userId);
-
-                        if (uow.ContactPersonRepository.ExistContactPersonByNumber(number))
-                            uow.ContactPersonRepository.DeleteContactPerson(number);
+                        dto.IdDependent = dependentId;
+                        dto.UpdUserId = userId;
+                        uow.DependentRepository.AddDependentFact(dto);
 
                         uow.SaveChanges();
                         uow.Commit();
@@ -161,13 +163,21 @@ namespace BusinessLogic.Controllers
         {
             List<string> colerrors = new List<string>();
 
-            if (!isAdd && !uow.DependentRepository.ExistDependentByNumber(dependent.Number))
+            if (!isAdd && !uow.DependentRepository.ExistDependentById(dependent.Id))
                 colerrors.Add($"El {dependent.Condition} no existe.");
 
-            if (isAdd && uow.DependentRepository.ExistDependentByNumber(dependent.Number))
+            if (isAdd && uow.DependentRepository.ExistDependentById(dependent.Id))
                 colerrors.Add($"El {dependent.Condition} ya está registrado.");
 
             return colerrors;
+        }
+
+        public DependentCreationFrontDTO GetDependentById(int id)
+        {
+            using (var uow = new UnitOfWork(_configuration, _application))
+            {
+                return uow.DependentRepository.GetDependentCompleteById(id);
+            }
         }
 
         #endregion
