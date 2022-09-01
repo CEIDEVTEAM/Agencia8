@@ -10,7 +10,6 @@ namespace BusinessLogic.DTOs.Dependent
 {
     public class DependentFactCreationFrontDTO
     {
-        public decimal Id { get; set; }
         public decimal? IdDependent { get; set; }
         public string? FactType { get; set; }
         public string? Description { get; set; }

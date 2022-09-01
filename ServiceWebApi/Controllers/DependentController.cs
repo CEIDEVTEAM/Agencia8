@@ -93,7 +93,7 @@ namespace ServiceWebApi.Controllers
             }
         }
 
-        [HttpDelete("deleteDependent")]
+        [HttpPut("deleteDependent")]
         public async Task<ActionResult<GenericResponse>> DeleteDependent([FromQuery] int dependentId, DependentFactCreationFrontDTO dto)
         {
             try

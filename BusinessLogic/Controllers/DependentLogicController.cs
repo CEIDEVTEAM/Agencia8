@@ -134,6 +134,7 @@ namespace BusinessLogic.Controllers
 
                         dto.IdDependent = dependentId;
                         dto.UpdUserId = userId;
+                        dto.FactType = "DELETE";
                         uow.DependentRepository.AddDependentFact(dto);
 
                         uow.SaveChanges();
