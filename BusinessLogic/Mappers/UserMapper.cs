@@ -25,7 +25,7 @@ namespace BusinessLogic.Mappers
             };
         }
 
-        public UserCreationDTO MapToObject(User entity)
+        public UserCreationDTO MapToEditObject(User entity)
         {
             if (entity == null)
                 throw new Exception("No hay entidad para mapear");
@@ -40,6 +40,23 @@ namespace BusinessLogic.Mappers
                 Phone = entity.Phone,
                 IdRole = entity.IdRole,
                 Password = entity.Password,
+            };
+        }
+
+        public UserDTO MapToObject(User entity)
+        {
+            if (entity == null)
+                throw new Exception("No hay entidad para mapear");
+
+            return new UserDTO()
+            {
+                Id = entity.Id,
+                UserName = entity.UserName,
+                Email = entity.Email,
+                Name = entity.Name,
+                Address = entity.Address,
+                Phone = entity.Phone,
+                IdRole = entity.IdRole,
             };
         }
 
@@ -70,5 +87,19 @@ namespace BusinessLogic.Mappers
             return listDTO;
         }
 
+        public User MapToEditEntity(UserCreationDTO dto, User entity)
+        {
+            if (dto == null || entity == null)
+                throw new Exception("No hay objeto/entidad para mapear");
+
+            entity.Address = dto.Address;
+            entity.Name = dto.Name;
+            entity.Phone = dto.Phone;
+            entity.Email = dto.Email;
+            entity.IdRole = dto.IdRole;
+            entity.Password = dto.Password;
+
+            return entity;
+        }
     }
 }

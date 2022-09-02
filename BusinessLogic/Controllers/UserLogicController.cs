@@ -3,6 +3,7 @@ using BusinessLogic.DataModel;
 using BusinessLogic.DTOs.Generals;
 using BusinessLogic.DTOs.User;
 using DataAccess.Models;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 
 namespace BusinessLogic.Controllers
@@ -35,10 +36,7 @@ namespace BusinessLogic.Controllers
 
                     if (!errors.Any())
                     {
-                        User user = _mapper.Map<User>(dto);
-
-                        user.ActiveFlag = "S";
-                        uow.UserRepository.AddUser(user);
+                        uow.UserRepository.AddUser(dto);
 
                         uow.SaveChanges();
                         uow.Commit();
@@ -75,22 +73,11 @@ namespace BusinessLogic.Controllers
 
                     if (!errors.Any())
                     {
-                        User user = uow.UserRepository.GetUserById(dto.Id);
+                        uow.UserRepository.UpdateUser(dto);
 
-                        if (user != null)
-                        {
-                            user.Address = dto.Address;
-                            user.Name = dto.Name;
-                            user.Phone = dto.Phone;
-                            user.Email = dto.Email;
-                            user.IdRole = dto.IdRole;
-
-                            uow.UserRepository.UpdateUser(user);
-
-                            uow.SaveChanges();
-                            uow.Commit();
-                            successful = true;
-                        }
+                        uow.SaveChanges();
+                        uow.Commit();
+                        successful = true;
                     }
                 }
                 catch (Exception ex)
@@ -121,17 +108,11 @@ namespace BusinessLogic.Controllers
                 {
                     if (uow.UserRepository.ExistUsuarioById(userId))
                     {
-                        User user = uow.UserRepository.GetUserById(userId);
+                        uow.UserRepository.DeleteUser(userId);
 
-                        if (user != null)
-                        {
-                            user.ActiveFlag = "N";
-                            uow.UserRepository.UpdateUser(user);
-
-                            uow.SaveChanges();
-                            uow.Commit();
-                            successful = true;
-                        }
+                        uow.SaveChanges();
+                        uow.Commit();
+                        successful = true;
                     }
                     else
                         errors.Add("El usuario no existe.");
@@ -166,6 +147,14 @@ namespace BusinessLogic.Controllers
                 colerrors.Add("Debe seleccionar un rol de usuario válido.");
 
             return colerrors;
+        }
+
+        public UserCreationDTO GetUserById(int id)
+        {
+            using (var uow = new UnitOfWork(_configuration, _application))
+            {
+                return uow.UserRepository.GetUserById(id);
+            }
         }
 
         #endregion

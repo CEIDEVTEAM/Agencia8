@@ -31,24 +31,52 @@ namespace ServiceWebApi.Controllers
         [HttpGet]
         public async Task<ActionResult<List<DependentDTO>>> DependentList([FromQuery] PaginationDTO dto)
         {
-            using (var uow = new UnitOfWork(this._configuration, _application))
+            try
             {
-                var queryable = uow.DependentRepository.GetDependents(dto.Search);
+                using (var uow = new UnitOfWork(this._configuration, _application))
+                {
+                    var queryable = uow.DependentRepository.GetDependents();
+                    await HttpContext.InsertHeaderPaginationParams(queryable);
+                    var dependents = await queryable.OrderBy(x => x.Name).Paginate(dto).ToListAsync();
+                    return _mapper.MapToObject(dependents);
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("No es posible comunicarse con el proveedor.");
+            }
+        }
 
-                await HttpContext.InsertHeaderPaginationParams(queryable);
-                var dependents = await queryable.OrderBy(x => x.Number).Paginate(dto).ToListAsync();
-                return _mapper.MapToObject(dependents);
+        [HttpGet("exCandidateDependent")]
+        public async Task<ActionResult<List<ExCandidateDependetDTO>>> GetExCandidateDependent([FromQuery] PaginationDTO dto)
+        {
+            try
+            {
+                using (var uow = new UnitOfWork(this._configuration, _application))
+                {
+                    var queryable = uow.DependentRepository.GetExCandidateDependents();
+                    await HttpContext.InsertHeaderPaginationParams(queryable);
+                    var dependents = await queryable.OrderBy(x => x.Name).Paginate(dto).ToListAsync();
+                    return _mapper.MapToObject(dependents);
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("No es posible comunicarse con el proveedor.");
             }
         }
 
         [HttpGet("{id:int}")]
         public async Task<ActionResult<DependentCreationFrontDTO>> Get(int id)
         {
-            using (var uow = new UnitOfWork(this._configuration, _application))
+            try
             {
-                var queryable = uow.DependentRepository.GetDependentCompleteById(id);
-
-                return _mapper.MapToEditObject(queryable);
+                DependentLogicController lg = new DependentLogicController(_configuration, _application);
+                return lg.GetDependentById(id);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("No es posible comunicarse con el proveedor.");
             }
         }
 
@@ -59,9 +87,9 @@ namespace ServiceWebApi.Controllers
             try
             {
                 DependentLogicController lg = new DependentLogicController(_configuration, _application);
-                //EDU
-                //FALTA OBTENER EL ID DEL USUARIO
-                return await lg.AddDependent(dto, 1);
+                var userName = HttpContext.User.Claims.FirstOrDefault(x => x.Type == "userName").Value;
+
+                return await lg.AddDependent(dto, userName);
             }
             catch (Exception ex)
             {
@@ -75,9 +103,9 @@ namespace ServiceWebApi.Controllers
             try
             {
                 DependentLogicController lg = new DependentLogicController(_configuration, _application);
-                //EDU
-                //FALTA OBTENER EL ID DEL USUARIO
-                return await lg.EditDependent(dto, 1);
+                var userName = HttpContext.User.Claims.FirstOrDefault(x => x.Type == "userName").Value;
+
+                return await lg.EditDependent(dto, userName);
             }
             catch (Exception ex)
             {
@@ -85,20 +113,21 @@ namespace ServiceWebApi.Controllers
             }
         }
 
-        [HttpDelete("deleteDependent")]
-        public async Task<ActionResult<GenericResponse>> DeleteDependent([FromQuery] int dependentId)
+        [HttpPut("deleteDependent")]
+        public async Task<ActionResult<GenericResponse>> DeleteDependent([FromQuery] int dependentId, DependentFactCreationFrontDTO dto)
         {
             try
             {
                 DependentLogicController lg = new DependentLogicController(_configuration, _application);
-                //EDU
-                //FALTA OBTENER EL ID DEL USUARIO
-                return await lg.DeleteDependent(dependentId,1);
+                var userName = HttpContext.User.Claims.FirstOrDefault(x => x.Type == "userName").Value;
+
+                return await lg.DeleteDependent(dependentId, dto, userName);
             }
             catch (Exception ex)
             {
                 return BadRequest("No es posible comunicarse con el proveedor.");
             }
         }
+
     }
 }

@@ -87,9 +87,10 @@ namespace BusinessLogic.DataModel.Repository
             return _context.Candidate.FirstOrDefault(x => x.Id == id);
         }
 
-        public VCandidate GetCandidateCompleteDataById(decimal id)
+        public CandidateCreationFrontDTO GetCandidateCompleteDataById(decimal id)
         {
-            return _context.VCandidate.FirstOrDefault(x => x.Id == id);
+            var x = _context.VCandidate.FirstOrDefault(x => x.Id == id);
+            return _mapper.MapToEditObject(x);
         }
 
         #endregion

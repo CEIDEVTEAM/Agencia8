@@ -34,6 +34,20 @@ namespace BusinessLogic.Mappers
             };
         }
 
+        public DependentFact MapToEntity(DependentFactCreationFrontDTO dto)
+        {
+            if (dto == null)
+                throw new Exception("No hay objeto para mapear");
+
+            return new DependentFact()
+            {
+                IdDependent = dto.IdDependent,
+                FactType = dto.FactType,
+                Description = dto.Description,
+                UpdUserId = dto.UpdUserId
+            };
+        }
+
         public DependentDTO MapToObject(VDependent entity)
         {
             if (entity == null)
@@ -171,6 +185,52 @@ namespace BusinessLogic.Mappers
                     Longitude = frontDTO.Longitude.ToString(),
                 }
             };
+        }
+
+        public ExCandidateDependetDTO MapToObject(VExCandidateDependent entity)
+        {
+            if (entity == null)
+                throw new Exception("No hay entidad para mapear");
+
+            return new ExCandidateDependetDTO
+            {
+                Id = entity.Id,
+                Type = entity.Type,
+                Name = entity.Name,
+                LastName = entity.LastName,
+                BirthDate = entity.BirthDate,
+                PersonalDocument = entity.PersonalDocument,
+                Gender = entity.Gender,
+                MaritalStatus = entity.MaritalStatus,
+                PersonalAddress = entity.PersonalAddress,
+                Phone = entity.Phone,
+                Condition = entity.Condition,
+                Status = entity.Status,
+                Number = entity.Number,
+                AddRow = entity.AddRow,
+                IdShopData = entity.IdShopData,
+                NameShopData = entity.NameShopData,
+                PhoneShopData = entity.PhoneShopData,
+                Address = entity.Address,
+                Neighborhood = entity.Neighborhood,
+                ShopType = entity.ShopType,
+                Latitude = entity.Latitude,
+                Longitude = entity.Longitude,
+                IdContactPerson = entity.IdContactPerson,
+                NameContactPerson = entity.NameContactPerson,
+                LastNameContactPerson = entity.LastNameContactPerson,
+                PhoneContactPerson = entity.PhoneContactPerson,
+                BondContactPerson = entity.BondContactPerson,
+            };
+        }
+
+        public List<ExCandidateDependetDTO> MapToObject(List<VExCandidateDependent> colEntity)
+        {
+            List<ExCandidateDependetDTO> col = new List<ExCandidateDependetDTO>();
+
+            colEntity.ForEach(x => col.Add(MapToObject(x)));
+
+            return col;
         }
     }
 }
