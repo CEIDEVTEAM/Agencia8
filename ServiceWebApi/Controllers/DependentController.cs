@@ -25,6 +25,7 @@ namespace ServiceWebApi.Controllers
         public DependentController(IConfiguration configuration)
         {
             this._configuration = configuration;
+            this._mapper = new DependentMapper();
         }
 
         [HttpGet("dependentList")]
