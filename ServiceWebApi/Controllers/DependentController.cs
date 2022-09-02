@@ -35,7 +35,7 @@ namespace ServiceWebApi.Controllers
             {
                 using (var uow = new UnitOfWork(this._configuration, _application))
                 {
-                    var queryable = uow.DependentRepository.GetDependents();
+                    var queryable = uow.DependentRepository.GetDependents(dto.Search);
                     await HttpContext.InsertHeaderPaginationParams(queryable);
                     var dependents = await queryable.OrderBy(x => x.Name).Paginate(dto).ToListAsync();
                     return _mapper.MapToObject(dependents);
@@ -113,15 +113,15 @@ namespace ServiceWebApi.Controllers
             }
         }
 
-        [HttpPut("deleteDependent")]
-        public async Task<ActionResult<GenericResponse>> DeleteDependent([FromQuery] int dependentId, DependentFactCreationFrontDTO dto)
+        [HttpPost("deleteDependent/{id:int}")]
+        public async Task<ActionResult<GenericResponse>> DeleteDependent(int id, [FromBody] DependentFactCreationFrontDTO dto)
         {
             try
             {
                 DependentLogicController lg = new DependentLogicController(_configuration, _application);
                 var userName = HttpContext.User.Claims.FirstOrDefault(x => x.Type == "userName").Value;
 
-                return await lg.DeleteDependent(dependentId, dto, userName);
+                return await lg.DeleteDependent(id, dto, userName);
             }
             catch (Exception ex)
             {

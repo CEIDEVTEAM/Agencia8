@@ -12,6 +12,7 @@ namespace BusinessLogic.DTOs.DecisionParam
         public string Name { get; set; }
         public string Description { get; set; }
         public string Value { get; set; }
+        public string ActiveFlag { get; set; }
         public DateTime? UpdRow { get; set; }
 
     }

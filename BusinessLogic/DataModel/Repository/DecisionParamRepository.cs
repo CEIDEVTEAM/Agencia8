@@ -53,14 +53,19 @@ namespace BusinessLogic.DataModel.Repository
 
         #region GET
 
-        public IQueryable<DecisionParam> GetDecisionParams()
+        public IQueryable<DecisionParam> GetDecisionParams(string search)
         {
-            return _context.DecisionParam.AsQueryable();
+            return _context.DecisionParam.Where(x => x.Name.ToLower().Contains(search.ToLower())).AsQueryable();
         }
 
         public DecisionParam GetDecisionParamById(decimal id)
         {
             return _context.DecisionParam.FirstOrDefault(x => x.Id == id);
+        }
+
+        public DecisionParamDTO GetMappedDecisionParamById(decimal id)
+        {
+            return this._mapper.MapToObject(_context.DecisionParam.FirstOrDefault(x => x.Id == id));
         }
 
         #endregion

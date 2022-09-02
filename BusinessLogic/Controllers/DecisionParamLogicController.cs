@@ -2,6 +2,7 @@
 using BusinessLogic.DTOs.Candidate;
 using BusinessLogic.DTOs.DecisionParam;
 using BusinessLogic.DTOs.Generals;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 
 namespace BusinessLogic.Controllers
@@ -54,6 +55,14 @@ namespace BusinessLogic.Controllers
 
         }
 
+        public DecisionParamDTO GetParamById(int id)
+        {
+            using (var uow = new UnitOfWork(_configuration, _application))
+            {
+                return uow.DecisionParamRepository.GetMappedDecisionParamById(id);
+            }
+        }
+
         #region VALIDATIONS
 
         public List<string> Validations(DecisionParamCreationDTO decisionParam, UnitOfWork uow, bool isAdd = false)
@@ -65,6 +74,8 @@ namespace BusinessLogic.Controllers
 
             return colerrors;
         }
+       
+
 
         #endregion
 

@@ -57,5 +57,5 @@ export {
   OutlinePersonIcon,
   OutlineCogIcon,
   OutlineLogoutIcon,
-  FortuneWheelIcon,
+  FortuneWheelIcon,  
 }

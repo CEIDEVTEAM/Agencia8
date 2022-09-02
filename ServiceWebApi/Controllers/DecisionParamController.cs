@@ -13,7 +13,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Text;
 namespace ServiceWebApi.Controllers
 {
-    [Route("api/decisionParam")]
+    [Route("api/decitionParam")]
     [ApiController]
     //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = "isAdmin")]
     public class DecisionParamController : ControllerBase
@@ -33,13 +33,27 @@ namespace ServiceWebApi.Controllers
         {
             using (var uow = new UnitOfWork(this._configuration, _application))
             {
-                var queryable = uow.DecisionParamRepository.GetDecisionParams();
+                var queryable = uow.DecisionParamRepository.GetDecisionParams(dto.Search);
 
                 await HttpContext.InsertHeaderPaginationParams(queryable);
                 var decisionParams = await queryable.OrderBy(x => x.Name).Paginate(dto).ToListAsync();
                 return _mapper.Map<List<DecisionParamDTO>>(decisionParams);
             }
 
+        }
+
+        [HttpGet("{id:int}")]
+        public async Task<ActionResult<DecisionParamDTO>> Get(int id)
+        {
+            try
+            {
+                DecisionParamLogicController lg = new DecisionParamLogicController(_configuration, _application);
+                return lg.GetParamById(id);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("No es posible comunicarse con el proveedor.");
+            }
         }
 
         [HttpPut("{id:int}")]

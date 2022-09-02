@@ -24,7 +24,7 @@ const routes = [
     icon: 'CardsIcon',
     name: 'Cards',
     resourse: "cards"
-    
+
   },
   {
     path: '/app/charts',
@@ -49,7 +49,7 @@ const routes = [
     icon: 'FortuneWheelIcon',
     name: 'Sub Agentes',
     resourse: "subagentes"
-  },  
+  },
   {
     icon: 'FormsIcon',
     name: 'Aspirantes',
@@ -65,7 +65,7 @@ const routes = [
       {
         path: '/app/candidates/CandidatesManagment',
         name: 'Gestión de Aspirantes',
-        resourse: "CandidatesManagment",        
+        resourse: "CandidatesManagment",
       },
     ],
   },
@@ -84,7 +84,21 @@ const routes = [
       {
         path: '/app/users/ListUsers',
         name: 'Listado de Usuarios',
-        resourse: "ListUsers",        
+        resourse: "ListUsers",
+      },
+    ],
+  },
+  {
+    icon: 'OutlineCogIcon',
+    name: 'Configuraciones',
+    resourse: "configs",
+    routes: [
+      // submenu
+      {
+        path: '/app/config/ListDecitionParams',
+        name: 'Parametros de Decisión',
+        resourse: "decitionParams",
+        exact: true
       },
     ],
   },

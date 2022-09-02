@@ -23,13 +23,14 @@ namespace BusinessLogic.Mappers
                 ActiveFlag = dto.ActiveFlag,
             };
         }
-        public DecisionParam MapToObject(DecisionParam entity)
+        public DecisionParamDTO MapToObject(DecisionParam entity)
         {
             if (entity == null)
                 throw new Exception("No hay entidad para mapear");
 
-            return new DecisionParam()
+            return new DecisionParamDTO()
             {
+                Id = entity.Id,
                 Name = entity.Name,
                 Description = entity.Description,
                 Value = entity.Value,
