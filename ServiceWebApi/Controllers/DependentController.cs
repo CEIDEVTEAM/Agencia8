@@ -46,6 +46,25 @@ namespace ServiceWebApi.Controllers
             }
         }
 
+        [HttpGet("exCandidateDependent")]
+        public async Task<ActionResult<List<ExCandidateDependetDTO>>> GetExCandidateDependent([FromQuery] PaginationDTO dto)
+        {
+            try
+            {
+                using (var uow = new UnitOfWork(this._configuration, _application))
+                {
+                    var queryable = uow.DependentRepository.GetExCandidateDependents();
+                    await HttpContext.InsertHeaderPaginationParams(queryable);
+                    var dependents = await queryable.OrderBy(x => x.Name).Paginate(dto).ToListAsync();
+                    return _mapper.MapToObject(dependents);
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("No es posible comunicarse con el proveedor.");
+            }
+        }
+
         [HttpGet("{id:int}")]
         public async Task<ActionResult<DependentCreationFrontDTO>> Get(int id)
         {
@@ -108,5 +127,6 @@ namespace ServiceWebApi.Controllers
                 return BadRequest("No es posible comunicarse con el proveedor.");
             }
         }
+
     }
 }

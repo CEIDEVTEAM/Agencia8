@@ -98,6 +98,11 @@ namespace BusinessLogic.DataModel.Repository
             return _context.VDependent.AsQueryable();
         }
 
+        public IQueryable<VExCandidateDependent> GetExCandidateDependents()
+        {
+            return _context.VExCandidateDependent.AsQueryable();
+        }
+
         #endregion
 
     }
