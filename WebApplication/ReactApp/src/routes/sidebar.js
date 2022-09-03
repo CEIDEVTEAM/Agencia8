@@ -51,6 +51,12 @@ const routes = [
     resourse: "subagentes"
   },
   {
+    path: '/app/dependent/ListExDependent',
+    icon: 'TablesIcon',
+    name: 'Históricos',
+    resourse: "subagentes"
+  },
+  {
     icon: 'FormsIcon',
     name: 'Aspirantes',
     resourse: "candidates",

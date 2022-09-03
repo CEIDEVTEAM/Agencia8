@@ -13,6 +13,7 @@ namespace BusinessLogic.DTOs.Generals
         private readonly int maxRecordsPerPage = 50;
         
         public string Search { get; set; } = "";
+        public string Filter { get; set; } = "";
         public int RecordsPerPage
         {
             get

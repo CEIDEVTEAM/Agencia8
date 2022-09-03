@@ -16,5 +16,6 @@ export const urlNewcandidate = `${apiURL}/candidate/addCandidate`;
 
 export const dependentUrl = `${apiURL}/dependent`;
 export const urlDeleteDependent = `${apiURL}/dependent/deleteDependent`;
+export const exCandidateDependent = `${apiURL}/dependent/exCandidateDependent`;
 
 export const decitionParamUrl = `${apiURL}/decitionParam`;

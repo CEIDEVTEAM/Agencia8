@@ -18,7 +18,7 @@ export default function Map(props) {
     const [coords, setCoords] = useState(props.coordenadas)
     return (
         <MapContainer
-            center={[-34.910051, -54.953425]} zoom={14}
+            center={[-34.910051, -54.953425]} zoom={12}
             style={{ height: "250px" }}
         >
             <TileLayer attribution="Agencia 8"

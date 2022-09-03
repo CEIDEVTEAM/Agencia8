@@ -1,5 +1,6 @@
 ﻿using AutoMapper.Execution;
 using BusinessLogic.DTOs.Dependent;
+using BusinessLogic.DTOs.Generals;
 using BusinessLogic.Mappers;
 using CommonSolution.Constants;
 using DataAccess.Context;
@@ -99,9 +100,22 @@ namespace BusinessLogic.DataModel.Repository
             return _context.VDependent.AsNoTracking().Where(x => x.LastName.ToLower().Contains(search.ToLower()) || x.Number.ToString().Contains(search.ToLower())).AsQueryable();
         }
 
-        public IQueryable<VExCandidateDependent> GetExCandidateDependents()
+        public IQueryable<VExCandidateDependent> GetExCandidateDependents(string search, string filter)
         {
-            return _context.VExCandidateDependent.AsQueryable();
+           
+            var query = _context.VExCandidateDependent.AsNoTracking().Where(x => x.LastName.ToLower().Contains(search.ToLower())
+            || x.PersonalDocument.Contains(search.ToLower())).AsQueryable();
+
+
+            if (!string.IsNullOrEmpty(filter))
+            {
+                query = (IQueryable<VExCandidateDependent>)query.Where(x => x.Type.ToLower() == filter).AsQueryable();
+            }
+
+            return query;
+
+
+            //return _context.VExCandidateDependent.AsNoTracking();
         }
 
         #endregion

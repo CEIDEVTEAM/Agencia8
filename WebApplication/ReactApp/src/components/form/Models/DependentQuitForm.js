@@ -14,7 +14,7 @@ export default function DependentQuitForm(props) {
 
             validationSchema={Yup.object({
                 description: Yup.string().required('Este campo es requerido')
-                    .max(30, 'La longitud máxima es de 30 caracteres')                
+                    .max(200, 'La longitud máxima es de 200 caracteres')                
             })}
         >
             {(formikProps) => (

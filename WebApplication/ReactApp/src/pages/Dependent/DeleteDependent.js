@@ -49,6 +49,7 @@ function DeleteDependent(props) {
                             toast.success("Dado de baja correctamente")
                             setErrors([])
                             resetForm()
+                            handleClose()
                         }
                     }} />
             </ModalBody>

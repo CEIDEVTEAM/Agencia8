@@ -54,7 +54,7 @@ namespace ServiceWebApi.Controllers
             {
                 using (var uow = new UnitOfWork(this._configuration, _application))
                 {
-                    var queryable = uow.DependentRepository.GetExCandidateDependents();
+                    var queryable = uow.DependentRepository.GetExCandidateDependents(dto.Search, dto.Filter);
                     await HttpContext.InsertHeaderPaginationParams(queryable);
                     var dependents = await queryable.OrderBy(x => x.Name).Paginate(dto).ToListAsync();
                     return _mapper.MapToObject(dependents);

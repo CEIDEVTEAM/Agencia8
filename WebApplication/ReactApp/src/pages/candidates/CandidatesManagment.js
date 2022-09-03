@@ -13,7 +13,7 @@ import {
   Input
 } from '@windmill/react-ui'
 
-import { EditIcon, TrashIcon,SearchIcon } from '../../icons'
+import { EditIcon, TrashIcon,SearchIcon, CardsIcon } from '../../icons'
 import { candidateUrl } from '../../utils/http/endpoints';
 import PageTitle from '../../components/Typography/PageTitle';
 import confirmation from '../../utils/generals/confirmation';
@@ -113,11 +113,11 @@ export default function CandidatesManagment () {
             <TableRow key={data.id}>
               <TableCell>
                 <div className="flex items-center space-x-4">
-                  <Button onClick={() => handleEdit(data.id)} layout="link" size="icon" aria-label="Edit">
+                  <Button title = "Editar" onClick={() => handleEdit(data.id)} layout="link" size="icon" aria-label="Edit">
                     <EditIcon className="w-5 h-5" aria-hidden="true" />
                   </Button>
-                  <Button onClick={()=>confirmation(()=> logicDelete(data.id))} layout="link" size="icon" aria-label="Delete">
-                    <TrashIcon className="w-5 h-5" aria-hidden="true" />
+                  <Button title ="Actualizar Trámite" onClick={()=>confirmation(()=> logicDelete(data.id))} layout="link" size="icon" aria-label="Delete">
+                    <CardsIcon className="w-5 h-5" aria-hidden="true" />
                   </Button>
                 </div>
               </TableCell>

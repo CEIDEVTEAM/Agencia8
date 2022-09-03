@@ -13,7 +13,7 @@ function EditDecitionParams(props) {
     return (
         <Modal isOpen={props.isOpen} onClose={handleClose} >
             <ModalHeader>Editar Parametros de Decisión</ModalHeader>
-            <ModalBody>
+            <ModalBody >
                 <Edit url={decitionParamUrl} id={props.id}>
                     {(entidad, editar) =>
                         <ParamsForm model={entidad} isEdit={true}
@@ -23,7 +23,7 @@ function EditDecitionParams(props) {
                 </Edit>
             </ModalBody>
             <ModalFooter>
-                <Button block size="large" layout="outline" onClick={handleClose}>
+                <Button className="w-full sm:w-autoblock" size="large" layout="outline" onClick={handleClose}>
                     Cerrar
                 </Button>
             </ModalFooter>

@@ -38,7 +38,7 @@ export default function ListDependent() {
     loadData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
 
-  }, [page, setPage, openModal,openDeleteModal, search])
+  }, [page, setPage, openModal, openDeleteModal, search])
 
   function loadData() {
     axios.get(dependentUrl, {
@@ -115,10 +115,10 @@ export default function ListDependent() {
               <TableRow key={data.id}>
                 <TableCell>
                   <div className="flex items-center space-x-4">
-                    <Button onClick={() => handleEdit(data.id)} layout="link" size="icon" aria-label="Edit">
+                    <Button title="Editar" onClick={() => handleEdit(data.id)} layout="link" size="icon" aria-label="Edit">
                       <EditIcon className="w-5 h-5" aria-hidden="true" />
                     </Button>
-                    <Button onClick={() => logicDelete(data.id)} layout="link" size="icon" aria-label="Delete">
+                    <Button title="Dar de baja" onClick={() => logicDelete(data.id)} layout="link" size="icon" aria-label="Delete">
                       <TrashIcon className="w-5 h-5" aria-hidden="true" />
                     </Button>
                     {/* <Button onClick={()=>confirmation(()=> logicDelete(data.id))} layout="link" size="icon" aria-label="Delete">

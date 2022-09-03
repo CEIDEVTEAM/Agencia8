@@ -22,6 +22,7 @@ const NewCandidate = lazy(() => import('../pages/candidates/NewCandidate'))
 
 //SUBAGENTES
 const ListDependent = lazy(() => import('../pages/Dependent/ListDependent'))
+const ListExDependent = lazy(() => import('../pages/Dependent/ListExDependent'))
 
 //PARAMETROS DECISION
 const ListDecitionParams = lazy(() => import('../pages/config/ListDecitionParams'))
@@ -125,6 +126,12 @@ const routes = [
     component: ListDecitionParams,
     isAdmin: true,
     resourse: "ListDependent"
+  },
+  {
+    path: '/dependent/ListExDependent',
+    component: ListExDependent,
+    isAdmin: true,
+    resourse: "ListExDependent"
   },
 
 

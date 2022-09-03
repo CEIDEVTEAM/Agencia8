@@ -13,7 +13,7 @@ import {
   Input
 } from '@windmill/react-ui'
 import EditUser from './EditUser';
-
+import Loading from "../../utils/generals/Loading"
 import { EditIcon, TrashIcon, SearchIcon } from '../../icons'
 import { userUrl } from '../../utils/http/endpoints';
 import PageTitle from '../../components/Typography/PageTitle';
@@ -98,6 +98,7 @@ export default function ListUsers() {
         />
       </div>
       <br />
+      {dataTable? 
       <TableContainer className="mb-6">
         <Table>
           <TableHeader>
@@ -133,7 +134,8 @@ export default function ListUsers() {
             label="Table navigation"
           />
         </TableFooter>
-      </TableContainer>
+      </TableContainer>:<Loading/>
+}
       <EditUser isOpen={openModal} onClose={onClose} id={id}></EditUser>
     </>
   )
