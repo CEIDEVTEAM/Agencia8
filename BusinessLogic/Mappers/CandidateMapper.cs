@@ -63,8 +63,8 @@ namespace BusinessLogic.Mappers
                 address = entity.Address,
                 neighborhood = entity.Neighborhood,
                 shopType = entity.ShopType,
-                latitude = entity.Latitude == null ? null: double.Parse(entity.Latitude),
-                longitude = entity.Longitude == null ? null: double.Parse(entity.Longitude),
+                latitude = entity.Latitude == null ? null : double.Parse(entity.Latitude),
+                longitude = entity.Longitude == null ? null : double.Parse(entity.Longitude),
                 cpName = entity.NameContactPerson,
                 cpLastName = entity.LastNameContactPerson,
                 cpPhone = entity.PhoneContactPerson,
@@ -202,6 +202,44 @@ namespace BusinessLogic.Mappers
                 }
             };
         }
-        
+
+        public ProcedureStep MapToEntity(ProcedureStepDTO dto)
+        {
+            if (dto == null)
+                throw new Exception("No hay entidad para mapear");
+
+            return new ProcedureStep()
+            {
+                StepType = dto.StepType,
+                Description = dto.Description,
+                IdCandidate = dto.IdCandidate,
+                UpdUser = dto.UpdUser
+            };
+        }
+
+        public ProcedureStepDTO MapToObject(ProcedureStep entity)
+        {
+            if (entity == null)
+                throw new Exception("No hay entidad para mapear");
+
+            return new ProcedureStepDTO()
+            {
+                StepType = entity.StepType,
+                Description = entity.Description,
+                IdCandidate = entity.IdCandidate,
+                UpdUser = entity.UpdUser,
+                AddRow = entity.AddRow.ToString(),
+            };
+        }
+
+        public List<ProcedureStepDTO> MapToObject(List<ProcedureStep> colEntity)
+        {
+            List<ProcedureStepDTO> colObject = new List<ProcedureStepDTO>();
+
+            colEntity.ForEach(x => colObject.Add(this.MapToObject(x)));
+
+            return colObject;
+        }
+
     }
 }
