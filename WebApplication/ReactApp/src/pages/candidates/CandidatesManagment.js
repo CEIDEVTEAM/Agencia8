@@ -18,6 +18,7 @@ import { candidateUrl } from '../../utils/http/endpoints';
 import PageTitle from '../../components/Typography/PageTitle';
 import confirmation from '../../utils/generals/confirmation';
 import EditCandidate from './EditCandidate';
+import ProcedureManagment from './ProcedureManagment'
 
 
 export default function CandidatesManagment () {
@@ -28,6 +29,7 @@ export default function CandidatesManagment () {
   const [dataTable, setDataTable] = useState([])
 
   const [openModal, setModalOpen] = useState(false)
+  const [openProceduresModal, setOpenProceduresModal] = useState(false)
   const [id, setId] = useState(0)
   const [search, setSearch] = useState(null)
 
@@ -59,7 +61,7 @@ export default function CandidatesManagment () {
     catch (error) {
         console.log(error.response.data);
     }
-}
+  } 
  
 
   function onPageChangeTable(p) {
@@ -70,9 +72,18 @@ export default function CandidatesManagment () {
     setModalOpen(true)
     setId(id);    
   }
+  function handleProcedure(id){
+    setOpenProceduresModal(true)
+    setId(id)
+  }
   function onClose(){
     setModalOpen(false)
   }
+
+  function onCloseProcedure(){
+    setOpenProceduresModal(false)
+  }
+
 
 
   const labels = ["Documento","Nombres","Apellidos",
@@ -84,7 +95,7 @@ export default function CandidatesManagment () {
   return (
     <>
     <PageTitle>Gestión de Aspirantes</PageTitle>
-    <div className="relative w-full max-w-xl mr-6 focus-within:text-purple-500">
+      <div className="relative w-full max-w-xl mr-6 focus-within:text-purple-500">
         <div className="absolute inset-y-0 flex items-center pl-2">
           <SearchIcon className="w-4 h-4" aria-hidden="true" />
         </div>
@@ -100,45 +111,47 @@ export default function CandidatesManagment () {
         />
       </div>
       <br />
-    <TableContainer className="mb-8">
-      <Table>
-        <TableHeader>
-          <tr>
-            <TableCell>Acciones</TableCell>
-            {labels.map((label, i) => <TableCell key={i}>{label}</TableCell>)}
-          </tr>
-        </TableHeader>
-        <TableBody>
-          {dataTable.map((data, i) => (
-            <TableRow key={data.id}>
-              <TableCell>
-                <div className="flex items-center space-x-4">
-                  <Button title = "Editar" onClick={() => handleEdit(data.id)} layout="link" size="icon" aria-label="Edit">
-                    <EditIcon className="w-5 h-5" aria-hidden="true" />
-                  </Button>
-                  <Button title ="Actualizar Trámite" onClick={()=>confirmation(()=> logicDelete(data.id))} layout="link" size="icon" aria-label="Delete">
-                    <CardsIcon className="w-5 h-5" aria-hidden="true" />
-                  </Button>
-                </div>
-              </TableCell>
-              {columns.map((column, i) => <TableCell key={i}>{data[column]}</TableCell>)}
+      <TableContainer className="mb-8">
+        <Table>
+          <TableHeader>
+            <tr>
+              <TableCell>Acciones</TableCell>
+              {labels.map((label, i) => <TableCell key={i}>{label}</TableCell>)}
+            </tr>
+          </TableHeader>
+          <TableBody>
+            {dataTable.map((data, i) => (
+              <TableRow key={data.id}>
+                <TableCell>
+                  <div className="flex items-center space-x-4">
+                    <Button title = "Editar" onClick={() => handleEdit(data.id)} layout="link" size="icon" aria-label="Edit">
+                      <EditIcon className="w-5 h-5" aria-hidden="true" />
+                    </Button>
+                    <Button title ="Actualizar Trámite" onClick={()=> handleProcedure(data.id)} layout="link" size="icon" aria-label="Delete">
+                      <CardsIcon className="w-5 h-5" aria-hidden="true" />
+                    </Button>
+                  </div>
+                </TableCell>
+                {columns.map((column, i) => <TableCell key={i}>{data[column]}</TableCell>)}
 
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-      <TableFooter>
-        <Pagination
-          totalResults={totalResults}
-          resultsPerPage={recordsPerPage}
-          onChange={onPageChangeTable}
-          label="Table navigation"
-        />
-      </TableFooter>
-    </TableContainer>
-    <EditCandidate isOpen={openModal} onClose={onClose} id={id}></EditCandidate>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+        <TableFooter>
+          <Pagination
+            totalResults={totalResults}
+            resultsPerPage={recordsPerPage}
+            onChange={onPageChangeTable}
+            label="Table navigation"
+          />
+        </TableFooter>
+      </TableContainer>
+      <EditCandidate isOpen={openModal} onClose={onClose} id={id}></EditCandidate>
+      <ProcedureManagment isOpen={openProceduresModal} onClose={onCloseProcedure} id={id}></ProcedureManagment>
+    
+    
     </>
   )
 }
 
-//export default ListUsers

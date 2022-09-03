@@ -1,63 +1,108 @@
 import React, { useState, useEffect } from 'react'
 import axios from "axios";
 import {
-  Table,
-  TableHeader,
-  TableCell,
-  TableBody,
-  TableRow,
-  TableFooter,
-  TableContainer,
-  Button,
-  Pagination,
-  Modal, ModalHeader, ModalBody, ModalFooter
+    Table,
+    TableHeader,
+    TableCell,
+    TableBody,
+    TableRow,
+    TableFooter,
+    TableContainer,
+    Button,
+    Pagination,
+    Modal, ModalHeader, ModalBody, ModalFooter,
+    Card, CardBody
 } from '@windmill/react-ui'
-import EditUser from './EditUser';
 import { EditIcon, TrashIcon, SearchIcon } from '../../icons'
-import { userUrl } from '../../utils/http/endpoints';
-import confirmation from '../../utils/generals/confirmation';
-import Edit from "../../utils/Edit/Edit";
+import { urlCandidateStep } from '../../utils/http/endpoints';
+import { urlCandidatePostStep } from '../../utils/http/endpoints';
+import ProcedureForm from '../../components/form/Models/ProcedureForm';
+import { toast } from 'react-toastify';
+import ToastyErrors from "../../utils/generals/ToastyErrors";
 
 
 function ProcedureManagment(props) {
 
     const handleClose = () => {
-        props.onClose();
+        props.onCloseProcedure();
     }
+
+    const recordsPerPage = 30
+    const [totalResults, setTotalResults] = useState(0);
+    const [page, setPage] = useState(1)
+    const [dataTable, setDataTable] = useState([])
+
+
+    useEffect(() => {
+        loadData();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+
+    }, [page, setPage])
+
+    function loadData() {
+        axios.get(`${urlCandidateStep}/${props.id}`, {
+            params: { page, recordsPerPage }
+        })
+            .then((response) => {
+                const totalRecords =
+                    parseInt(response.headers['totalrecords'], 10);
+                setDataTable(response.data);
+                setTotalResults(totalRecords)
+                console.log(response)
+            })
+    }
+
+    function onPageChangeTable(p) {
+        setPage(p)
+    }
+
+    const [errors, setErrors] = useState([]);
+    async function New(values) {
+        try {
+            console.log(values)
+
+            const response = await axios.post(`${urlCandidatePostStep}/${props.id}`, values);
+            console.log(response)
+
+            if (response.data.successful) {
+                return true;
+            } else {
+                setErrors(response.data.errors)
+                return false;
+            }
+        }
+        catch (error) {
+            setErrors(error.errors);
+            return false;
+        }
+    }
+
+    const labels = ["Estado","Descripción","Fecha"]
+    const columns = ["colProcedureStep.stepType","colProcedureStep.description","colProcedureStep.addRow"]
+
 
     return (
         <Modal isOpen={props.isOpen} onClose={handleClose} >
             <ModalHeader>Tramitación</ModalHeader>
+            <hr/>
             <ModalBody>
-                <Edit url={userUrl} id={props.id}>
-                    {(entidad, editar) =>
-                        <UsersForm model={entidad} isEdit={true}
-                            onSubmit={async valores => {
-                                await editar(valores)
-                            }} />}
-                </Edit>
-
+                <Card colored className="text-white bg-purple-600">
+                    <CardBody>
+                        <p className="mb-4 font-semibold">Aspirante: {dataTable.candidate.name}</p>
+                        <p className="mb-4 font-semibold">Barrio: {dataTable.candidate.neighborhood}</p>
+                        <p className="mb-4 font-semibold">Calidad: {dataTable.candidate.condition}</p>
+                    </CardBody>
+                </Card>
                 <TableContainer className="mb-6">
                     <Table>
                         <TableHeader>
                             <tr>
-                                <TableCell>Acciones</TableCell>
                                 {labels.map((label, i) => <TableCell key={i}>{label}</TableCell>)}
                             </tr>
                         </TableHeader>
                         <TableBody>
                             {dataTable.map((data, i) => (
                                 <TableRow key={data.id}>
-                                    <TableCell>
-                                        <div className="flex items-center space-x-4">
-                                            <Button onClick={() => handleEdit(data.id)} layout="link" size="icon" aria-label="Edit">
-                                                <EditIcon className="w-5 h-5" aria-hidden="true" />
-                                            </Button>
-                                            <Button onClick={() => confirmation(() => logicDelete(data.id))} layout="link" size="icon" aria-label="Delete">
-                                                <TrashIcon className="w-5 h-5" aria-hidden="true" />
-                                            </Button>
-                                        </div>
-                                    </TableCell>
                                     {columns.map((column, i) => <TableCell key={i}>{data[column]}</TableCell>)}
 
                                 </TableRow>
@@ -73,6 +118,21 @@ function ProcedureManagment(props) {
                         />
                     </TableFooter>
                 </TableContainer>
+                <hr/>
+                <ToastyErrors errors={errors} />
+                <ProcedureForm model={{
+                    stepType: '',
+                    description: ''
+                }}
+
+                    onSubmit={async (values, { resetForm }) => {
+                        let response = await New(values);
+                        if (response) {
+                            toast.success("Guardado correctamente")
+                            setErrors([])
+                            resetForm()
+                        }
+                    }} />
             </ModalBody>
             <ModalFooter>
                 <Button block size="large" layout="outline" onClick={handleClose}>
@@ -82,4 +142,4 @@ function ProcedureManagment(props) {
         </Modal>
     )
 }
-export default EditUser
+export default ProcedureManagment

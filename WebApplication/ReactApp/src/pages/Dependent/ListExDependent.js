@@ -17,8 +17,6 @@ import {
 import { EditIcon, TrashIcon, SearchIcon } from '../../icons'
 import { exCandidateDependent } from '../../utils/http/endpoints';
 import PageTitle from '../../components/Typography/PageTitle';
-import confirmation from '../../utils/generals/confirmation';
-
 
 
 export default function ListExDependent() {
@@ -54,34 +52,14 @@ export default function ListExDependent() {
             })
     }
 
-    async function logicDelete(id) {
-        setModalDeleteOpen(true)
-        setId(id);
-    }
-
-
     function onPageChangeTable(p) {
         setPage(p)
     }
 
-    function handleEdit(id) {
-        setModalOpen(true)
-        setId(id);
-    }
-    function onClose() {
-        setModalOpen(false)
-    }
-
-    function onCloseDelete() {
-        setModalDeleteOpen(false)
-    }
-
-
-
-    const labels = ["Tipo", "Numero", "Documento", "Nombres", "Apellidos",
+    const labels = ["Documento", "Nombres", "Apellidos",
         "Condición", "Dirección", "Teléfonos", "Teléfonos comercio",
         "Dirección Personal", "Inscripción"]
-    const columns = ["type", "number", "personalDocument", "name", "lastName",
+    const columns = ["personalDocument","name", "lastName",
         "condition", "address", "phone", "phoneShopData", "personalAddress", "addRow"]
 
     return (
@@ -107,7 +85,7 @@ export default function ListExDependent() {
                             setFilter(null)
                         } else { setFilter(e.target.value.toLowerCase()) }
                     }} className="mt-1">
-                        <option value="">  ----Tipo----</option>
+                        <option value=""> ----Tipo----</option>
                         <option value="dependent">Ex SubAgente o Corredor</option>
                         <option value="candidate">Ex Aspirante</option>
                     </Select>
@@ -118,29 +96,14 @@ export default function ListExDependent() {
             <TableContainer className="mb-8">
                 <Table>
                     <TableHeader>
-                        <tr>
-                            <TableCell>Acciones</TableCell>
+                        <tr>                            
                             {labels.map((label, i) => <TableCell key={i}>{label}</TableCell>)}
                         </tr>
                     </TableHeader>
                     <TableBody>
                         {dataTable.map((data, i) => (
-                            <TableRow key={data.id}>
-                                <TableCell>
-                                    <div className="flex items-center space-x-4">
-                                        <Button onClick={() => handleEdit(data.id)} layout="link" size="icon" aria-label="Edit">
-                                            <EditIcon className="w-5 h-5" aria-hidden="true" />
-                                        </Button>
-                                        <Button onClick={() => logicDelete(data.id)} layout="link" size="icon" aria-label="Delete">
-                                            <TrashIcon className="w-5 h-5" aria-hidden="true" />
-                                        </Button>
-                                        {/* <Button onClick={()=>confirmation(()=> logicDelete(data.id))} layout="link" size="icon" aria-label="Delete">
-                    <TrashIcon className="w-5 h-5" aria-hidden="true" />
-                  </Button> */}
-                                    </div>
-                                </TableCell>
+                            <TableRow key={data.id}>                                                              
                                 {columns.map((column, i) => <TableCell key={i}>{data[column]}</TableCell>)}
-
                             </TableRow>
                         ))}
                     </TableBody>
