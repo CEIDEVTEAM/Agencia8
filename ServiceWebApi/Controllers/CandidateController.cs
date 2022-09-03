@@ -54,7 +54,7 @@ namespace ServiceWebApi.Controllers
             try
             {
                 CandidateLogicController lg = new CandidateLogicController(_configuration, _application);
-                return lg.GetUserById(id);
+                return lg.GetCandidateById(id);
             }
             catch (Exception ex)
             {
@@ -87,6 +87,36 @@ namespace ServiceWebApi.Controllers
                 var userName = HttpContext.User.Claims.FirstOrDefault(x => x.Type == "userName").Value;
 
                 return await lg.EditCandidate(dto, userName);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("No es posible comunicarse con el proveedor.");
+            }
+        }
+
+        [HttpGet("step/{id:int}")]
+        public async Task<ActionResult<CandidateStepDataDTO>> GetSteps(int id)
+        {
+            try
+            {
+                CandidateLogicController lg = new CandidateLogicController(_configuration, _application);
+                return lg.GetStepsById(id);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("No es posible comunicarse con el proveedor.");
+            }
+        }
+
+        [HttpPost("addStep/{id:int}")]
+        public async Task<ActionResult<GenericResponse>> AddCandidateStep(int id, ProcedureStepDTO dto)
+        {
+            try
+            {
+                CandidateLogicController lg = new CandidateLogicController(_configuration, _application);
+                var userName = HttpContext.User.Claims.FirstOrDefault(x => x.Type == "userName").Value;
+
+                return lg.AddCandidateStep(dto, userName);
             }
             catch (Exception ex)
             {

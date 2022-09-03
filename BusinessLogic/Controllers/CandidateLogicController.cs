@@ -2,8 +2,11 @@
 using BusinessLogic.DTOs.Candidate;
 using BusinessLogic.DTOs.Generals;
 using BusinessLogic.Mappers;
+using CommonSolution.Enums;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json.Linq;
+using static BusinessLogic.DTOs.Candidate.CandidateStepDataDTO;
 
 namespace BusinessLogic.Controllers
 {
@@ -47,7 +50,7 @@ namespace BusinessLogic.Controllers
                             uow.ShopDataRepository.AddShopData(dto.ShopData, uow, userId);
                         }
 
-                        dto.ContactPerson.IdCandidate = idCandidate; 
+                        dto.ContactPerson.IdCandidate = idCandidate;
                         uow.ContactPersonRepository.AddContactPerson(dto.ContactPerson);
 
                         uow.SaveChanges();
@@ -118,11 +121,78 @@ namespace BusinessLogic.Controllers
 
         }
 
-        public CandidateCreationFrontDTO GetUserById(int id)
+        public ActionResult<CandidateStepDataDTO> GetStepsById(int id)
         {
             using (var uow = new UnitOfWork(_configuration, _application))
             {
-                return uow.CandidateRepository.GetCandidateCompleteDataById(id);
+                CandidateStepDataDTO dto = new CandidateStepDataDTO();
+
+                dto.colProcedureStep = uow.CandidateRepository.GetCandidateStepsById(id);
+                dto.candidate = uow.CandidateRepository.GetCandidateCreationById(id);
+
+                Dictionary<int, string> colStepType = Enum.GetValues(typeof(StepTypes)).Cast<StepTypes>().ToDictionary(t => (int)t, t => t.ToString());
+
+                dto.colStepTypes = new List<stepType>();
+                foreach (var item in colStepType)
+                {
+                    if (!dto.colProcedureStep.Any(a => a.StepType == item.Value))
+                    {
+                        dto.colStepTypes.Add(new stepType { id = item.Key, name = item.Value });
+                    }
+                }
+
+
+
+                return dto;
+            }
+        }
+
+        public ActionResult<GenericResponse> AddCandidateStep(ProcedureStepDTO dto, string userName)
+        {
+            List<string> errors = new List<string>();
+            bool successful = false;
+
+            using (var uow = new UnitOfWork(_configuration, _application))
+            {
+                uow.BeginTransaction();
+
+                decimal userId = uow.UserRepository.GetUserByUserName(userName).Id;
+
+                try
+                {
+                    //errors = Validations(dto, uow, true);
+
+                    //if (!errors.Any())
+                    //{
+                    dto.UpdUser = userId;
+
+                    uow.CandidateRepository.AddCandidateStep(dto);
+
+                    uow.SaveChanges();
+                    uow.Commit();
+                    successful = true;
+                    //}
+                }
+                catch (Exception ex)
+                {
+                    errors.Add("Error al comunicarse con la base de datos");
+                    uow.Rollback();
+                }
+            }
+
+            return new GenericResponse()
+            {
+                Errors = errors,
+                Successful = successful
+            };
+        }
+
+
+        public CandidateCreationFrontDTO GetCandidateById(int id)
+        {
+            using (var uow = new UnitOfWork(_configuration, _application))
+            {
+                return uow.CandidateRepository.GetCandidateCreationById(id);
             }
         }
 

@@ -31,6 +31,14 @@ namespace BusinessLogic.DataModel.Repository
             return entity.Id;
         }
 
+        public void AddCandidateStep(ProcedureStepDTO dto)
+        {
+            ProcedureStep entity = _mapper.MapToEntity(dto);
+            entity.AddRow = DateTime.Now;
+
+            _context.ProcedureStep.Add(entity);
+        }
+
         #endregion
 
         #region UPDATE
@@ -87,10 +95,16 @@ namespace BusinessLogic.DataModel.Repository
             return _context.Candidate.FirstOrDefault(x => x.Id == id);
         }
 
-        public CandidateCreationFrontDTO GetCandidateCompleteDataById(decimal id)
+        public CandidateCreationFrontDTO GetCandidateCreationById(decimal id)
         {
             var x = _context.VCandidate.FirstOrDefault(x => x.Id == id);
             return _mapper.MapToEditObject(x);
+        }
+
+        public List<ProcedureStepDTO> GetCandidateStepsById(int idCandidate)
+        {
+            var x = _context.ProcedureStep.Where(x => x.IdCandidate == idCandidate).ToList();
+            return _mapper.MapToObject(x);
         }
 
         #endregion
