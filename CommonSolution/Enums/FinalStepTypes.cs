@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 
 namespace CommonSolution.Enums
 {
-    public enum StepTypes
+    public enum FinalStepTypes
     {
-        DOC_EN_AGENCIA,
-        DOC_EN_BANCA,
+        ACEPTADO,
         DECLINADO
     }
 }
