@@ -1,7 +1,9 @@
 ﻿using BusinessLogic.DataModel;
 using BusinessLogic.DTOs.Candidate;
+using BusinessLogic.DTOs.Dependent;
 using BusinessLogic.DTOs.Generals;
 using BusinessLogic.Mappers;
+using CommonSolution.Constants;
 using CommonSolution.Enums;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -141,7 +143,7 @@ namespace BusinessLogic.Controllers
                 {
                     colStepType = Enum.GetValues(typeof(StepTypes)).Cast<StepTypes>().ToDictionary(t => (int)t, t => t.ToString());
 
-                    if(dto.colProcedureStep.Count == colStepType.Count)
+                    if (dto.colProcedureStep.Count == colStepType.Count)
                     {
                         colStepType = Enum.GetValues(typeof(FinalStepTypes)).Cast<FinalStepTypes>().ToDictionary(t => (int)t, t => t.ToString());
                     }
@@ -151,7 +153,7 @@ namespace BusinessLogic.Controllers
                 {
                     if (!dto.colProcedureStep.Any(a => a.StepType == item.Value))
                     {
-                        dto.colStepTypes.Add(new stepType { id = item.Value , name = item.Value });
+                        dto.colStepTypes.Add(new stepType { id = item.Value, name = item.Value });
                     }
                 }
 
@@ -179,12 +181,38 @@ namespace BusinessLogic.Controllers
                     //if (!errors.Any())
                     //{
                     dto.UpdUser = userId;
+                    if (dto.StepType == "DECLINADO")
+                    {
+                        CandidateCreationDTO candidate = uow.CandidateRepository.GetCandidateById(dto.IdCandidate ?? -1);
+                        candidate.Status = CStatus.declined;
+
+                        uow.CandidateRepository.UpdateCandidate(candidate, uow, userId);
+                    }
+                    else if (dto.StepType == "ACEPTADO")
+                    {
+                        CandidateCreationFrontDTO candidate = uow.CandidateRepository.GetCandidateCreationById(dto.IdCandidate ?? -1);
+                        DependentCreationDTO dependent = _mapper.MapToDependentObject(candidate);
+                        DependentLogicController lgDep = new DependentLogicController(_configuration, _application);
+
+                        errors = lgDep.AddDependent(candidate, uow, userId);
+
+                        CandidateCreationDTO candiateUpd = uow.CandidateRepository.GetCandidateById(dto.IdCandidate ?? -1);
+                        candiateUpd.Status = CStatus.accepted;
+                        uow.CandidateRepository.UpdateCandidate(candiateUpd, uow, userId);
+                    }
 
                     uow.CandidateRepository.AddCandidateStep(dto);
 
-                    uow.SaveChanges();
-                    uow.Commit();
-                    successful = true;
+                    if (!errors.Any())
+                    {
+                        uow.SaveChanges();
+                        uow.Commit();
+                        successful = true;
+                    }
+                    else
+                    {
+                        throw new Exception("");
+                    }
                     //}
                 }
                 catch (Exception ex)

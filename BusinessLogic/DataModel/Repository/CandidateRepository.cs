@@ -45,7 +45,7 @@ namespace BusinessLogic.DataModel.Repository
 
         public void UpdateCandidate(CandidateCreationDTO candidate, UnitOfWork uow, decimal userId)
         {
-            Candidate entity = this.GetCandidateById(candidate.Id);
+            Candidate entity = _context.Candidate.FirstOrDefault(x => x.Id == candidate.Id);
 
             entity = this._mapper.MapToEditEntity(candidate, entity);
             entity.UpdRow = DateTime.Now;
@@ -58,14 +58,6 @@ namespace BusinessLogic.DataModel.Repository
         #endregion
 
         #region DELETE
-
-        public void DeleteCandidate(decimal id, UnitOfWork uow, decimal userId)
-        {
-            Candidate entity = GetCandidateById(id);
-
-            _context.Candidate.Remove(entity);
-            uow.LogRepository.LogCandidate(entity, userId, CActions.edit);
-        }
 
 
         #endregion
@@ -89,16 +81,16 @@ namespace BusinessLogic.DataModel.Repository
         {
             return _context.VCandidate.AsNoTracking().Where(x => x.LastName.ToLower().Contains(search.ToLower())|| x.PersonalDocument.ToLower().Contains(search.ToLower())).AsQueryable();
         }
-
-        public Candidate GetCandidateById(decimal id)
-        {
-            return _context.Candidate.FirstOrDefault(x => x.Id == id);
-        }
-
         public CandidateCreationFrontDTO GetCandidateCreationById(decimal id)
         {
             var x = _context.VCandidate.FirstOrDefault(x => x.Id == id);
             return _mapper.MapToEditObject(x);
+        }
+
+        public CandidateCreationDTO GetCandidateById(decimal id)
+        {
+            var x = _context.Candidate.FirstOrDefault(x => x.Id == id);
+            return _mapper.MapToObject(x);
         }
 
         public List<ProcedureStepDTO> GetCandidateStepsById(int idCandidate)

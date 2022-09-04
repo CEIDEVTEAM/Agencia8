@@ -81,21 +81,21 @@ namespace ServiceWebApi.Controllers
         }
 
 
-        [HttpPost("addDependent")]
-        public async Task<ActionResult<GenericResponse>> AddDependent([FromBody] DependentCreationFrontDTO dto)
-        {
-            try
-            {
-                DependentLogicController lg = new DependentLogicController(_configuration, _application);
-                var userName = HttpContext.User.Claims.FirstOrDefault(x => x.Type == "userName").Value;
+        //[HttpPost("addDependent")]
+        //public async Task<ActionResult<GenericResponse>> AddDependent([FromBody] DependentCreationFrontDTO dto)
+        //{
+        //    try
+        //    {
+        //        DependentLogicController lg = new DependentLogicController(_configuration, _application);
+        //        var userName = HttpContext.User.Claims.FirstOrDefault(x => x.Type == "userName").Value;
 
-                return await lg.AddDependent(dto, userName);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest("No es posible comunicarse con el proveedor.");
-            }
-        }
+        //        return await lg.AddDependent(dto, userName);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return BadRequest("No es posible comunicarse con el proveedor.");
+        //    }
+        //}
 
         [HttpPut("{id:int}")]
         public async Task<ActionResult<GenericResponse>> EditDependent([FromBody] DependentCreationFrontDTO dto)

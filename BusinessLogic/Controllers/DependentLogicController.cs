@@ -1,4 +1,5 @@
 ﻿using BusinessLogic.DataModel;
+using BusinessLogic.DTOs.Candidate;
 using BusinessLogic.DTOs.Dependent;
 using BusinessLogic.DTOs.Generals;
 using BusinessLogic.Mappers;
@@ -20,53 +21,41 @@ namespace BusinessLogic.Controllers
             this._mapper = new DependentMapper();
         }
 
-        public async Task<GenericResponse> AddDependent(DependentCreationFrontDTO frontDto, string userName)
+        public List<string> AddDependent(CandidateCreationFrontDTO frontDto, UnitOfWork uow, decimal userId)
         {
             List<string> errors = new List<string>();
             bool successful = false;
 
             DependentCreationDTO dto = _mapper.MapToObject(frontDto);
 
-            using (var uow = new UnitOfWork(_configuration, _application))
+            try
             {
-                uow.BeginTransaction();
-                decimal userId = uow.UserRepository.GetUserByUserName(userName).Id;
+                errors = Validations(dto, uow, true);
 
-                try
+                if (!errors.Any())
                 {
-                    errors = Validations(dto, uow, true);
+                    decimal idDependent = uow.DependentRepository.AddDependent(dto, uow, userId);
 
-                    if (!errors.Any())
+                    if (dto.ShopData != null)
                     {
-                        decimal idDependent = uow.DependentRepository.AddDependent(dto, uow, userId);
-
-                        if (dto.ShopData != null)
-                        {
-                            dto.ShopData.NumberDependent = idDependent;
-                            uow.ShopDataRepository.AddShopData(dto.ShopData, uow, userId);
-                        }
-
-                        dto.ContactPerson.IdDependent = idDependent; 
-                        uow.ContactPersonRepository.AddContactPerson(dto.ContactPerson);
-
-                        uow.SaveChanges();
-                        uow.Commit();
-                        successful = true;
+                        dto.ShopData.IdDependent = idDependent;
+                        uow.ShopDataRepository.AddShopData(dto.ShopData, uow, userId);
                     }
-                }
-                catch (Exception ex)
-                {
-                    errors.Add("Error al comunicarse con la base de datos");
-                    uow.Rollback();
+
+                    dto.ContactPerson.IdDependent = idDependent;
+                    uow.ContactPersonRepository.AddContactPerson(dto.ContactPerson);
+
+                    uow.SaveChanges();
+                    successful = true;
                 }
             }
-
-            return new GenericResponse()
+            catch (Exception ex)
             {
-                Errors = errors,
-                Successful = successful
-            };
+                errors.Add("Error al comunicarse con la base de datos");
+                uow.Rollback();
+            }
 
+            return errors;
         }
 
         public async Task<GenericResponse> EditDependent(DependentCreationFrontDTO frontDto, string userName)

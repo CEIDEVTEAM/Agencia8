@@ -26,6 +26,7 @@ namespace BusinessLogic.DataModel.Repository
         {
             Dependent entity = _mapper.MapToEntity(dto);
             entity.AddRow = DateTime.Now;
+            entity.ActiveFlag = "S";
 
             _context.Dependent.Add(entity);
             uow.LogRepository.LogDependent(entity, userId, CActions.add);
