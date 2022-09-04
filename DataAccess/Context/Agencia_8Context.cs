@@ -225,9 +225,8 @@ namespace DataAccess.Context
                     .IsUnicode(false);
 
                 entity.Property(e => e.RecomendedDecision)
-                    .HasMaxLength(10)
-                    .HasColumnName("Recomended_Decision")
-                    .IsFixedLength();
+                    .HasMaxLength(30)
+                    .IsUnicode(false);
             });
 
             modelBuilder.Entity<DependentFact>(entity =>
