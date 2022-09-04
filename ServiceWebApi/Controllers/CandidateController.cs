@@ -108,7 +108,7 @@ namespace ServiceWebApi.Controllers
             }
         }
 
-        [HttpPut("addStep/{id:int}")]
+        [HttpPut("step/{id:int}")]
         public async Task<ActionResult<GenericResponse>> AddCandidateStep(int id, ProcedureStepDTO dto)
         {
             try

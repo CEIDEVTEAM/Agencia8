@@ -24,7 +24,7 @@ namespace BusinessLogic.DataModel.Repository
         {
             DecisionSupport entity = _mapper.MapToEntity(obj);
             entity.AddRow = DateTime.Now;
-            _context.DecisionSupport.Add(entity);
+            _context.DecisionSupport.AddAsync(entity);
             return entity.Id;
             
         }

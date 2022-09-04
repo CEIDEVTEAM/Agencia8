@@ -103,7 +103,8 @@ namespace BusinessLogic.DataModel.Repository
 
         public List<DistanceResponseDTO> GetDependentsWithUbications()
         {
-            return _context.VDependent.AsNoTracking().Where(x => x.Condition == "SubAgente").Select(s => new DistanceResponseDTO { Latitude = s.Latitude, Longitude = s.Longitude }).ToList();
+            return _context.VDependent.AsNoTracking().Where(x => x.Condition == "SubAgente")
+                .Select(s => new DistanceResponseDTO { Latitude = s.Latitude, Longitude = s.Longitude }).ToList();
         }
 
         public IQueryable<VExCandidateDependent> GetExCandidateDependents(string search, string filter)

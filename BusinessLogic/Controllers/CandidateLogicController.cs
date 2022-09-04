@@ -52,8 +52,11 @@ namespace BusinessLogic.Controllers
                         {
                             dto.ShopData.IdCandidate = idCandidate;
                             uow.ShopDataRepository.AddShopData(dto.ShopData, uow, userId);
-                            uow.SaveChanges();
-                            this.DecisionSupportResult(uow, idCandidate, userId);
+                            frontDto.id = idCandidate;                            
+                            decimal idDecision = this.DecisionSupportResult(uow, frontDto, userId);
+                            dto.IdDecisionSupport = idDecision;
+                            uow.CandidateRepository.UpdateCandidate(dto, uow, userId);
+
                         }
 
                         dto.ContactPerson.IdCandidate = idCandidate;
@@ -61,7 +64,8 @@ namespace BusinessLogic.Controllers
 
                         uow.SaveChanges();
                         uow.Commit();
-                        successful = true;
+                        successful = true;                   
+                        
                     }
                 }
                 catch (Exception ex)
@@ -165,11 +169,10 @@ namespace BusinessLogic.Controllers
             }
         }
 
-        public void DecisionSupportResult(UnitOfWork uow, decimal candidateId, decimal userId)
+        public decimal DecisionSupportResult(UnitOfWork uow, CandidateCreationFrontDTO candidate, decimal userId)
         {
             DecisionSupportDTO dto = new DecisionSupportDTO();
 
-            CandidateCreationFrontDTO candidate = uow.CandidateRepository.GetCandidateCreationById(candidateId);
             List<DistanceResponseDTO> getDistances = uow.DependentRepository.GetDependentsWithUbications();
 
             GeoCoordinate candidateLocation = new GeoCoordinate((double)candidate.latitude, (double)candidate.longitude);
@@ -200,9 +203,11 @@ namespace BusinessLogic.Controllers
             dto.Date = DateTime.Now;
 
             decimal idDecision = uow.DecisionSupportRepository.AddDecision(dto);
-            CandidateCreationDTO upd = _mapper.MapToObject(candidate);
-            upd.IdDecisionSupport = idDecision;
-            uow.CandidateRepository.UpdateCandidate(upd, uow, userId);
+            uow.SaveChanges();
+            return idDecision;
+            //CandidateCreationDTO upd = _mapper.MapToObject(candidate);
+            //upd.IdDecisionSupport = idDecision;
+            ////uow.CandidateRepository.UpdateCandidate(upd, uow, userId);
         }
 
         public ActionResult<GenericResponse> AddCandidateStep(ProcedureStepDTO dto, string userName)
