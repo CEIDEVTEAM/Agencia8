@@ -151,7 +151,7 @@ namespace BusinessLogic.Controllers
                 {
                     if (!dto.colProcedureStep.Any(a => a.StepType == item.Value))
                     {
-                        dto.colStepTypes.Add(new stepType { id = item.Key, name = item.Value });
+                        dto.colStepTypes.Add(new stepType { id = item.Value , name = item.Value });
                     }
                 }
 

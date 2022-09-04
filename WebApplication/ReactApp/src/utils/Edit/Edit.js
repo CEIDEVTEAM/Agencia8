@@ -12,7 +12,7 @@ export default function Edit(props) {
     const id  = props.id;
     const [entity, setEntity] = useState();
     const [errors, setErrors] = useState([]);
-    const [success, setSuccess] = useState();
+    const [success, setSuccess] = useState(false);
     const history = useHistory();
     console.log(entity)
 
@@ -20,15 +20,18 @@ export default function Edit(props) {
         axios.get(`${props.url}/${id}`)
             .then((response) => {
                 setEntity(response.data);
+                setSuccess(false)
             })        
-    }, [])
+    }, [success])
 
-    async function edit(entity) {
+    async function edit(entity, resetForm) {
         try {            
             const response = await axios.put(`${props.url}/${id}`, entity);
             if(response.data.successful) {
                 toast.success("Cambios realizados correctamente") 
+                setSuccess(true)
                 setErrors([])
+                resetForm()                
             }else{
                 setErrors(response.data.errors)
             }           

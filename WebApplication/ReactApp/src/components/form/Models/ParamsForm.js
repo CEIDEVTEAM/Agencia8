@@ -8,13 +8,8 @@ import SectionTitle from '../../../components/Typography/SectionTitle'
 
 
 export default function ParamsForm(props) {
-    const [isEditing, setIsEditing] = useState(false)
-    useEffect(() => {
-        if (props.isEdit)
-            setIsEditing(true)
-    }, [])
-
-
+    
+    
     return (
         <Formik initialValues={props.model}
             onSubmit={props.onSubmit}

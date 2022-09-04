@@ -19,7 +19,7 @@ export default function DependentQuitForm(props) {
         >
             {(formikProps) => (
                 <Form>
-                    <div className="grid md:grid-cols-2 md:gap-6">
+                    <div className="grid md:grid-cols-1 md:gap-6">
                         <FormTextArea type={"textarea"} campo="description" label="Motivo" />                        
                     </div>
                     
