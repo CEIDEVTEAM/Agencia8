@@ -68,6 +68,11 @@ namespace BusinessLogic.DataModel.Repository
             return this._mapper.MapToObject(_context.DecisionParam.FirstOrDefault(x => x.Id == id));
         }
 
+        public double GetDecisionParamByNeighborhood(string neighborhood)
+        {
+            return double.Parse(_context.DecisionParam.FirstOrDefault(x => x.Name == neighborhood).Value);
+        }
+
         #endregion
 
     }

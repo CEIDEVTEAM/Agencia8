@@ -101,9 +101,14 @@ namespace BusinessLogic.DataModel.Repository
             return _context.VDependent.AsNoTracking().Where(x => x.LastName.ToLower().Contains(search.ToLower()) || x.Number.ToString().Contains(search.ToLower())).AsQueryable();
         }
 
+        public List<DistanceResponseDTO> GetDependentsWithUbications()
+        {
+            return _context.VDependent.AsNoTracking().Where(x => x.Condition == "SubAgente").Select(s => new DistanceResponseDTO { Latitude = s.Latitude, Longitude = s.Longitude }).ToList();
+        }
+
         public IQueryable<VExCandidateDependent> GetExCandidateDependents(string search, string filter)
         {
-           
+
             var query = _context.VExCandidateDependent.AsNoTracking().Where(x => x.LastName.ToLower().Contains(search.ToLower())
             || x.PersonalDocument.Contains(search.ToLower())).AsQueryable();
 

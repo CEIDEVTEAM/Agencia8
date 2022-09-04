@@ -52,6 +52,8 @@ namespace BusinessLogic.Controllers
                         {
                             dto.ShopData.IdCandidate = idCandidate;
                             uow.ShopDataRepository.AddShopData(dto.ShopData, uow, userId);
+                            uow.SaveChanges();
+                            this.DecisionSupportResult(uow, idCandidate, userId);
                         }
 
                         dto.ContactPerson.IdCandidate = idCandidate;
@@ -163,18 +165,44 @@ namespace BusinessLogic.Controllers
             }
         }
 
-        public ActionResult<DesitionSupportDTO> DecisionSupportResult(int candidateId)
+        public void DecisionSupportResult(UnitOfWork uow, decimal candidateId, decimal userId)
         {
-            DesitionSupportDTO dto = new DesitionSupportDTO();
-            using (var uow = new UnitOfWork(_configuration, _application))
+            DecisionSupportDTO dto = new DecisionSupportDTO();
+
+            CandidateCreationFrontDTO candidate = uow.CandidateRepository.GetCandidateCreationById(candidateId);
+            List<DistanceResponseDTO> getDistances = uow.DependentRepository.GetDependentsWithUbications();
+
+            GeoCoordinate candidateLocation = new GeoCoordinate((double)candidate.latitude, (double)candidate.longitude);
+
+            double minDistance = double.MaxValue;
+            double minDistanceNeighborhood = uow.DecisionParamRepository.GetDecisionParamByNeighborhood(candidate.neighborhood);
+
+            foreach (DistanceResponseDTO item in getDistances)
             {
-                CandidateDTO candidate = uow.CandidateRepository.GetCandidateById(candidateId);
+                GeoCoordinate currentPoint = new GeoCoordinate(double.Parse(item.Latitude), double.Parse(item.Longitude));
+                double distance = DistanceExtensions.GetDistance(candidateLocation, currentPoint);
 
+                if (distance < minDistance)
+                    minDistance = distance;
             }
+            if (minDistance < minDistanceNeighborhood)
+            {
+                dto.RecomendedDecision = "No recomendando";
+                dto.Description = $"La distancia minima para el barrio {candidate.neighborhood} es {minDistanceNeighborhood}," +
+                    $" el comercio mas cercano se encuentra a {minDistance}";
+            }
+            else
+            {
+                dto.RecomendedDecision = "Se recomienda";
+                dto.Description = $"La distancia minima para el barrio {candidate.neighborhood} es {minDistanceNeighborhood}," +
+                    $" el comercio mas cercano se encuentra a {minDistance}";
+            }
+            dto.Date = DateTime.Now;
 
-            //DistanceExtensions.GetDistance(coordinate1, coordinate2);
-
-            return dto;
+            decimal idDecision = uow.DecisionSupportRepository.AddDecision(dto);
+            CandidateCreationDTO upd = _mapper.MapToObject(candidate);
+            upd.IdDecisionSupport = idDecision;
+            uow.CandidateRepository.UpdateCandidate(upd, uow, userId);
         }
 
         public ActionResult<GenericResponse> AddCandidateStep(ProcedureStepDTO dto, string userName)
@@ -197,20 +225,20 @@ namespace BusinessLogic.Controllers
                     dto.UpdUser = userId;
                     if (dto.StepType == "DECLINADO")
                     {
-                        CandidateCreationDTO candidate = uow.CandidateRepository.GetCandidateById(dto.IdCandidate ?? -1);
+                        CandidateCreationDTO candidate = uow.CandidateRepository.GetCandidateById((decimal)dto.IdCandidate);
                         candidate.Status = CStatus.declined;
 
                         uow.CandidateRepository.UpdateCandidate(candidate, uow, userId);
                     }
                     else if (dto.StepType == "ACEPTADO")
                     {
-                        CandidateCreationFrontDTO candidate = uow.CandidateRepository.GetCandidateCreationById(dto.IdCandidate ?? -1);
+                        CandidateCreationFrontDTO candidate = uow.CandidateRepository.GetCandidateCreationById((decimal)dto.IdCandidate);
                         DependentCreationDTO dependent = _mapper.MapToDependentObject(candidate);
                         DependentLogicController lgDep = new DependentLogicController(_configuration, _application);
 
                         errors = lgDep.AddDependent(candidate, uow, userId);
 
-                        CandidateCreationDTO candiateUpd = uow.CandidateRepository.GetCandidateById(dto.IdCandidate ?? -1);
+                        CandidateCreationDTO candiateUpd = uow.CandidateRepository.GetCandidateById((decimal)dto.IdCandidate);
                         candiateUpd.Status = CStatus.accepted;
                         uow.CandidateRepository.UpdateCandidate(candiateUpd, uow, userId);
                     }

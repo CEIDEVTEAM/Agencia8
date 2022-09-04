@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BusinessLogic.DTOs.Candidate
 {
-    public class DesitionSupportDTO
+    public class DecisionSupportDTO
     {
         public decimal Id { get; set; }
         public DateTime? Date { get; set; }
