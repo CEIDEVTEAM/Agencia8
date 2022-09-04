@@ -1,5 +1,6 @@
 ﻿using BusinessLogic.DTOs.Candidate;
 using BusinessLogic.DTOs.ContactPerson;
+using BusinessLogic.DTOs.Dependent;
 using BusinessLogic.DTOs.ShopData;
 using CommonSolution.Constants;
 using DataAccess.Models;
@@ -241,5 +242,44 @@ namespace BusinessLogic.Mappers
             return colObject;
         }
 
+        public DependentCreationDTO MapToDependentObject(CandidateCreationFrontDTO candidate)
+        {
+            if (candidate == null)
+                throw new Exception("No hay objeto/entidad para mapear");
+
+            return new DependentCreationDTO
+            {
+                Id = candidate.id ?? 0,
+                Name = candidate.name,
+                LastName = candidate.lastName,
+                BirthDate = DateTime.Parse(candidate.birthDate),
+                PersonalDocument = candidate.personalDocument,
+                Gender = candidate.Gender,
+                MaritalStatus = candidate.MaritalStatus,
+                PersonalAddress = candidate.personalAddress,
+                Phone = candidate.phone,
+                Condition = candidate.condition,
+
+                ContactPerson = new ContactPersonCreationDTO
+                {
+                    Name = candidate.cpName,
+                    LastName = candidate.cpLastName,
+                    Phone = candidate.cpPhone,
+                    Bond = candidate.bond
+                },
+
+                ShopData = string.IsNullOrEmpty(candidate.cName) ? null : new ShopDataCreationDTO
+                {
+                    Name = candidate.cName,
+                    Phone = candidate.cPhone,
+                    Address = candidate.address,
+                    Neighborhood = candidate.neighborhood,
+                    ShopType = candidate.shopType,
+                    Latitude = candidate.latitude.ToString(),
+                    Longitude = candidate.longitude.ToString(),
+                }
+            };
+
+        }
     }
 }

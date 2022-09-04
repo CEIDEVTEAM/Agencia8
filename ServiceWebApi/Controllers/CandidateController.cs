@@ -108,13 +108,13 @@ namespace ServiceWebApi.Controllers
             }
         }
 
-        [HttpPut("step/{id:int}")]
+        [HttpPut("addStep/{id:int}")]
         public async Task<ActionResult<GenericResponse>> AddCandidateStep(int id, ProcedureStepDTO dto)
         {
             try
             {
                 CandidateLogicController lg = new CandidateLogicController(_configuration, _application);
-                var userName = HttpContext.User.Claims.FirstOrDefault(x => x.Type == "userName").Value;
+                var userName = "admin";//HttpContext.User.Claims.FirstOrDefault(x => x.Type == "userName").Value; EDU
                 dto.IdCandidate = id;
                 return lg.AddCandidateStep(dto, userName);
             }

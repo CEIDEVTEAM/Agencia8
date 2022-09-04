@@ -1,7 +1,9 @@
 ﻿using BusinessLogic.DataModel;
 using BusinessLogic.DTOs.Candidate;
+using BusinessLogic.DTOs.Dependent;
 using BusinessLogic.DTOs.Generals;
 using BusinessLogic.Mappers;
+using CommonSolution.Constants;
 using BusinessLogic.Utils;
 using CommonSolution.Enums;
 using Microsoft.AspNetCore.Mvc;
@@ -193,12 +195,38 @@ namespace BusinessLogic.Controllers
                     //if (!errors.Any())
                     //{
                     dto.UpdUser = userId;
+                    if (dto.StepType == "DECLINADO")
+                    {
+                        CandidateCreationDTO candidate = uow.CandidateRepository.GetCandidateById(dto.IdCandidate ?? -1);
+                        candidate.Status = CStatus.declined;
+
+                        uow.CandidateRepository.UpdateCandidate(candidate, uow, userId);
+                    }
+                    else if (dto.StepType == "ACEPTADO")
+                    {
+                        CandidateCreationFrontDTO candidate = uow.CandidateRepository.GetCandidateCreationById(dto.IdCandidate ?? -1);
+                        DependentCreationDTO dependent = _mapper.MapToDependentObject(candidate);
+                        DependentLogicController lgDep = new DependentLogicController(_configuration, _application);
+
+                        errors = lgDep.AddDependent(candidate, uow, userId);
+
+                        CandidateCreationDTO candiateUpd = uow.CandidateRepository.GetCandidateById(dto.IdCandidate ?? -1);
+                        candiateUpd.Status = CStatus.accepted;
+                        uow.CandidateRepository.UpdateCandidate(candiateUpd, uow, userId);
+                    }
 
                     uow.CandidateRepository.AddCandidateStep(dto);
 
-                    uow.SaveChanges();
-                    uow.Commit();
-                    successful = true;
+                    if (!errors.Any())
+                    {
+                        uow.SaveChanges();
+                        uow.Commit();
+                        successful = true;
+                    }
+                    else
+                    {
+                        throw new Exception("");
+                    }
                     //}
                 }
                 catch (Exception ex)
