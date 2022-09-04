@@ -129,10 +129,24 @@ namespace BusinessLogic.Controllers
 
                 dto.colProcedureStep = uow.CandidateRepository.GetCandidateStepsById(id);
                 dto.candidate = uow.CandidateRepository.GetCandidateCreationById(id);
-
-                Dictionary<int, string> colStepType = Enum.GetValues(typeof(StepTypes)).Cast<StepTypes>().ToDictionary(t => (int)t, t => t.ToString());
-
                 dto.colStepTypes = new List<stepType>();
+
+                Dictionary<int, string> colStepType = new Dictionary<int, string>();
+
+                if (!dto.colProcedureStep.Any())
+                {
+                    colStepType = Enum.GetValues(typeof(InitialStepTypes)).Cast<InitialStepTypes>().ToDictionary(t => (int)t, t => t.ToString());
+                }
+                else
+                {
+                    colStepType = Enum.GetValues(typeof(StepTypes)).Cast<StepTypes>().ToDictionary(t => (int)t, t => t.ToString());
+
+                    if(dto.colProcedureStep.Count == colStepType.Count)
+                    {
+                        colStepType = Enum.GetValues(typeof(FinalStepTypes)).Cast<FinalStepTypes>().ToDictionary(t => (int)t, t => t.ToString());
+                    }
+                }
+
                 foreach (var item in colStepType)
                 {
                     if (!dto.colProcedureStep.Any(a => a.StepType == item.Value))
