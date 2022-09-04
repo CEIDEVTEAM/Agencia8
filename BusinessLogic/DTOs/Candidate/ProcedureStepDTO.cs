@@ -10,8 +10,8 @@ namespace BusinessLogic.DTOs.Candidate
     {
         public string StepType { get; set; }
         public string Description { get; set; }
-        public decimal IdCandidate { get; set; }
-        public decimal UpdUser { get; set; }
-        public string AddRow { get; set; }
+        public decimal? IdCandidate { get; set; }
+        public decimal? UpdUser { get; set; } 
+        public string? AddRow { get; set; }
     }
 }

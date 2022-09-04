@@ -14,7 +14,7 @@ namespace BusinessLogic.DTOs.Candidate
 
         public class stepType
         {
-            public int id { get; set; }
+            public string id { get; set; }
             public string name { get; set; }
         }
 

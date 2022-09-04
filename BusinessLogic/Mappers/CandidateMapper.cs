@@ -212,8 +212,8 @@ namespace BusinessLogic.Mappers
             {
                 StepType = dto.StepType,
                 Description = dto.Description,
-                IdCandidate = dto.IdCandidate,
-                UpdUser = dto.UpdUser
+                IdCandidate = (decimal)dto.IdCandidate,
+                UpdUser = (decimal)dto.UpdUser
             };
         }
 

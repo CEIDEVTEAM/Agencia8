@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import axios from "axios";
+import {Link} from 'react-router-dom'
 import {
   Table,
   TableHeader,
@@ -14,11 +15,12 @@ import {
 } from '@windmill/react-ui'
 
 import { EditIcon, TrashIcon,SearchIcon, CardsIcon } from '../../icons'
-import { candidateUrl } from '../../utils/http/endpoints';
+import { candidateUrl, urlCandidateStep } from '../../utils/http/endpoints';
 import PageTitle from '../../components/Typography/PageTitle';
 import confirmation from '../../utils/generals/confirmation';
 import EditCandidate from './EditCandidate';
 import ProcedureManagment from './ProcedureManagment'
+import Procedure from './Procedure';
 
 
 export default function CandidatesManagment () {
@@ -26,7 +28,7 @@ export default function CandidatesManagment () {
   const recordsPerPage = 30
   const [totalResults, setTotalResults] = useState(0);
   const [page, setPage] = useState(1)
-  const [dataTable, setDataTable] = useState([])
+  const [dataTable, setDataTable] = useState([])  
 
   const [openModal, setModalOpen] = useState(false)
   const [openProceduresModal, setOpenProceduresModal] = useState(false)
@@ -38,7 +40,7 @@ export default function CandidatesManagment () {
     loadData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
 
-  }, [page, setPage, openModal, search])
+  }, [page, setPage, openModal, openProceduresModal,search])
 
   function loadData() {
     axios.get(candidateUrl, {
@@ -61,8 +63,7 @@ export default function CandidatesManagment () {
     catch (error) {
         console.log(error.response.data);
     }
-  } 
- 
+  }  
 
   function onPageChangeTable(p) {
     setPage(p)
@@ -74,7 +75,7 @@ export default function CandidatesManagment () {
   }
   function handleProcedure(id){
     setOpenProceduresModal(true)
-    setId(id)
+    setId(id)    
   }
   function onClose(){
     setModalOpen(false)
@@ -147,10 +148,8 @@ export default function CandidatesManagment () {
           />
         </TableFooter>
       </TableContainer>
-      <EditCandidate isOpen={openModal} onClose={onClose} id={id}></EditCandidate>
-      <ProcedureManagment isOpen={openProceduresModal} onClose={onCloseProcedure} id={id}></ProcedureManagment>
-    
-    
+      <EditCandidate isOpen={openModal} onClose={onClose} id={id}></EditCandidate> 
+      <Procedure isOpen={openProceduresModal} onClose={onCloseProcedure} id={id}></Procedure>
     </>
   )
 }

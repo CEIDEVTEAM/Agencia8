@@ -34,8 +34,8 @@ export default function ListDependent() {
   const [search, setSearch] = useState(null)
 
 
-  useEffect(() => {
-    loadData();
+  useEffect(() => {    
+      loadData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
 
   }, [page, setPage, openModal, openDeleteModal, search])

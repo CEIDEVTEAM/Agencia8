@@ -21,7 +21,7 @@ import { toast } from 'react-toastify';
 import ToastyErrors from "../../utils/generals/ToastyErrors";
 
 
-function ProcedureManagment(props) {
+export default function ProcedureManagment(props) {
 
     const handleClose = () => {
         props.onCloseProcedure();
@@ -33,12 +33,7 @@ function ProcedureManagment(props) {
     const [dataTable, setDataTable] = useState([])
 
 
-    useEffect(() => {
-        loadData();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-
-    }, [page, setPage])
-
+  
     function loadData() {
         axios.get(`${urlCandidateStep}/${props.id}`, {
             params: { page, recordsPerPage }
@@ -93,7 +88,7 @@ function ProcedureManagment(props) {
                         <p className="mb-4 font-semibold">Calidad: {dataTable.candidate.condition}</p>
                     </CardBody>
                 </Card>
-                <TableContainer className="mb-6">
+                {/* <TableContainer className="mb-6">
                     <Table>
                         <TableHeader>
                             <tr>
@@ -118,7 +113,7 @@ function ProcedureManagment(props) {
                         />
                     </TableFooter>
                 </TableContainer>
-                <hr/>
+                <hr/> */}
                 <ToastyErrors errors={errors} />
                 <ProcedureForm model={{
                     stepType: '',
@@ -142,4 +137,3 @@ function ProcedureManagment(props) {
         </Modal>
     )
 }
-export default ProcedureManagment
