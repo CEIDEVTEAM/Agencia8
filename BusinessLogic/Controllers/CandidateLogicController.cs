@@ -2,9 +2,11 @@
 using BusinessLogic.DTOs.Candidate;
 using BusinessLogic.DTOs.Generals;
 using BusinessLogic.Mappers;
+using BusinessLogic.Utils;
 using CommonSolution.Enums;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using Nest;
 using Newtonsoft.Json.Linq;
 using static BusinessLogic.DTOs.Candidate.CandidateStepDataDTO;
 
@@ -141,7 +143,7 @@ namespace BusinessLogic.Controllers
                 {
                     colStepType = Enum.GetValues(typeof(StepTypes)).Cast<StepTypes>().ToDictionary(t => (int)t, t => t.ToString());
 
-                    if(dto.colProcedureStep.Count == colStepType.Count)
+                    if (dto.colProcedureStep.Count == colStepType.Count)
                     {
                         colStepType = Enum.GetValues(typeof(FinalStepTypes)).Cast<FinalStepTypes>().ToDictionary(t => (int)t, t => t.ToString());
                     }
@@ -151,12 +153,26 @@ namespace BusinessLogic.Controllers
                 {
                     if (!dto.colProcedureStep.Any(a => a.StepType == item.Value))
                     {
-                        dto.colStepTypes.Add(new stepType { id = item.Value , name = item.Value });
+                        dto.colStepTypes.Add(new stepType { id = item.Value, name = item.Value });
                     }
                 }
 
                 return dto;
             }
+        }
+
+        public ActionResult<DesitionSupportDTO> DecisionSupportResult(int candidateId)
+        {
+            DesitionSupportDTO dto = new DesitionSupportDTO();
+            using (var uow = new UnitOfWork(_configuration, _application))
+            {
+                CandidateDTO candidate = uow.CandidateRepository.GetCandidateById(candidateId);
+
+            }
+
+            //DistanceExtensions.GetDistance(coordinate1, coordinate2);
+
+            return dto;
         }
 
         public ActionResult<GenericResponse> AddCandidateStep(ProcedureStepDTO dto, string userName)
