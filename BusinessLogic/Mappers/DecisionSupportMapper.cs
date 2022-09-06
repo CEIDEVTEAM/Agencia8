@@ -19,8 +19,6 @@ namespace BusinessLogic.Mappers
             {
                 Description = dto.Description,
                 RecomendedDecision = dto.RecomendedDecision,
-                Date = dto.Date,
-                
             };
         }
 
@@ -33,7 +31,6 @@ namespace BusinessLogic.Mappers
             {
                 Description = entity.Description,
                 RecomendedDecision = entity.RecomendedDecision,
-                Date = entity.Date,
             };
         }
     }

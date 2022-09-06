@@ -19,6 +19,7 @@ namespace BusinessLogic.DTOs.Candidate
         public string phone { get; set; }
         public string condition { get; set; }
         public decimal? number { get; set; }
+        public decimal? idDecisionSupport { get; set; }
 
         //Contact person
         public decimal? idContactPerson { get; set; }

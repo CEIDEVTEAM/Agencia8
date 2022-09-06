@@ -68,7 +68,7 @@ namespace ServiceWebApi.Controllers
             try
             {
                 CandidateLogicController lg = new CandidateLogicController(_configuration, _application);
-                var userName = HttpContext.User.Claims.FirstOrDefault(x => x.Type == "userName").Value;
+                var userName = "admin";//HttpContext.User.Claims.FirstOrDefault(x => x.Type == "userName").Value; EDU
 
                 return await lg.AddCandidate(dto, userName);
             }
@@ -117,6 +117,22 @@ namespace ServiceWebApi.Controllers
                 var userName = "admin";//HttpContext.User.Claims.FirstOrDefault(x => x.Type == "userName").Value; EDU
                 dto.IdCandidate = id;
                 return lg.AddCandidateStep(dto, userName);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("No es posible comunicarse con el proveedor.");
+            }
+        }
+
+        [HttpPut("recomendedDecision/{id:int}")]
+        public async Task<ActionResult<RecomendedDecisionDTO>> RecomendedDecision(int id)
+        {
+            try
+            {
+                CandidateLogicController lg = new CandidateLogicController(_configuration, _application);
+                var userName = "admin";//HttpContext.User.Claims.FirstOrDefault(x => x.Type == "userName").Value; EDU
+
+                return lg.RecomendedDecision(id);
             }
             catch (Exception ex)
             {

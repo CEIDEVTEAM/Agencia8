@@ -125,6 +125,17 @@ namespace BusinessLogic.DataModel.Repository
             //return _context.VExCandidateDependent.AsNoTracking();
         }
 
+        public int GetShopCountByNeighborhood(string? neighborhood)
+        {
+            return (from dep in _context.Dependent.AsNoTracking()
+                    join shop in _context.ShopData on dep.Id equals shop.IdDependent
+                    where dep.Condition == "SubAgente" && shop.Neighborhood == neighborhood select dep.Id).Count();
+        }
+        public int GetExternalShopCountByNeighborhood(string? neighborhood)
+        {
+            return _context.ExternalDependent.AsNoTracking().Where(x => x.Neighborhood == neighborhood).Count();
+        }
+
         #endregion
 
     }

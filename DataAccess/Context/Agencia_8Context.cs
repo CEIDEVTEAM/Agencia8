@@ -119,9 +119,12 @@ namespace DataAccess.Context
                     .HasColumnName("Upd_Row");
 
                 entity.HasOne(d => d.IdDecisionSupportNavigation)
-                    .WithMany(p => p.Candidates)
-                    .HasForeignKey(d => d.IdDecisionSupport)
+                    .WithOne(p => p.IdNavigation)
+                    .HasForeignKey<DecisionSupport>(d => d.Id)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Decision_Support");
+
+               
             });
 
             modelBuilder.Entity<ContactPerson>(entity =>
@@ -218,15 +221,14 @@ namespace DataAccess.Context
                     .HasColumnType("datetime")
                     .HasColumnName("Add_Row");
 
-                entity.Property(e => e.Date).HasColumnType("date");
-
                 entity.Property(e => e.Description)
                     .HasMaxLength(1000)
                     .IsUnicode(false);
 
                 entity.Property(e => e.RecomendedDecision)
                     .HasMaxLength(30)
-                    .IsUnicode(false);
+                    .IsUnicode(false)
+                    .HasColumnName("Recomended_Decision");
             });
 
             modelBuilder.Entity<DependentFact>(entity =>
@@ -960,6 +962,11 @@ namespace DataAccess.Context
                 entity.Property(e => e.IdContactPerson)
                     .HasColumnType("numeric(10, 0)")
                     .HasColumnName("Id_Contact_Person");
+
+                entity.Property(e => e.IdDecisionSupport)
+                  .HasColumnType("numeric(10, 0)")
+                  .HasColumnName("Id_Decision_Support");
+                
             });
 
             modelBuilder.Entity<VDependent>(entity =>

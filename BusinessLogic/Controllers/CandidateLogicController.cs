@@ -11,6 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Nest;
 using Newtonsoft.Json.Linq;
 using static BusinessLogic.DTOs.Candidate.CandidateStepDataDTO;
+using Elasticsearch.Net;
 
 namespace BusinessLogic.Controllers
 {
@@ -31,6 +32,8 @@ namespace BusinessLogic.Controllers
         {
             List<string> errors = new List<string>();
             bool successful = false;
+            decimal idCandidate = -1;
+            decimal userId = -1;
 
             CandidateCreationDTO dto = _mapper.MapToObject(frontDto);
 
@@ -38,7 +41,7 @@ namespace BusinessLogic.Controllers
             {
                 uow.BeginTransaction();
 
-                decimal userId = uow.UserRepository.GetUserByUserName(userName).Id;
+                userId = uow.UserRepository.GetUserByUserName(userName).Id;
 
                 try
                 {
@@ -46,17 +49,14 @@ namespace BusinessLogic.Controllers
 
                     if (!errors.Any())
                     {
-                        decimal idCandidate = uow.CandidateRepository.AddCandidate(dto, uow, userId);
+                        idCandidate = uow.CandidateRepository.AddCandidate(dto, uow, userId);
 
                         if (dto.ShopData != null)
                         {
                             dto.ShopData.IdCandidate = idCandidate;
                             uow.ShopDataRepository.AddShopData(dto.ShopData, uow, userId);
-                            frontDto.id = idCandidate;                            
-                            decimal idDecision = this.DecisionSupportResult(uow, frontDto, userId);
-                            dto.IdDecisionSupport = idDecision;
-                            uow.CandidateRepository.UpdateCandidate(dto, uow, userId);
-
+                            frontDto.id = idCandidate;
+                            this.DecisionSupportResult(frontDto, uow, userId);
                         }
 
                         dto.ContactPerson.IdCandidate = idCandidate;
@@ -64,8 +64,7 @@ namespace BusinessLogic.Controllers
 
                         uow.SaveChanges();
                         uow.Commit();
-                        successful = true;                   
-                        
+                        successful = true;
                     }
                 }
                 catch (Exception ex)
@@ -74,6 +73,8 @@ namespace BusinessLogic.Controllers
                     uow.Rollback();
                 }
             }
+
+
 
             return new GenericResponse()
             {
@@ -169,12 +170,10 @@ namespace BusinessLogic.Controllers
             }
         }
 
-        public decimal DecisionSupportResult(UnitOfWork uow, CandidateCreationFrontDTO candidate, decimal userId)
+        public void DecisionSupportResult(CandidateCreationFrontDTO candidate, UnitOfWork uow, decimal userId)
         {
             DecisionSupportDTO dto = new DecisionSupportDTO();
-
             List<DistanceResponseDTO> getDistances = uow.DependentRepository.GetDependentsWithUbications();
-
             GeoCoordinate candidateLocation = new GeoCoordinate((double)candidate.latitude, (double)candidate.longitude);
 
             double minDistance = double.MaxValue;
@@ -200,14 +199,15 @@ namespace BusinessLogic.Controllers
                 dto.Description = $"La distancia minima para el barrio {candidate.neighborhood} es {minDistanceNeighborhood}," +
                     $" el comercio mas cercano se encuentra a {minDistance}";
             }
+
             dto.Date = DateTime.Now;
 
-            decimal idDecision = uow.DecisionSupportRepository.AddDecision(dto);
-            uow.SaveChanges();
-            return idDecision;
-            //CandidateCreationDTO upd = _mapper.MapToObject(candidate);
-            //upd.IdDecisionSupport = idDecision;
-            ////uow.CandidateRepository.UpdateCandidate(upd, uow, userId);
+            decimal idDecision = uow.DecisionSupportRepository.AddDecision(dto, uow);
+
+            CandidateCreationDTO upd = _mapper.MapToObject(candidate);
+            upd.IdDecisionSupport = idDecision;
+            uow.CandidateRepository.UpdateCandidate(upd, uow, userId);
+
         }
 
         public ActionResult<GenericResponse> AddCandidateStep(ProcedureStepDTO dto, string userName)
@@ -276,13 +276,33 @@ namespace BusinessLogic.Controllers
             };
         }
 
-
         public CandidateCreationFrontDTO GetCandidateById(int id)
         {
             using (var uow = new UnitOfWork(_configuration, _application))
             {
                 return uow.CandidateRepository.GetCandidateCreationById(id);
             }
+        }
+
+        public ActionResult<RecomendedDecisionDTO> RecomendedDecision(int id)
+        {
+            RecomendedDecisionDTO dto = new RecomendedDecisionDTO();
+
+            using (var uow = new UnitOfWork(_configuration, _application))
+            {
+                CandidateCreationFrontDTO candidate = uow.CandidateRepository.GetCandidateCreationById(id);
+                DecisionSupportDTO recDec = uow.DecisionSupportRepository.GetRecomendedDecision(candidate.idDecisionSupport ?? -1);
+
+                dto.Neighborhood = candidate.neighborhood;
+                dto.RecomendedDecision = recDec.RecomendedDecision;
+                dto.Description = recDec.Description;
+
+                dto.ShopCoordinates = uow.DependentRepository.GetDependentsWithUbications();
+                dto.AgencyShops = uow.DependentRepository.GetShopCountByNeighborhood(candidate.neighborhood);
+                dto.ExternalAgencyShops = uow.DependentRepository.GetExternalShopCountByNeighborhood(candidate.neighborhood);
+            }
+
+            return dto;
         }
 
         #region VALIDATIONS

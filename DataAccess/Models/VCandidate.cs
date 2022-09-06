@@ -31,6 +31,7 @@ namespace DataAccess.Models
         public string PhoneContactPerson { get; set; } = null!;
         public string Bond { get; set; } = null!;
         public decimal? IdContactPerson { get; set; }
+        public decimal? IdDecisionSupport { get; set; }
 
     }
 }

@@ -20,13 +20,15 @@ namespace BusinessLogic.DataModel.Repository
         }
 
         #region ADD
-        public decimal AddDecision(DecisionSupportDTO obj)
+        public decimal AddDecision(DecisionSupportDTO obj, UnitOfWork uow)
         {
             DecisionSupport entity = _mapper.MapToEntity(obj);
             entity.AddRow = DateTime.Now;
-            _context.DecisionSupport.AddAsync(entity);
+
+            _context.DecisionSupport.Add(entity);
+            uow.SaveChanges();
+
             return entity.Id;
-            
         }
 
         #endregion
@@ -52,13 +54,11 @@ namespace BusinessLogic.DataModel.Repository
 
         #region GET
 
-
-        public DecisionSupportDTO GetMappedDecisionParamById(decimal id)
+        public DecisionSupportDTO GetRecomendedDecision(decimal id)
         {
-            return this._mapper.MapToObject(_context.DecisionSupport.FirstOrDefault(x => x.Id == id));
+            var x = _context.DecisionSupport.FirstOrDefault(x => x.Id == id);
+            return _mapper.MapToObject(x);
         }
-
-
 
         #endregion
 

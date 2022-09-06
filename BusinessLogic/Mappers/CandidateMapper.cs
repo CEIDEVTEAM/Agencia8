@@ -70,7 +70,7 @@ namespace BusinessLogic.Mappers
                 cpLastName = entity.LastNameContactPerson,
                 cpPhone = entity.PhoneContactPerson,
                 bond = entity.Bond,
-                idContactPerson = entity.IdContactPerson,
+                idContactPerson = entity.IdContactPerson,                
             };
         }
 
@@ -105,6 +105,7 @@ namespace BusinessLogic.Mappers
                 cpPhone = entity.PhoneContactPerson,
                 bond = entity.Bond,
                 idContactPerson = entity.IdContactPerson,
+                idDecisionSupport = entity.IdDecisionSupport
             };
         }
 
