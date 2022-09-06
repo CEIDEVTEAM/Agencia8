@@ -11,15 +11,27 @@ let DefaultIcon = L.icon({
     shadowUrl: iconShadow,
     iconAnchor: [16, 37]
 });
-
 L.Marker.prototype.options.icon = DefaultIcon;
+const LeafIcon = L.Icon.extend({
+    options: {}
+});
+const greenIcon = new LeafIcon({
+    shadowUrl: iconShadow,
+    iconAnchor: [16, 37],
+    iconUrl:
+        "https://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|2ecc71&chf=a,s,ee00FFFF"
+});
+
 
 export default function Map(props) {
     const [coords, setCoords] = useState(props.coordenadas)
+    const [coordsCol, setCoordsCol] = useState(props.colection)
     return (
         <MapContainer
             center={[-34.910051, -54.953425]} zoom={12}
-            style={{ height: "250px" }}
+            style={{ height: "350px" }}
+            fullscreenControl={true} 
+
         >
             <TileLayer attribution="Agencia 8"
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -33,16 +45,16 @@ export default function Map(props) {
                 {...coord}
             />)}
 
-            {/* {coords.map(coord => <Mark key={coord.lat + coord.lng}
+            {props.colection ? props.colection.map(coord => <MarkOthers key={coord.latitude + coord.longitude}
                 {...coord}
-            />)} */}
-            
+            />) : null}
+
         </MapContainer>
     )
 }
 
 Map.defaultProps = {
-    height: '500px',
+    height: '600px',
     soloLectura: false,
     manejarClickMapa: () => { }
 }
@@ -55,18 +67,26 @@ function ClickMap(props) {
 function Mark(props) {
     return (
         <Marker position={[props.lat, props.lng]}>
-            {props.nombre ? <Popup>
-                {props.nombre}
+            {props.number ? <Popup>
+                {props.number}
             </Popup> : null}
         </Marker>
     )
 }
-
-// function PopulateMarkes(props) {
+function MarkOthers(props) {
+    return (
+        <Marker icon={greenIcon} position={[props.latitude, props.longitude]}>
+            {props.number ? <Popup>
+                {props.number}
+            </Popup> : null}
+        </Marker>
+    )
+}
+// function PopulateMarkers(coordsCol) {
 //     return (
-//         props.colection.map(position =>
+//         coordsCol.map(position =>
 //             <Marker position={[position.lat, position.lng]}>
-//                 {props.nombre ? <Popup>{props.nombre}</Popup> : null}
+//                 {position.number ? <Popup>{position.number}</Popup> : null}
 //             </Marker>)
 //     )
 // }

@@ -15,9 +15,7 @@ export default function CandidateShopData(props) {
         }
         const respuesta = {lat: props.props.latitude, 
             lng: props.props.longitude}
-        return [respuesta];
-
-       
+        return [respuesta];       
     }
     return (
         <div >

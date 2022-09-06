@@ -124,7 +124,7 @@ namespace ServiceWebApi.Controllers
             }
         }
 
-        [HttpPut("recomendedDecision/{id:int}")]
+        [HttpGet("recomendedDecision/{id:int}")]
         public async Task<ActionResult<RecomendedDecisionDTO>> RecomendedDecision(int id)
         {
             try

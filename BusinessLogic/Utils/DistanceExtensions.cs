@@ -18,6 +18,7 @@ namespace BusinessLogic.Utils
             double a = Math.Sin(Lat / 2) * Math.Sin(Lat / 2) + Math.Cos(point1.Latitude * (Math.PI / 180)) * Math.Cos(point2.Latitude * (Math.PI / 180)) * Math.Sin(Lon / 2) * Math.Sin(Lon / 2);
             double c = 2 * Math.Atan2(Math.Sqrt(a), Math.Sqrt(1 - a));
             distance = (EarthRadius * c) * 1000;
+            distance = Math.Round(distance);
             return distance;
         }
     }

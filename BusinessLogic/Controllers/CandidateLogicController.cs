@@ -181,7 +181,7 @@ namespace BusinessLogic.Controllers
 
             foreach (DistanceResponseDTO item in getDistances)
             {
-                GeoCoordinate currentPoint = new GeoCoordinate(double.Parse(item.Latitude), double.Parse(item.Longitude));
+                GeoCoordinate currentPoint = new GeoCoordinate(item.Latitude, item.Longitude);
                 double distance = DistanceExtensions.GetDistance(candidateLocation, currentPoint);
 
                 if (distance < minDistance)
@@ -196,8 +196,8 @@ namespace BusinessLogic.Controllers
             else
             {
                 dto.RecomendedDecision = "Se recomienda";
-                dto.Description = $"La distancia minima para el barrio {candidate.neighborhood} es {minDistanceNeighborhood}," +
-                    $" el comercio mas cercano se encuentra a {minDistance}";
+                dto.Description = $"La distancia minima para el barrio {candidate.neighborhood} es {minDistanceNeighborhood} metros," +
+                    $" el comercio mas cercano se encuentra a {minDistance} metros";
             }
 
             dto.Date = DateTime.Now;

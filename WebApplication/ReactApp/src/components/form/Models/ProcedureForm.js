@@ -1,5 +1,5 @@
-import { Formik, Form, FormikHelpers } from "formik";
-import React, { useEffect, useState } from "react";
+import { Formik, Form,} from "formik";
+import React from "react";
 import * as Yup from 'yup'
 import FormText from '../form-groups/FormText'
 import FormSelect from "../form-groups/FormSelect";
@@ -38,13 +38,6 @@ export default function ParamsForm(props) {
                             <hr />
                             <p className="mb-4 font-bold">HISTORIAL</p>
                             {props.steps.map((step, i) => <><p key={i}> # {step.addRow} - {step.stepType} - {step.description} </p><hr /></>)}
-
-
-
-
-
-
-
                         </CardBody>
                     </Card>
 

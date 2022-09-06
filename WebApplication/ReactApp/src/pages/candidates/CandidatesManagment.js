@@ -19,8 +19,8 @@ import { candidateUrl, urlCandidateStep } from '../../utils/http/endpoints';
 import PageTitle from '../../components/Typography/PageTitle';
 import confirmation from '../../utils/generals/confirmation';
 import EditCandidate from './EditCandidate';
-import ProcedureManagment from './ProcedureManagment'
 import Procedure from './Procedure';
+import DecisionSupport from './DecisionSupport';
 
 
 export default function CandidatesManagment () {
@@ -32,6 +32,7 @@ export default function CandidatesManagment () {
 
   const [openModal, setModalOpen] = useState(false)
   const [openProceduresModal, setOpenProceduresModal] = useState(false)
+  const [openDecisionModal, setOpenDecisionModal] = useState(false)
   const [id, setId] = useState(0)
   const [search, setSearch] = useState(null)
 
@@ -53,17 +54,7 @@ export default function CandidatesManagment () {
       setTotalResults(totalRecords)
       console.log(response)       
       })
-  }
-
-  async function logicDelete(id) {
-    try {
-        await axios.delete(`${candidateUrl}/${id}`)
-        loadData();
-    }
-    catch (error) {
-        console.log(error.response.data);
-    }
-  }  
+  } 
 
   function onPageChangeTable(p) {
     setPage(p)
@@ -73,16 +64,27 @@ export default function CandidatesManagment () {
     setModalOpen(true)
     setId(id);    
   }
+
   function handleProcedure(id){
     setOpenProceduresModal(true)
     setId(id)    
   }
+
+  function handleSupport(id){
+    setOpenDecisionModal(true)
+    setId(id)    
+  }
+
   function onClose(){
     setModalOpen(false)
   }
 
   function onCloseProcedure(){
     setOpenProceduresModal(false)
+  }
+
+  function onCloseSupport(){
+    setOpenDecisionModal(false)
   }
 
 
@@ -131,6 +133,9 @@ export default function CandidatesManagment () {
                     <Button title ="Actualizar Trámite" onClick={()=> handleProcedure(data.id)} layout="link" size="icon" aria-label="Delete">
                       <CardsIcon className="w-5 h-5" aria-hidden="true" />
                     </Button>
+                    <Button title ="Recomendación" onClick={()=> handleSupport(data.id)} layout="link" size="icon" aria-label="Delete">
+                      <CardsIcon className="w-5 h-5" aria-hidden="true" />
+                    </Button>
                   </div>
                 </TableCell>
                 {columns.map((column, i) => <TableCell key={i}>{data[column]}</TableCell>)}
@@ -150,6 +155,7 @@ export default function CandidatesManagment () {
       </TableContainer>
       <EditCandidate isOpen={openModal} onClose={onClose} id={id}></EditCandidate> 
       <Procedure isOpen={openProceduresModal} onClose={onCloseProcedure} id={id}></Procedure>
+      <DecisionSupport isOpen={openDecisionModal} onClose={onCloseSupport} id={id}></DecisionSupport>
     </>
   )
 }

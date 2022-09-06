@@ -8,8 +8,9 @@ namespace BusinessLogic.DTOs.Generals
 {
     public class DistanceResponseDTO
     {
-        public string Latitude { get; set; }
-        public string Longitude { get; set; }
+        public decimal Number { get; set; }
+        public double Latitude { get; set; }
+        public double Longitude { get; set; }
 
     }
 }
