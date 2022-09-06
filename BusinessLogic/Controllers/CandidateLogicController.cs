@@ -297,6 +297,7 @@ namespace BusinessLogic.Controllers
                 dto.RecomendedDecision = recDec.RecomendedDecision;
                 dto.Description = recDec.Description;
 
+                dto.NeighborhoodPotential = uow.DecisionParamRepository.GetPotentialByNeighborhood(candidate.neighborhood);
                 dto.ShopCoordinates = uow.DependentRepository.GetDependentsWithUbications();
                 dto.AgencyShops = uow.DependentRepository.GetShopCountByNeighborhood(candidate.neighborhood);
                 dto.ExternalAgencyShops = uow.DependentRepository.GetExternalShopCountByNeighborhood(candidate.neighborhood);

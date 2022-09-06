@@ -196,7 +196,7 @@ namespace DataAccess.Context
 
                 entity.Property(e => e.Description)
                     .HasMaxLength(100)
-                    .IsFixedLength();
+                    .IsUnicode(false);
 
                 entity.Property(e => e.Name)
                     .HasMaxLength(50)

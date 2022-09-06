@@ -73,6 +73,11 @@ namespace BusinessLogic.DataModel.Repository
             return double.Parse(_context.DecisionParam.FirstOrDefault(x => x.Name == neighborhood).Value);
         }
 
+        public string GetPotentialByNeighborhood(string neighborhood)
+        {
+            return _context.DecisionParam.FirstOrDefault(x => x.Name == neighborhood).Description;
+        }
+
         #endregion
 
     }
