@@ -9,6 +9,9 @@ import FormDatePicker from "../../form-groups/FormDatePicker";
 export default function CandidatePersonalData(props) {
     const [options, setOptions] = useState([{ id: "M", name: "Masculino" }, { id: "F", name: "Femenino" }])
     const [optionsCond, setOptionsCond] = useState([{ id: "SubAgente", name: "SubAgente" }, { id: "Corredor", name: "Corredor" }])
+    const [optionsMarital, setOptionsMarital] = useState([{ id: "Casado", name: "Casado" }, 
+    { id: "Soltero", name: "Soltero" }, { id: "Divorciado", name: "Divorciado" },{ id: "Viudo", name: "Viudo" },{ id: "Concuvinato", name: "Concuvinato" },
+    { id: "Otro", name: "Otro" }])
 
     return (
         <div >
@@ -24,7 +27,7 @@ export default function CandidatePersonalData(props) {
             </div>
             <div className="grid md:grid-cols-3 md:gap-6">
                 <FormText campo="phone" label="Telefono" />
-                <FormText campo="maritalStatus" label="Estado Civil" />
+                <FormSelect options={optionsMarital} campo="maritalStatus" label="Estado Civil" />
                 <FormSelect options={options} campo="gender" label="Género" />
             </div>
         </div>
