@@ -12,6 +12,7 @@ using Nest;
 using Newtonsoft.Json.Linq;
 using static BusinessLogic.DTOs.Candidate.CandidateStepDataDTO;
 using Elasticsearch.Net;
+using DataAccess.Models;
 
 namespace BusinessLogic.Controllers
 {
@@ -232,6 +233,13 @@ namespace BusinessLogic.Controllers
                     {
                         CandidateCreationDTO candidate = uow.CandidateRepository.GetCandidateById((decimal)dto.IdCandidate);
                         candidate.Status = CStatus.declined;
+
+                        uow.CandidateRepository.UpdateCandidate(candidate, uow, userId);
+                    }
+                    else if (dto.StepType == "EN_TRAMITE")
+                    {
+                        CandidateCreationDTO candidate = uow.CandidateRepository.GetCandidateById((decimal)dto.IdCandidate);
+                        candidate.Status = CStatus.inProcess;
 
                         uow.CandidateRepository.UpdateCandidate(candidate, uow, userId);
                     }
