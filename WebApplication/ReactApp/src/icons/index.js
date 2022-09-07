@@ -29,6 +29,7 @@ import { ReactComponent as OutlineLogoutIcon } from './outlineLogout.svg'
 import { ReactComponent as FortuneWheelIcon } from './fortune-wheel.svg'
 import { ReactComponent as AcceptedIcon } from './accept-icon.svg'
 import { ReactComponent as DeniedIcon } from './incorrect-icon.svg'
+import { ReactComponent as LikeIcon } from './like.svg'
 
 export {
   ButtonsIcon,
@@ -61,5 +62,6 @@ export {
   OutlineLogoutIcon,
   FortuneWheelIcon,
   AcceptedIcon,
-  DeniedIcon  
+  DeniedIcon,
+  LikeIcon 
 }
