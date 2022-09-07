@@ -14,7 +14,7 @@ import {
   Input
 } from '@windmill/react-ui'
 
-import { EditIcon, TrashIcon,SearchIcon, CardsIcon } from '../../icons'
+import { EditIcon, TrashIcon,SearchIcon, CardsIcon, LikeIcon, MenuIcon, ModalsIcon } from '../../icons'
 import { candidateUrl, urlCandidateStep } from '../../utils/http/endpoints';
 import PageTitle from '../../components/Typography/PageTitle';
 import confirmation from '../../utils/generals/confirmation';
@@ -134,7 +134,7 @@ export default function CandidatesManagment () {
                       <CardsIcon className="w-5 h-5" aria-hidden="true" />
                     </Button>
                     <Button title ="Recomendación" onClick={()=> handleSupport(data.id)} layout="link" size="icon" aria-label="Delete">
-                      <CardsIcon className="w-5 h-5" aria-hidden="true" />
+                      <ModalsIcon className="w-5 h-5" aria-hidden="true" />
                     </Button>
                   </div>
                 </TableCell>
