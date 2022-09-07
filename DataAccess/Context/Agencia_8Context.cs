@@ -41,6 +41,7 @@ namespace DataAccess.Context
         public virtual DbSet<VDependent> VDependent { get; set; } = null!;
         public virtual DbSet<VUser> VUsers { get; set; } = null!;
         public virtual DbSet<VExCandidateDependent> VExCandidateDependent { get; set; } = null!;
+        public virtual DbSet<VDependentCandidateNumber> VDependentCandidateNumbers { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -1251,6 +1252,15 @@ namespace DataAccess.Context
                 entity.Property(e => e.Type)
                     .HasMaxLength(9)
                     .IsUnicode(false);
+            });
+
+            modelBuilder.Entity<VDependentCandidateNumber>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("V_DependentCandidateNumbers");
+
+                entity.Property(e => e.Number).HasColumnType("numeric(10, 0)");
             });
 
             OnModelCreatingPartial(modelBuilder);

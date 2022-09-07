@@ -3,6 +3,7 @@ using BusinessLogic.Mappers;
 using CommonSolution.Constants;
 using DataAccess.Context;
 using DataAccess.Models;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace BusinessLogic.DataModel.Repository
@@ -97,6 +98,16 @@ namespace BusinessLogic.DataModel.Repository
         {
             var x = _context.ProcedureStep.Where(x => x.IdCandidate == idCandidate).ToList();
             return _mapper.MapToObject(x);
+        }
+
+        public List<decimal?> GetDependentCandiateNumbers()
+        {
+            return _context.VDependentCandidateNumbers.Select(s => s.Number).OrderBy(o => o).ToList();
+        }
+
+        public ActionResult<List<string>> GetNeighborhoods()
+        {
+            return _context.DecisionParam.Where(x => x.ActiveFlag == "S" && x.Name != "General").Select(s => s.Name).ToList();
         }
 
         #endregion

@@ -139,5 +139,22 @@ namespace ServiceWebApi.Controllers
                 return BadRequest("No es posible comunicarse con el proveedor.");
             }
         }
+
+        [HttpGet("neighborhoods")]
+        public async Task<ActionResult<List<string>>> GetNeighborhoods()
+        {
+            try
+            {
+                CandidateLogicController lg = new CandidateLogicController(_configuration, _application);
+                var userName = "admin";//HttpContext.User.Claims.FirstOrDefault(x => x.Type == "userName").Value; EDU
+
+                return lg.GetNeighborhoods();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("No es posible comunicarse con el proveedor.");
+            }
+        }
+
     }
 }

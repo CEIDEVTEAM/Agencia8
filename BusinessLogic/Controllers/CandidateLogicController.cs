@@ -243,9 +243,16 @@ namespace BusinessLogic.Controllers
 
                         errors = lgDep.AddDependent(candidate, uow, userId);
 
-                        CandidateCreationDTO candiateUpd = uow.CandidateRepository.GetCandidateById((decimal)dto.IdCandidate);
-                        candiateUpd.Status = CStatus.accepted;
-                        uow.CandidateRepository.UpdateCandidate(candiateUpd, uow, userId);
+                        CandidateCreationDTO candidateUpd = uow.CandidateRepository.GetCandidateById((decimal)dto.IdCandidate);
+                        candidateUpd.Status = CStatus.accepted;
+                        decimal number = GetNextAgencyNumber(uow);
+
+                        if (number != -1)
+                            candidateUpd.Number = number;
+                        else
+                            throw new Exception("No hay números disponibles, máximo en 149");
+
+                        uow.CandidateRepository.UpdateCandidate(candidateUpd, uow, userId);
                     }
 
                     uow.CandidateRepository.AddCandidateStep(dto);
@@ -276,6 +283,32 @@ namespace BusinessLogic.Controllers
             };
         }
 
+        public decimal GetNextAgencyNumber(UnitOfWork uow)
+        {
+            decimal number = -1;
+            decimal maxAvailable = 149;
+
+            List<decimal?> colAgencyNumbers = uow.CandidateRepository.GetDependentCandiateNumbers();
+
+            if (colAgencyNumbers.Count() < maxAvailable)
+            {
+                decimal aux = 1;
+
+                do
+                {
+                    if (!colAgencyNumbers.Contains(aux))
+                        number = aux;
+                    else
+                        aux++;
+
+                } while (number == -1 || aux > maxAvailable);
+
+            }
+
+            return number;
+        }
+
+
         public CandidateCreationFrontDTO GetCandidateById(int id)
         {
             using (var uow = new UnitOfWork(_configuration, _application))
@@ -296,6 +329,8 @@ namespace BusinessLogic.Controllers
                 dto.Neighborhood = candidate.neighborhood;
                 dto.RecomendedDecision = recDec.RecomendedDecision;
                 dto.Description = recDec.Description;
+                dto.Latitude = candidate.latitude;
+                dto.Longitude = candidate.longitude;
 
                 dto.NeighborhoodPotential = uow.DecisionParamRepository.GetPotentialByNeighborhood(candidate.neighborhood);
                 dto.ShopCoordinates = uow.DependentRepository.GetDependentsWithUbications();
@@ -304,6 +339,14 @@ namespace BusinessLogic.Controllers
             }
 
             return dto;
+        }
+
+        public ActionResult<List<string>> GetNeighborhoods()
+        {
+            using (var uow = new UnitOfWork(_configuration, _application))
+            {
+                return uow.CandidateRepository.GetNeighborhoods();
+            }
         }
 
         #region VALIDATIONS
@@ -320,6 +363,7 @@ namespace BusinessLogic.Controllers
 
             return colerrors;
         }
+
 
         #endregion
 

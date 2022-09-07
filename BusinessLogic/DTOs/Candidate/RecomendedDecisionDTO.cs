@@ -16,6 +16,8 @@ namespace BusinessLogic.DTOs.Candidate
         public string Description { get; set; }
         public int AgencyShops { get; set; }
         public int ExternalAgencyShops { get; set; }
+        public double? Latitude { get; set; }
+        public double? Longitude { get; set; }
         public List<DistanceResponseDTO> ShopCoordinates { get; set; }
     }
 }
