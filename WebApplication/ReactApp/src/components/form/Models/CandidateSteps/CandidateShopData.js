@@ -2,12 +2,14 @@ import React, { useEffect, useState } from "react";
 import FormText from '../../form-groups/FormText'
 import FormSelect from '../../form-groups/FormSelect'
 import FormMap from "../../form-groups/FormMap";
+import axios from 'axios';
+import {urlNeighborhood} from '../../../../utils/http/endpoints'
 
 
 
 export default function CandidateShopData(props) {
 
-    const [options, setOptions] = useState([{ id: "Barrio Norte", name: "Barrio Norte" }, { id: 2, name: "Barrio2" }, { id: 3, name: "Barrio 3" }])
+    const [options, setOptions] = useState(props.options)
     
     function transformarCoordenada(){
         if (props.props.latitude === undefined || props.props.latitude === null || props.props.longitude === undefined || props.props.longitude === null){
@@ -16,7 +18,9 @@ export default function CandidateShopData(props) {
         const respuesta = {lat: props.props.latitude, 
             lng: props.props.longitude}
         return [respuesta];       
-    }
+    }   
+
+
     return (
         <div >
             <FormText campo="address" label="Dirección del comercio" />

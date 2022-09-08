@@ -5,14 +5,7 @@ import FormText from '../form-groups/FormText'
 import FormSelect from "../form-groups/FormSelect";
 import { Button, Card, CardBody } from '@windmill/react-ui'
 
-export default function ParamsForm(props) {
-
-    let options;
-    if (props.options !== undefined) {
-        options = props.options
-    } else {
-        options = [{ id: 1, name: "Barrio 1" }]
-    }
+export default function ProcedureForm(props) {
 
     return (
         <Formik initialValues={props.model}
@@ -37,13 +30,13 @@ export default function ParamsForm(props) {
                             <p className="mb-4 font-semibold">Barrio: {props.info.neighborhood}  </p>
                             <hr />
                             <p className="mb-4 font-bold">HISTORIAL</p>
-                            {props.steps.map((step, i) => <><p key={i}> # {step.addRow} - {step.stepType} - {step.description} </p><hr /></>)}
+                            {props.steps.map((step) => <><p> # {step.addRow} - {step.stepType} - {step.description} </p><hr /></>)}
                         </CardBody>
                     </Card>
 
                     <div >
                         <div className="grid md:grid-cols-2 md:gap-6">
-                            <FormSelect options={options} campo="stepType" label="Nuevo Estado del Trámite" />
+                            <FormSelect options={props.options} campo="stepType" label="Nuevo Estado del Trámite" />
                             <FormText campo="description" label="Descripción" />
                         </div>
                     </div>

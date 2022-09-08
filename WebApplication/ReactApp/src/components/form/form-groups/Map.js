@@ -26,10 +26,13 @@ const greenIcon = new LeafIcon({
 export default function Map(props) {
     const [coords, setCoords] = useState(props.coordenadas)
     const [coordsCol, setCoordsCol] = useState(props.colection)
+    let center = [-34.908162, -54.955682] 
+    if(coords.length > 0)  
+        center = [coords[0].lat,coords[0].lng] 
     return (
         <MapContainer
-            center={[-34.910051, -54.953425]} zoom={12}
-            style={{ height: "350px" }}
+            center={center} zoom={16}
+            style={{ height: "250px" }}
             fullscreenControl={true} 
 
         >
@@ -77,7 +80,7 @@ function MarkOthers(props) {
     return (
         <Marker icon={greenIcon} position={[props.latitude, props.longitude]}>
             {props.number ? <Popup>
-                {props.number}
+               SUB AGENTE {props.number}
             </Popup> : null}
         </Marker>
     )

@@ -11,6 +11,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Text;
+using static BusinessLogic.DTOs.Candidate.CandidateStepDataDTO;
+
 namespace ServiceWebApi.Controllers
 {
     [Route("api/candidate")]
@@ -141,7 +143,7 @@ namespace ServiceWebApi.Controllers
         }
 
         [HttpGet("neighborhoods")]
-        public async Task<ActionResult<List<string>>> GetNeighborhoods()
+        public async Task<ActionResult<List<stepType>>> GetNeighborhoods()
         {
             try
             {

@@ -40,7 +40,7 @@ export default function Edit(props) {
             //history.push(props.urlIndice);
         }
         catch (error) {
-            setErrors(error.response.data)
+            setErrors(error)
         }
     }
 

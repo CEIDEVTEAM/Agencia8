@@ -105,7 +105,7 @@ namespace BusinessLogic.DataModel.Repository
             return _context.VDependentCandidateNumbers.Select(s => s.Number).OrderBy(o => o).ToList();
         }
 
-        public ActionResult<List<string>> GetNeighborhoods()
+        public List<string> GetNeighborhoods()
         {
             return _context.DecisionParam.Where(x => x.ActiveFlag == "S" && x.Name != "General").Select(s => s.Name).ToList();
         }
