@@ -21,12 +21,12 @@ namespace BusinessLogic.Controllers
             this._mapper = new DependentMapper();
         }
 
-        public List<string> AddDependent(CandidateCreationFrontDTO frontDto, UnitOfWork uow, decimal userId)
+        public List<string> AddDependent(DependentCreationDTO dto, UnitOfWork uow, decimal userId)
         {
             List<string> errors = new List<string>();
             bool successful = false;
 
-            DependentCreationDTO dto = _mapper.MapToObject(frontDto);
+            //DependentCreationDTO dto = _mapper.MapToObject(frontDto);
 
             try
             {
@@ -39,11 +39,11 @@ namespace BusinessLogic.Controllers
                     if (dto.ShopData != null)
                     {
                         dto.ShopData.IdDependent = idDependent;
-                        uow.ShopDataRepository.AddShopData(dto.ShopData, uow, userId);
+                        uow.ShopDataRepository.UpdateShopData(dto.ShopData, uow, userId);
                     }
 
                     dto.ContactPerson.IdDependent = idDependent;
-                    uow.ContactPersonRepository.AddContactPerson(dto.ContactPerson);
+                    uow.ContactPersonRepository.UpdateContactPerson(dto.ContactPerson);
 
                     uow.SaveChanges();
                     successful = true;

@@ -262,7 +262,7 @@ namespace BusinessLogic.Controllers
                             DependentCreationDTO dependent = _mapper.MapToDependentObject(candidate);
                             DependentLogicController lgDep = new DependentLogicController(_configuration, _application);
 
-                            errors = lgDep.AddDependent(candidate, uow, userId);
+                            errors = lgDep.AddDependent(dependent, uow, userId);
 
                             uow.CandidateRepository.UpdateCandidate(candidateUpd, uow, userId);
                         }

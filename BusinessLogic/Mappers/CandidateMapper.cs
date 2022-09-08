@@ -265,6 +265,7 @@ namespace BusinessLogic.Mappers
 
                 ContactPerson = new ContactPersonCreationDTO
                 {
+                    Id = candidate.idContactPerson ?? -1,
                     Name = candidate.cpName,
                     LastName = candidate.cpLastName,
                     Phone = candidate.cpPhone,
@@ -273,6 +274,7 @@ namespace BusinessLogic.Mappers
 
                 ShopData = string.IsNullOrEmpty(candidate.cName) ? null : new ShopDataCreationDTO
                 {
+                    Id = candidate.idShopData ?? -1,
                     Name = candidate.cName,
                     Phone = candidate.cPhone,
                     Address = candidate.address,
