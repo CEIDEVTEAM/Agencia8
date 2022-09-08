@@ -63,6 +63,12 @@ namespace BusinessLogic.Mappers
             entity.Latitude = dto.Latitude;
             entity.Longitude = dto.Longitude;
 
+            if (dto.IdDependent != null)
+                entity.IdDependent = dto.IdDependent; 
+            
+            if (dto.IdCandidate != null)
+                entity.IdCandidate = dto.IdCandidate;
+
             return entity;
         }
     }

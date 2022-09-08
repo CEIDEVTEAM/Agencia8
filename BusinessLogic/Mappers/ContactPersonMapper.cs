@@ -52,6 +52,9 @@ namespace BusinessLogic.Mappers
             entity.Phone = dto.Phone;
             entity.Bond = dto.Bond;
 
+            if (dto.IdDependent != null)
+                entity.IdDependent = dto.IdDependent;
+
             return entity;
         }
     }
