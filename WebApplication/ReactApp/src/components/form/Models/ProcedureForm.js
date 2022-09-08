@@ -30,7 +30,7 @@ export default function ProcedureForm(props) {
                             <p className="mb-4 font-semibold">Barrio: {props.info.neighborhood}  </p>
                             <hr />
                             <p className="mb-4 font-bold">HISTORIAL</p>
-                            {props.steps.map((step) => <><p> # {step.addRow} - {step.stepType} - {step.description} </p><hr /></>)}
+                            {props.steps.map((step,i) => <div key={i}><p key={step.Type}> # {step.addRow} - {step.stepType} - {step.description} </p>< hr /></div>)}
                         </CardBody>
                     </Card>
 
