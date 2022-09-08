@@ -22,7 +22,7 @@ function Procedure(props) {
                             info = {entidad.candidate}
                             steps = {entidad.colProcedureStep}
                             onSubmit={async (valores,{resetForm}) => {
-                                await editar(valores,resetForm())                                
+                                await editar(valores,resetForm())                                                                                               
                             }}
                              />}
                 </Edit>

@@ -191,13 +191,15 @@ namespace BusinessLogic.Controllers
             if (minDistance < minDistanceNeighborhood)
             {
                 dto.RecomendedDecision = "No recomendando";
-                dto.Description = $"La distancia minima para el barrio {candidate.neighborhood} es {minDistanceNeighborhood}," +
-                    $" el comercio mas cercano se encuentra a {minDistance}";
+                dto.Description = $"La distancia minima para el barrio {candidate.neighborhood} " +
+                    $"es {minDistanceNeighborhood} metros," +
+                    $" el comercio mas cercano se encuentra a {minDistance} metros";
             }
             else
             {
                 dto.RecomendedDecision = "Se recomienda";
-                dto.Description = $"La distancia minima para el barrio {candidate.neighborhood} es {minDistanceNeighborhood} metros," +
+                dto.Description = $"La distancia minima para el barrio {candidate.neighborhood}" +
+                    $" es {minDistanceNeighborhood} metros," +
                     $" el comercio mas cercano se encuentra a {minDistance} metros";
             }
 
@@ -349,12 +351,19 @@ namespace BusinessLogic.Controllers
             return dto;
         }
 
-        public ActionResult<List<string>> GetNeighborhoods()
+        public ActionResult<List<stepType>> GetNeighborhoods()
         {
+            List<stepType> neighborhoodsList = new List<stepType>();
             using (var uow = new UnitOfWork(_configuration, _application))
             {
-                return uow.CandidateRepository.GetNeighborhoods();
+                List<string> neighborhoods = uow.CandidateRepository.GetNeighborhoods();
+                neighborhoods.Sort();
+                foreach (var item in neighborhoods)
+                {
+                    neighborhoodsList.Add(new stepType { id = item, name = item });
+                }
             }
+            return neighborhoodsList;
         }
 
         #region VALIDATIONS

@@ -7,7 +7,7 @@ import FormMap from "../../form-groups/FormMap";
 
 export default function DependentShopData(props) {
 
-    const [options, setOptions] = useState([{ id: 1, name: "Barrio 1" }, { id: 2, name: "Barrio2" }, { id: 3, name: "Barrio 3" }])
+    const [options, setOptions] = useState(props.options)
     
     function transformarCoordenada(){
         if (props.props.latitude === undefined || props.props.latitude === null || props.props.longitude === undefined || props.props.longitude === null){

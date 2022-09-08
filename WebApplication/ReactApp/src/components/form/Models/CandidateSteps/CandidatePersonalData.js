@@ -12,6 +12,7 @@ export default function CandidatePersonalData(props) {
     const [optionsMarital, setOptionsMarital] = useState([{ id: "Casado", name: "Casado" }, 
     { id: "Soltero", name: "Soltero" }, { id: "Divorciado", name: "Divorciado" },{ id: "Viudo", name: "Viudo" },{ id: "Concuvinato", name: "Concuvinato" },
     { id: "Otro", name: "Otro" }])
+    
 
     return (
         <div >

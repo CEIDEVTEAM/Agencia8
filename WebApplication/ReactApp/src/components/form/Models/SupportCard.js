@@ -8,12 +8,12 @@ import Map from '../form-groups/Map'
 const SupportCard = (props) => {
 
     function transformarCoordenada() {
-        if (props.data.shopCoordinates.latitude === undefined || props.data.shopCoordinates.latitude === null || props.props.longitude === undefined || props.props.longitude === null) {
+        if (props.data.latitude === undefined || props.data.latitude === null || props.data.longitude === undefined || props.data.longitude === null) {
             return [];
         }
         const respuesta = {
-            lat: props.props.latitude,
-            lng: props.props.longitude
+            lat: props.data.latitude,
+            lng: props.data.longitude
         }
         return [respuesta];
     }

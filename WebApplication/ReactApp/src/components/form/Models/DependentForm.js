@@ -5,6 +5,8 @@ import DependentPersonalData from './DependentSteps/DependentPersonalData';
 import DependentShopData from './DependentSteps/DependentShopData';
 import DependentContactPerson from './DependentSteps/DependentContactPerson';
 import NoShopDataRequired from './CandidateSteps/NoShopDataRequired';
+import axios from 'axios';
+import { urlNeighborhood } from '../../../utils/http/endpoints'
 
 
 
@@ -20,6 +22,17 @@ export default function DependentForm(props) {
     const [conditionState, setconditionState] = useState();
     useEffect(() => {
         setconditionState("SubAgente");
+
+    }, [])
+
+    const [neighborhoods, setNeighborhoods] = useState()
+    useEffect(() => {
+
+        axios.get(urlNeighborhood)
+            .then((response) => {
+                setNeighborhoods(response.data);
+
+            })
 
     }, [])
 
@@ -49,7 +62,7 @@ export default function DependentForm(props) {
                     })}
                 >
                     <br />
-                    <DependentPersonalData isEdit={props.isEdit}/>
+                    <DependentPersonalData isEdit={props.isEdit} />
                     <br />
                 </WizardStep>
                 <WizardStep
@@ -80,7 +93,7 @@ export default function DependentForm(props) {
                         })}
                     >
                         <br />
-                        <DependentShopData props={props.model}/>
+                        <DependentShopData props={props.model} options={neighborhoods} />
                         <br />
                     </WizardStep> : <WizardStep
                         onSubmit={() => console.log('Step3 onSubmit')}

@@ -181,6 +181,7 @@ namespace BusinessLogic.Mappers
                 Condition = frontDTO.condition,
                 Status = CStatus.enrolled,
                 Number = frontDTO.number,
+                IdDecisionSupport = frontDTO.idDecisionSupport,
 
                 ContactPerson = new ContactPersonCreationDTO
                 {
