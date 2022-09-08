@@ -261,6 +261,7 @@ namespace BusinessLogic.Mappers
                 PersonalAddress = candidate.personalAddress,
                 Phone = candidate.phone,
                 Condition = candidate.condition,
+                Number = candidate.number ?? 0,
 
                 ContactPerson = new ContactPersonCreationDTO
                 {

@@ -226,10 +226,10 @@ namespace BusinessLogic.Controllers
 
                 try
                 {
-                    //errors = Validations(dto, uow, true);
+                    errors = Validations(dto, uow, true);
 
-                    //if (!errors.Any())
-                    //{
+                    if (!errors.Any())
+                    {
                     dto.UpdUser = userId;
                     if (dto.StepType == "DECLINADO")
                     {
@@ -277,7 +277,7 @@ namespace BusinessLogic.Controllers
                     {
                         throw new Exception("");
                     }
-                    //}
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -381,6 +381,15 @@ namespace BusinessLogic.Controllers
             return colerrors;
         }
 
+        public List<string> Validations(ProcedureStepDTO candidate, UnitOfWork uow, bool isAdd = false)
+        {
+            List<string> colerrors = new List<string>();
+
+            if (!isAdd && !uow.CandidateRepository.ExistCandidateById(candidate.IdCandidate ?? -1))
+                colerrors.Add($"El aspirante no existe, puede haya sido aceptado o declinado.");
+
+            return colerrors;
+        }
 
         #endregion
 
