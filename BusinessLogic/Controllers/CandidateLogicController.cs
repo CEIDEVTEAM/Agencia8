@@ -226,7 +226,7 @@ namespace BusinessLogic.Controllers
 
                 try
                 {
-                    errors = Validations(dto, uow, true);
+                    errors = Validations(dto, uow);
 
                     if (!errors.Any())
                     {
