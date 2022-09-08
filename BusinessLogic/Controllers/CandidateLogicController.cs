@@ -258,11 +258,11 @@ namespace BusinessLogic.Controllers
                             else
                                 throw new Exception("No hay números disponibles, máximo en 149");
 
+                            candidate.number = number;
                             DependentCreationDTO dependent = _mapper.MapToDependentObject(candidate);
                             DependentLogicController lgDep = new DependentLogicController(_configuration, _application);
-                            candidate.number = number;
 
-                            errors = lgDep.AddDependent(candidate, uow, userId);
+                            errors = lgDep.AddDependent(dependent, uow, userId);
 
                             uow.CandidateRepository.UpdateCandidate(candidateUpd, uow, userId);
                         }
