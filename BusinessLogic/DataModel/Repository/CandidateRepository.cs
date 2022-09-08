@@ -66,7 +66,7 @@ namespace BusinessLogic.DataModel.Repository
         #region ANY
         public bool ExistCandidateById(decimal id)
         {
-            return _context.Candidate.Any(x => x.Id == id);
+            return _context.Candidate.Any(x => x.Id == id && x.Status != "Declinado" && x.Status != "Aceptado");
         }
 
         public bool ExistCandidateByDocument(string document)
