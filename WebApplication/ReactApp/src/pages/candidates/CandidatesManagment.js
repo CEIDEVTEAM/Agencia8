@@ -90,10 +90,10 @@ export default function CandidatesManagment () {
 
 
   const labels = ["Documento","Nombres","Apellidos",
-  "Condición","Dirección","Teléfonos","Teléfonos comercio",
+  "Condición","Dirección Comercio","Barrio","Teléfonos","Teléfonos comercio",
   "Dirección Personal","Inscripción"]
   const columns = ["personalDocument","name","lastName",
-  "condition","address","phone","cPhone","personalAddress","addRow"]
+  "condition","address","neighborhood","phone","cPhone","personalAddress","addRow"]
 
   return (
     <>
@@ -133,9 +133,9 @@ export default function CandidatesManagment () {
                     <Button title ="Actualizar Trámite" onClick={()=> handleProcedure(data.id)} layout="link" size="icon" aria-label="Delete">
                       <CardsIcon className="w-5 h-5" aria-hidden="true" />
                     </Button>
-                    <Button title ="Recomendación" onClick={()=> handleSupport(data.id)} layout="link" size="icon" aria-label="Delete">
+                    {data.condition ==="Corredor" ? null : <Button title ="Recomendación" onClick={()=> handleSupport(data.id)} layout="link" size="icon" aria-label="Delete">
                       <ModalsIcon className="w-5 h-5" aria-hidden="true" />
-                    </Button>
+                    </Button>}
                   </div>
                 </TableCell>
                 {columns.map((column, i) => <TableCell key={i}>{data[column]}</TableCell>)}

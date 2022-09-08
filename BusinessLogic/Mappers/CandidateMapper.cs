@@ -55,7 +55,7 @@ namespace BusinessLogic.Mappers
                 personalAddress = entity.PersonalAddress,
                 phone = entity.Phone,
                 status = entity.Status,
-                addRow = entity.AddRow,
+                addRow = entity.AddRow.ToString(),
                 number = entity.Number,
                 condition = entity.Condition,
                 idShopData = entity.IdShopData,

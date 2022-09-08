@@ -18,7 +18,7 @@ namespace BusinessLogic.DTOs.Dependent
         public string PersonalAddress { get; set; }
         public string Phone { get; set; }
         public string Condition { get; set; }
-        public DateTime? AddRow { get; set; }
+        public string? AddRow { get; set; }
         public decimal Number { get; set; }
         public decimal? PatentNamber { get; set; }
         public decimal? IdShopData { get; set; }

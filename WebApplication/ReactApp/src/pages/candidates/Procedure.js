@@ -9,6 +9,7 @@ function Procedure(props) {
     const handleClose = () => {
         props.onClose();
     }
+    const [isFinalStep, setIsFinalStep] = useState(false)
 
     return (
         <Modal isOpen={props.isOpen} onClose={handleClose} >
@@ -22,7 +23,10 @@ function Procedure(props) {
                             info = {entidad.candidate}
                             steps = {entidad.colProcedureStep}
                             onSubmit={async (valores,{resetForm}) => {
-                                await editar(valores,resetForm())                                                                                               
+                                await editar(valores,resetForm())
+                                if(valores.stepType === "ACEPTADO"|| valores.stepType==="DECLINADO")
+                                    handleClose()  
+                                                                                                                                                               
                             }}
                              />}
                 </Edit>

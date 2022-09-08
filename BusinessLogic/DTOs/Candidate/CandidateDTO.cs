@@ -19,7 +19,7 @@ namespace BusinessLogic.DTOs.Candidate
         public string personalAddress { get; set; } = null!;
         public string phone { get; set; } = null!;
         public string status { get; set; } = null!;
-        public DateTime? addRow { get; set; }
+        public string? addRow { get; set; }
         public decimal? number { get; set; }
         public string condition { get; set; } = null!;
         public decimal? idShopData { get; set; }
