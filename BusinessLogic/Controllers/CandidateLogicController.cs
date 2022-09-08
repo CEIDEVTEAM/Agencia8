@@ -230,53 +230,55 @@ namespace BusinessLogic.Controllers
 
                     if (!errors.Any())
                     {
-                    dto.UpdUser = userId;
-                    if (dto.StepType == "DECLINADO")
-                    {
-                        CandidateCreationDTO candidate = uow.CandidateRepository.GetCandidateById((decimal)dto.IdCandidate);
-                        candidate.Status = CStatus.declined;
+                        dto.UpdUser = userId;
+                        if (dto.StepType == "DECLINADO")
+                        {
+                            CandidateCreationDTO candidate = uow.CandidateRepository.GetCandidateById((decimal)dto.IdCandidate);
+                            candidate.Status = CStatus.declined;
 
-                        uow.CandidateRepository.UpdateCandidate(candidate, uow, userId);
-                    }
-                    else if (dto.StepType == "EN_TRAMITE")
-                    {
-                        CandidateCreationDTO candidate = uow.CandidateRepository.GetCandidateById((decimal)dto.IdCandidate);
-                        candidate.Status = CStatus.inProcess;
+                            uow.CandidateRepository.UpdateCandidate(candidate, uow, userId);
+                        }
+                        else if (dto.StepType == "EN_TRAMITE")
+                        {
+                            CandidateCreationDTO candidate = uow.CandidateRepository.GetCandidateById((decimal)dto.IdCandidate);
+                            candidate.Status = CStatus.inProcess;
 
-                        uow.CandidateRepository.UpdateCandidate(candidate, uow, userId);
-                    }
-                    else if (dto.StepType == "ACEPTADO")
-                    {
-                        CandidateCreationFrontDTO candidate = uow.CandidateRepository.GetCandidateCreationById((decimal)dto.IdCandidate);
-                        DependentCreationDTO dependent = _mapper.MapToDependentObject(candidate);
-                        DependentLogicController lgDep = new DependentLogicController(_configuration, _application);
+                            uow.CandidateRepository.UpdateCandidate(candidate, uow, userId);
+                        }
+                        else if (dto.StepType == "ACEPTADO")
+                        {
+                            CandidateCreationFrontDTO candidate = uow.CandidateRepository.GetCandidateCreationById((decimal)dto.IdCandidate);
 
-                        errors = lgDep.AddDependent(candidate, uow, userId);
+                            CandidateCreationDTO candidateUpd = uow.CandidateRepository.GetCandidateById((decimal)dto.IdCandidate);
+                            candidateUpd.Status = CStatus.accepted;
+                            decimal number = GetNextAgencyNumber(uow);
 
-                        CandidateCreationDTO candidateUpd = uow.CandidateRepository.GetCandidateById((decimal)dto.IdCandidate);
-                        candidateUpd.Status = CStatus.accepted;
-                        decimal number = GetNextAgencyNumber(uow);
+                            if (number != -1)
+                                candidateUpd.Number = number;
+                            else
+                                throw new Exception("No hay números disponibles, máximo en 149");
 
-                        if (number != -1)
-                            candidateUpd.Number = number;
+                            DependentCreationDTO dependent = _mapper.MapToDependentObject(candidate);
+                            DependentLogicController lgDep = new DependentLogicController(_configuration, _application);
+                            candidate.number = number;
+
+                            errors = lgDep.AddDependent(candidate, uow, userId);
+
+                            uow.CandidateRepository.UpdateCandidate(candidateUpd, uow, userId);
+                        }
+
+                        uow.CandidateRepository.AddCandidateStep(dto);
+
+                        if (!errors.Any())
+                        {
+                            uow.SaveChanges();
+                            uow.Commit();
+                            successful = true;
+                        }
                         else
-                            throw new Exception("No hay números disponibles, máximo en 149");
-
-                        uow.CandidateRepository.UpdateCandidate(candidateUpd, uow, userId);
-                    }
-
-                    uow.CandidateRepository.AddCandidateStep(dto);
-
-                    if (!errors.Any())
-                    {
-                        uow.SaveChanges();
-                        uow.Commit();
-                        successful = true;
-                    }
-                    else
-                    {
-                        throw new Exception("");
-                    }
+                        {
+                            throw new Exception("");
+                        }
                     }
                 }
                 catch (Exception ex)
