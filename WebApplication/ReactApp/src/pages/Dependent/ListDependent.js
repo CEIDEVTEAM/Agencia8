@@ -34,8 +34,8 @@ export default function ListDependent() {
   const [search, setSearch] = useState(null)
 
 
-  useEffect(() => {    
-      loadData();
+  useEffect(() => {
+    loadData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
 
   }, [page, setPage, openModal, openDeleteModal, search])
@@ -78,10 +78,10 @@ export default function ListDependent() {
 
 
   const labels = ["Numero", "Documento", "Nombres", "Apellidos",
-    "Condición", "Dirección", "Teléfonos", "Teléfonos comercio",
+    "Condición", "Dirección Comercio", "Barrio", "Teléfonos", "Teléfonos comercio",
     "Dirección Personal", "Inscripción"]
   const columns = ["number", "personalDocument", "name", "lastName",
-    "condition", "address", "phone", "phoneShopData", "personalAddress", "addRow"]
+    "condition", "address", "neighborhood", "phone", "phoneShopData", "personalAddress", "addRow"]
 
   return (
     <>
@@ -111,7 +111,7 @@ export default function ListDependent() {
             </tr>
           </TableHeader>
           <TableBody>
-            {dataTable.map((data, i) => (
+            {dataTable? dataTable.map((data, i) => (
               <TableRow key={data.id}>
                 <TableCell>
                   <div className="flex items-center space-x-4">
@@ -129,7 +129,7 @@ export default function ListDependent() {
                 {columns.map((column, i) => <TableCell key={i}>{data[column]}</TableCell>)}
 
               </TableRow>
-            ))}
+            )):<TableRow>.....Cargando</TableRow>}
           </TableBody>
         </Table>
         <TableFooter>

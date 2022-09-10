@@ -98,6 +98,7 @@ namespace BusinessLogic.DataModel.Repository
 
         public IQueryable<VDependent> GetDependents(string search)
         {
+            var test = _context.VDependent.ToList();
             return _context.VDependent.AsNoTracking().Where(x => x.LastName.ToLower().Contains(search.ToLower()) || x.Number.ToString().Contains(search.ToLower())).AsQueryable();
         }
 

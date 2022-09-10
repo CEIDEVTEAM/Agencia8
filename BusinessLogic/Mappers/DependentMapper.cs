@@ -66,7 +66,7 @@ namespace BusinessLogic.Mappers
                 Condition = entity.Condition,
                 PersonalAddress = entity.PersonalAddress,
                 Phone = entity.Phone,
-                AddRow = entity.AddRow,
+                AddRow = entity.AddRow.ToString(),
                 Number = entity.Number,
                 PatentNamber = entity.PatentNamber,
                 IdShopData = entity.IdShopData,
