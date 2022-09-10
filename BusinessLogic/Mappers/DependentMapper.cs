@@ -247,7 +247,7 @@ namespace BusinessLogic.Mappers
                 Condition = entity.Condition,
                 Status = entity.Status,
                 Number = entity.Number,
-                AddRow = entity.AddRow,
+                AddRow = entity.AddRow.ToString(),
                 IdShopData = entity.IdShopData,
                 NameShopData = entity.NameShopData,
                 PhoneShopData = entity.PhoneShopData,

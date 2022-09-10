@@ -21,7 +21,7 @@ namespace BusinessLogic.DTOs.Dependent
         public string Condition { get; set; } = null!;
         public string Status { get; set; } = null!;
         public decimal? Number { get; set; }
-        public DateTime? AddRow { get; set; }
+        public string? AddRow { get; set; }
         public decimal? IdShopData { get; set; }
         public string? NameShopData { get; set; }
         public string? PhoneShopData { get; set; }

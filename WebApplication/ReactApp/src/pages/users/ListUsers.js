@@ -9,7 +9,7 @@ import {
   TableFooter,
   TableContainer,
   Button,
-  Pagination,
+  //Pagination,
   Input
 } from '@windmill/react-ui'
 import EditUser from './EditUser';
@@ -18,11 +18,12 @@ import { EditIcon, TrashIcon, SearchIcon } from '../../icons'
 import { userUrl } from '../../utils/http/endpoints';
 import PageTitle from '../../components/Typography/PageTitle';
 import confirmation from '../../utils/generals/confirmation';
+import CustomPagination from '../../utils/generals/Pagination';
 
 
 export default function ListUsers() {
 
-  const recordsPerPage = 10
+  const recordsPerPage = 2
   const [totalResults, setTotalResults] = useState(0);
   const [page, setPage] = useState(1)
   const [dataTable, setDataTable] = useState([])
@@ -127,7 +128,7 @@ export default function ListUsers() {
           </TableBody>
         </Table>
         <TableFooter>
-          <Pagination
+          <CustomPagination
             totalResults={totalResults}
             resultsPerPage={recordsPerPage}
             onChange={onPageChangeTable}

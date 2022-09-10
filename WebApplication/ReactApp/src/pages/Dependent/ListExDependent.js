@@ -8,11 +8,10 @@ import {
     TableRow,
     TableFooter,
     TableContainer,
-    Button,
-    Pagination,
     Input,
     Select
 } from '@windmill/react-ui'
+import Pagination from '../../utils/generals/Pagination';
 
 import { EditIcon, TrashIcon, SearchIcon } from '../../icons'
 import { exCandidateDependent } from '../../utils/http/endpoints';
@@ -56,15 +55,15 @@ export default function ListExDependent() {
         setPage(p)
     }
 
-    const labels = ["Documento", "Nombres", "Apellidos",
-        "Condición", "Dirección", "Teléfonos", "Teléfonos comercio",
-        "Dirección Personal", "Inscripción"]
-    const columns = ["personalDocument","name", "lastName",
-        "condition", "address", "phone", "phoneShopData", "personalAddress", "addRow"]
+    const labels = ["Documento", "Nombres", "Apellidos","número",
+        "Condición","Dirección Personal", "Dirección comercio", "Teléfonos", "Teléfonos comercio",
+         "Inscripción"]
+    const columns = ["personalDocument","name", "lastName","number",
+        "condition", "personalAddress", "address", "phone", "phoneShopData", "addRow"]
 
     return (
         <>
-            <PageTitle>Consulta Historica de Sub Agentes, Corredores y Aspirantes</PageTitle>
+            <PageTitle>Consulta Histórica de Sub Agentes, Corredores y Aspirantes</PageTitle>
             <div className="relative w-full max-w-xl mr-6 focus-within:text-purple-500">
                 <div className="absolute inset-y-0 flex items-center pl-2">
                     <SearchIcon className="w-4 h-4" aria-hidden="true" />

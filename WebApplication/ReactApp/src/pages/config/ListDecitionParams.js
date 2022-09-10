@@ -8,10 +8,10 @@ import {
     TableRow,
     TableFooter,
     TableContainer,
-    Button,
-    Pagination,
+    Button,    
     Input
 } from '@windmill/react-ui'
+import Pagination from '../../utils/generals/Pagination';
 
 import { EditIcon, SearchIcon } from '../../icons'
 import { decitionParamUrl } from '../../utils/http/endpoints';

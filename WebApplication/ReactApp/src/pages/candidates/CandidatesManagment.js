@@ -9,10 +9,10 @@ import {
   TableRow,
   TableFooter,
   TableContainer,
-  Button,
-  Pagination,
+  Button,  
   Input
 } from '@windmill/react-ui'
+import Pagination from '../../utils/generals/Pagination';
 
 import { EditIcon, TrashIcon,SearchIcon, CardsIcon, LikeIcon, MenuIcon, ModalsIcon } from '../../icons'
 import { candidateUrl, urlCandidateStep } from '../../utils/http/endpoints';
@@ -89,10 +89,10 @@ export default function CandidatesManagment () {
 
 
 
-  const labels = ["Documento","Nombres","Apellidos",
+  const labels = ["Número","Documento","Nombres","Apellidos",
   "Condición","Dirección Comercio","Barrio","Teléfonos","Teléfonos comercio",
   "Dirección Personal","Inscripción"]
-  const columns = ["personalDocument","name","lastName",
+  const columns = ["number","personalDocument","name","lastName",
   "condition","address","neighborhood","phone","cPhone","personalAddress","addRow"]
 
   return (
