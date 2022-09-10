@@ -245,20 +245,22 @@ namespace BusinessLogic.Controllers
 
                             uow.CandidateRepository.UpdateCandidate(candidate, uow, userId);
                         }
-                        else if (dto.StepType == "ACEPTADO")
-                        {
-                            CandidateCreationFrontDTO candidate = uow.CandidateRepository.GetCandidateCreationById((decimal)dto.IdCandidate);
-
+                        else if (dto.StepType == "DOC_EN_AGENCIA")
+                        { 
                             CandidateCreationDTO candidateUpd = uow.CandidateRepository.GetCandidateById((decimal)dto.IdCandidate);
-                            candidateUpd.Status = CStatus.accepted;
                             decimal number = GetNextAgencyNumber(uow);
 
                             if (number != -1)
                                 candidateUpd.Number = number;
                             else
                                 throw new Exception("No hay números disponibles, máximo en 149");
+                        
+                        }
+                        else if (dto.StepType == "ACEPTADO")
+                        {
+                            CandidateCreationDTO candidateUpd = uow.CandidateRepository.GetCandidateById((decimal)dto.IdCandidate);
+                            CandidateCreationFrontDTO candidate = uow.CandidateRepository.GetCandidateCreationById((decimal)dto.IdCandidate);
 
-                            candidate.number = number;
                             DependentCreationDTO dependent = _mapper.MapToDependentObject(candidate);
                             DependentLogicController lgDep = new DependentLogicController(_configuration, _application);
 
