@@ -37,7 +37,7 @@ namespace ServiceWebApi.Controllers
                 {
                     var queryable = uow.DependentRepository.GetDependents(dto.Search);
                     await HttpContext.InsertHeaderPaginationParams(queryable);
-                    var dependents = await queryable.OrderBy(x => x.Name).Paginate(dto).ToListAsync();
+                    var dependents = await queryable.OrderBy(x => x.Number).Paginate(dto).ToListAsync();
                     return _mapper.MapToObject(dependents);
                 }
             }
@@ -56,7 +56,7 @@ namespace ServiceWebApi.Controllers
                 {
                     var queryable = uow.DependentRepository.GetExCandidateDependents(dto.Search, dto.Filter);
                     await HttpContext.InsertHeaderPaginationParams(queryable);
-                    var dependents = await queryable.OrderBy(x => x.Name).Paginate(dto).ToListAsync();
+                    var dependents = await queryable.OrderBy(x => x.PersonalDocument).Paginate(dto).ToListAsync();
                     return _mapper.MapToObject(dependents);
                 }
             }

@@ -254,7 +254,9 @@ namespace BusinessLogic.Controllers
                                 candidateUpd.Number = number;
                             else
                                 throw new Exception("No hay números disponibles, máximo en 149");
-                        
+
+                            uow.CandidateRepository.UpdateCandidate(candidateUpd, uow, userId);
+
                         }
                         else if (dto.StepType == "ACEPTADO")
                         {
@@ -265,7 +267,7 @@ namespace BusinessLogic.Controllers
                             DependentLogicController lgDep = new DependentLogicController(_configuration, _application);
 
                             errors = lgDep.AddDependent(dependent, uow, userId);
-
+                            candidateUpd.Status = CStatus.accepted;
                             uow.CandidateRepository.UpdateCandidate(candidateUpd, uow, userId);
                         }
 
