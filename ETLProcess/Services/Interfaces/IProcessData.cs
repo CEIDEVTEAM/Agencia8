@@ -10,6 +10,6 @@ namespace ETLProcess.Services.Interfaces
 {
     public interface IProcessData
     {
-        void Execute(ExcelApp.Range excelRange, IDapper dapper, ILogger logger);
+        void Execute(ExcelApp.Workbook excelWorkbook, IDapper dapper, ILogger logger);
     }
 }

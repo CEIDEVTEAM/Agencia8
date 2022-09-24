@@ -16,6 +16,7 @@ namespace ETLProcess.Configuration
         {
             public string FileName { get; set; }
             public string FolderRoute { get; set; }
+            public string Strategy { get; set; }
         }
     }
 }

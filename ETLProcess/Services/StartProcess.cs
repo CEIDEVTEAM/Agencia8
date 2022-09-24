@@ -25,6 +25,7 @@ namespace ETLProcess.Services
         public void Start()
         {
             ExcelApp.Application excelApp = new ExcelApp.Application();
+            Dictionary<string, string> processedFiles = new Dictionary<string, string>();
             try
             {
                 _logger.LogInformation("Inicio de ejecución");
@@ -38,19 +39,17 @@ namespace ETLProcess.Services
                         try
                         {
                             ExcelApp.Workbook excelBook = excelApp.Workbooks.Open($"{item.FolderRoute}{item.FileName}");
-                            ExcelApp._Worksheet excelSheet = excelBook.Sheets[1];
-                            ExcelApp.Range excelRange = excelSheet.UsedRange;
 
-                            IProcessData processData = GetStrategyProcess(item.FileName);
-                            processData.Execute(excelRange, _dapper, _logger);
+                            IProcessData processData = GetStrategyProcess(item.Strategy, item.FileName);
+                            processData.Execute(excelBook, _dapper, _logger);
 
-                            ReleaseObject(excelBook);
-                            ReleaseObject(excelSheet);
-                            ReleaseObject(excelRange);
+                            ReleaseObject.ReleaseObjectService(excelBook);
+                            processedFiles.Add($"{item.FolderRoute}{item.FileName}", "PROCESADO");
                         }
                         catch (Exception ex)
                         {
                             _logger.LogError(ex.Message);
+                            processedFiles.Add($"{item.FolderRoute}{item.FileName}", "ERROR");
                         }
                     }
                 }
@@ -64,6 +63,8 @@ namespace ETLProcess.Services
             {
                 excelApp.Quit();
                 Marshal.ReleaseComObject(excelApp);
+
+                UpdateFileNames(processedFiles);
             }
         }
 
@@ -84,7 +85,7 @@ namespace ETLProcess.Services
                     if (validateDoc != null)
                         validateDocs.Add(item);
 
-                    ReleaseObject(validateDoc);
+                    ReleaseObject.ReleaseObjectService(validateDoc);
                 }
                 catch (Exception)
                 {
@@ -97,38 +98,40 @@ namespace ETLProcess.Services
             return validateDocs;
         }
 
-        public IProcessData GetStrategyProcess(string fileName)
+        public IProcessData GetStrategyProcess(string strategy, string fileName)
         {
-            IProcessData strategy;
+            IProcessData processData;
 
-            switch (fileName)
+            switch (strategy)
             {
-                case "test2.xlsx":
-                    strategy = new FileTest();
+                case "LiquidacionMensual":
+                    processData = new LiquidacionMensual();
                     break;
                 default:
                     throw new Exception($"Lectura no implementada para el archivo {fileName}");
             }
 
-            return strategy;
+            return processData;
         }
 
-        public static void ReleaseObject(object obj)
+        private void UpdateFileNames(Dictionary<string, string> processedFiles)
         {
-            try
+            foreach (var item in processedFiles)
             {
-                Marshal.ReleaseComObject(obj);
-                obj = null;
-            }
-            catch
-            {
-                obj = null;
-            }
-            finally
-            {
-                GC.Collect();
-                GC.WaitForPendingFinalizers();
-            }
+                var split = item.Key.Split('.');
+                string fileName = @"";
+                for (int i = 0; i < split.Length; i++)
+                {
+                    if (i == split.Length - 1)
+                        fileName += $"-{item.Value}.";
+
+                    fileName += $"{split[i]}";
+                }
+
+                File.Move(item.Key, fileName);
+
+                _logger.LogInformation($"Nombre de archivo modificado: {item.Key} => {fileName}");
+            };
         }
     }
 }
