@@ -341,7 +341,7 @@ namespace DataAccess.Context
 
             modelBuilder.Entity<ExternalDependent>(entity =>
             {
-                entity.HasKey(e => e.Number);
+                entity.HasKey(e => new { e.Number, e.Name });
 
                 entity.ToTable("External_Dependents");
 

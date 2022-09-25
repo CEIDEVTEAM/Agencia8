@@ -42,6 +42,7 @@ namespace BusinessLogic.DataModel
             this.ContactPersonRepository = new ContactPersonRepository(this._context);
             this.DecisionParamRepository = new DecisionParamRepository(this._context);
             this.DecisionSupportRepository = new DecisionSupportRepository(this._context);
+
         }
 
         public void BeginTransaction()

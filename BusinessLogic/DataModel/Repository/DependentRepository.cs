@@ -13,11 +13,13 @@ namespace BusinessLogic.DataModel.Repository
     {
         private readonly Agencia_8Context _context;
         private readonly DependentMapper _mapper;
+        private readonly ExternalDependentMapper _emapper;
 
         public DependentRepository(Agencia_8Context context)
         {
             this._context = context;
             this._mapper = new DependentMapper();
+            this._emapper = new ExternalDependentMapper();
         }
 
         #region ADD
@@ -41,6 +43,15 @@ namespace BusinessLogic.DataModel.Repository
             entity.AddRow = DateTime.Now;
             _context.DependentFact.Add(entity);
         }
+         
+
+        public void AddExternalDependent(ExternalDependentDTO dto)
+        {
+            ExternalDependent entity = _emapper.MapToEntity(dto);
+            entity.AddRow = DateTime.Now;
+            
+            _context.ExternalDependent.Add(entity);
+        }
 
         #endregion
 
@@ -56,6 +67,15 @@ namespace BusinessLogic.DataModel.Repository
 
             _context.Dependent.Update(entity);
             uow.LogRepository.LogDependent(entity, userId, CActions.edit);
+        }
+
+        public void UpdateExternalDependent(ExternalDependentDTO dto)
+        {
+            ExternalDependent entity = _context.ExternalDependent.FirstOrDefault(x => x.Number == dto.Number && x.Name == dto.Name);
+            entity = this._emapper.MapToEditEntity(dto, entity);
+
+            entity.UpdRow = DateTime.Now;
+            _context.ExternalDependent.Update(entity);
         }
 
 
@@ -87,6 +107,11 @@ namespace BusinessLogic.DataModel.Repository
             return _context.Dependent.Any(x => x.Id == id);
         }
 
+        public bool ExistDependentByNumberAndName(decimal number, string name)
+        {
+            return _context.ExternalDependent.Any(x => x.Number == number && x.Name == name);
+        }
+
         #endregion
 
         #region GET
@@ -100,6 +125,14 @@ namespace BusinessLogic.DataModel.Repository
         {
             var test = _context.VDependent.ToList();
             return _context.VDependent.AsNoTracking().Where(x => x.LastName.ToLower().Contains(search.ToLower()) || x.Number.ToString().Contains(search.ToLower())).AsQueryable();
+        }
+
+        public IQueryable<ExternalDependent> GetExternalDependents(string search)
+        {
+            var test = _context.ExternalDependent.ToList();
+            return _context.ExternalDependent.AsNoTracking().Where(x => x.Name.ToLower().Contains(search.ToLower())
+            || x.Number.ToString().Contains(search.ToLower())
+            || x.Address.Contains(search.ToLower())).AsQueryable();
         }
 
         public List<DistanceResponseDTO> GetDependentsWithUbications()
@@ -135,6 +168,11 @@ namespace BusinessLogic.DataModel.Repository
         public int GetExternalShopCountByNeighborhood(string? neighborhood)
         {
             return _context.ExternalDependent.AsNoTracking().Where(x => x.Neighborhood == neighborhood).Count();
+        }
+
+        public ExternalDependentDTO GetExternalDependentByNumberAndName(decimal number, string name)
+        {
+            return _emapper.MapToObject(_context.ExternalDependent.Where(x=>x.Number==number && x.Name== name).FirstOrDefault());
         }
 
         #endregion

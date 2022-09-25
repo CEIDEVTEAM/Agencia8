@@ -21,11 +21,13 @@ namespace ServiceWebApi.Controllers
         public const string _application = "DEPENDENT";
         private readonly IConfiguration _configuration;
         private readonly DependentMapper _mapper;
+        private readonly ExternalDependentMapper _emapper;
 
         public DependentController(IConfiguration configuration)
         {
             this._configuration = configuration;
             this._mapper = new DependentMapper();
+            this._emapper = new ExternalDependentMapper();
         }
 
         [HttpGet]
@@ -40,6 +42,52 @@ namespace ServiceWebApi.Controllers
                     var dependents = await queryable.OrderBy(x => x.Number).Paginate(dto).ToListAsync();
                     return _mapper.MapToObject(dependents);
                 }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("No es posible comunicarse con el proveedor.");
+            }
+        }
+
+        [HttpGet("externalDependent")]
+        public async Task<ActionResult<List<ExternalDependentDTO>>> ExternalDependentList([FromQuery] PaginationDTO dto)
+        {
+            try
+            {
+                using (var uow = new UnitOfWork(this._configuration, _application))
+                {
+                    var queryable = uow.DependentRepository.GetExternalDependents(dto.Search);
+                    await HttpContext.InsertHeaderPaginationParams(queryable);
+                    var dependents = await queryable.OrderBy(x => x.Number).Paginate(dto).ToListAsync();
+                    return _emapper.MapToObject(dependents);
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("No es posible comunicarse con el proveedor.");
+            }
+        }
+        [HttpGet("getExternalDependent/{id}")]
+        public async Task<ActionResult<ExternalDependentDTO>> GetExternalDependent(string id)
+        {
+            try
+            {
+                ExternalDependentLogicController lg = new ExternalDependentLogicController(_configuration, _application);
+                return lg.GetExternalDependentByKey(id);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("No es posible comunicarse con el proveedor.");
+            }
+        }
+
+        [HttpPut("getExternalDependent/{id}")]
+        public async Task<ActionResult<GenericResponse>> EditExternalDependent(string id,[FromBody] ExternalDependentDTO dto)
+        {
+            try
+            {
+                ExternalDependentLogicController lg = new ExternalDependentLogicController(_configuration, _application);
+                return lg.EditExternalDependent(dto);
             }
             catch (Exception ex)
             {
@@ -81,21 +129,20 @@ namespace ServiceWebApi.Controllers
         }
 
 
-        //[HttpPost("addDependent")]
-        //public async Task<ActionResult<GenericResponse>> AddDependent([FromBody] DependentCreationFrontDTO dto)
-        //{
-        //    try
-        //    {
-        //        DependentLogicController lg = new DependentLogicController(_configuration, _application);
-        //        var userName = HttpContext.User.Claims.FirstOrDefault(x => x.Type == "userName").Value;
-
-        //        return await lg.AddDependent(dto, userName);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return BadRequest("No es posible comunicarse con el proveedor.");
-        //    }
-        //}
+        [HttpPost("processExternals")]
+        public async Task<ActionResult<GenericResponse>> ProcessExternals()
+        {
+            try
+            {
+                ExternalDependentLogicController lg = new ExternalDependentLogicController(_configuration, _application);
+                
+                return await lg.ProccessExternalDependets();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("No es posible comunicarse con el proveedor.");
+            }
+        }
 
         [HttpPut("{id:int}")]
         public async Task<ActionResult<GenericResponse>> EditDependent([FromBody] DependentCreationFrontDTO dto)

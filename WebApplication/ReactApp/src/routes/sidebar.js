@@ -73,6 +73,11 @@ const routes = [
         name: 'Gestión de Aspirantes',
         resourse: "CandidatesManagment",
       },
+      {
+        path: '/app/candidates/ListExternalDependent',
+        name: 'Consulta de S.A Externos',
+        resourse: "ExternalDependent",
+      },
     ],
   },
   {

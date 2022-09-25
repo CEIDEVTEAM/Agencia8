@@ -60,7 +60,7 @@ export function PageButton({ page, isActive, onClick }) {
 
 PageButton.propTypes = {
   page: PropTypes.number.isRequired,
-  onClick: PropTypes.func.isRequired,
+  onClick: PropTypes.func,
   isActive: PropTypes.bool,
 }
 

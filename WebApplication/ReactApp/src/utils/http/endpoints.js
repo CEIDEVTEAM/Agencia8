@@ -21,5 +21,8 @@ export const urlNeighborhood = `${apiURL}/candidate/neighborhoods`;
 export const dependentUrl = `${apiURL}/dependent`;
 export const urlDeleteDependent = `${apiURL}/dependent/deleteDependent`;
 export const exCandidateDependent = `${apiURL}/dependent/exCandidateDependent`;
+export const externalDependentUrl = `${apiURL}/dependent/externalDependent`;
+export const getExternalDependentUrl = `${apiURL}/dependent/getExternalDependent`;
+export const proccessExternalsUrl = `${apiURL}/dependent/processExternals`;
 
 export const decitionParamUrl = `${apiURL}/decitionParam`;
