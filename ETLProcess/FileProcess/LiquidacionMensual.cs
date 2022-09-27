@@ -73,7 +73,7 @@ namespace ETLProcess.FileProcess
                                     }
                                     catch (Exception)
                                     {
-                                        logger.LogError($"Error a convertir datos en la fila: {r}, hoja:{sheet}");
+                                        logger.LogError($"Error al convertir datos en la fila: {r}, hoja:{sheet}");
                                         throw new Exception();
                                     }
 
@@ -179,7 +179,7 @@ namespace ETLProcess.FileProcess
             obj.Aportes = null;
         }
 
-        public class ObjectLiquidacionMensual
+        private class ObjectLiquidacionMensual
         {
             public DateTime Fecha { get; set; }
             public string Agencia { get; set; }
@@ -189,7 +189,6 @@ namespace ETLProcess.FileProcess
             public Decimal? Aciertos_Vespertinos { get; set; }
             public Decimal? Aciertos_Nocturnos { get; set; }
             public Decimal? Aportes { get; set; }
-
         }
     }
 }
