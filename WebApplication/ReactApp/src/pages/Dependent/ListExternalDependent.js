@@ -99,8 +99,6 @@ export default function ListExternalDependent() {
 
   }
 
-
-
   const labels = ["Numero", "Nombres y Apellidos", "Dirección Comercio"]
   const columns = ["number", "name", "address"]
 
@@ -108,17 +106,14 @@ export default function ListExternalDependent() {
     <>
       <PageTitle>Sub Agentes Extenos</PageTitle>
       <div className="relative w-full max-w-xl mr-6 focus-within:text-purple-500">
-        <div className="absolute inset-y-0 flex items-center pl-2">
-          <SearchIcon className="w-4 h-4" aria-hidden="true" />
-        </div>
         <Input
           className="pl-8 text-gray-700"
-          placeholder="Nombre, dirección o número"
+          placeholder="Buscar por: Nombre, dirección o número"
           aria-label="Búsqueda"
           onChange={(e) => {
             if (e.target.value === "") {
-              setSearch(null)
-            } else { setSearch(e.target.value.toLowerCase()) }
+              setSearch(null)              
+            } else { setSearch(e.target.value.toLowerCase()); onPageChangeTable(1) }
           }}
         />
         <br/>
@@ -137,10 +132,10 @@ export default function ListExternalDependent() {
           </TableHeader>
           <TableBody>
             {dataTable ? dataTable.map((data, i) => (
-              <TableRow key={data.number + "-" + data.name}>
+              <TableRow key={data.id}>
                 <TableCell>
                   <div className="flex items-center space-x-4">
-                    <Button title="Editar" onClick={() => handleEdit(data.number + "-" + data.name)} layout="link" size="icon" aria-label="Edit">
+                    <Button title="Editar" onClick={() => handleEdit(data.id)} layout="link" size="icon" aria-label="Edit">
                       <EditIcon className="w-5 h-5" aria-hidden="true" />
                     </Button>
                   </div>
@@ -156,6 +151,7 @@ export default function ListExternalDependent() {
             totalResults={totalResults}
             resultsPerPage={recordsPerPage}
             onChange={onPageChangeTable}
+            currentPage={page}
             label="Table navigation"
           />
         </TableFooter>

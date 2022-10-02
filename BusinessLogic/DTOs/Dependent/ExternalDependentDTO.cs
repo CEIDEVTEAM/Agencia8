@@ -13,11 +13,13 @@ namespace BusinessLogic.DTOs.Dependent
         public string Name { get; set; } = null!;
         public string? LastName { get; set; }
         public string? Neighborhood { get; set; }
-        public string? Address { get; set; } = null!;
+        public string Address { get; set; } = null!;
         public string? Condition { get; set; }
-        public string? Latitude { get; set; }
-        public string? Longitude { get; set; }
+        public double? Latitude { get; set; }
+        public double? Longitude { get; set; }
         public DateTime? AddRow { get; set; }
         public DateTime? UpdRow { get; set; }
+        public decimal Id { get; set; }
+        public string? ActiveFlag { get; set; }
     }
 }

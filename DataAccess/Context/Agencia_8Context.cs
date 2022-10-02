@@ -341,7 +341,11 @@ namespace DataAccess.Context
 
             modelBuilder.Entity<ExternalDependent>(entity =>
             {
-                entity.HasKey(e => new { e.Number, e.Name });
+                entity.HasKey(e => e.Id);
+
+                entity.Property(e => e.Id)
+                    .HasColumnType("numeric(10, 0)")
+                    .ValueGeneratedOnAdd();
 
                 entity.ToTable("External_Dependents");
 
@@ -387,6 +391,11 @@ namespace DataAccess.Context
                 entity.Property(e => e.UpdRow)
                     .HasColumnType("datetime")
                     .HasColumnName("Upd_Row");
+
+                entity.Property(e => e.ActiveFlag)
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .HasColumnName("Active_Flag");
             });
 
             modelBuilder.Entity<LtAuthentication>(entity =>

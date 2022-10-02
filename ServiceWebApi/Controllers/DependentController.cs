@@ -68,12 +68,13 @@ namespace ServiceWebApi.Controllers
             }
         }
         [HttpGet("getExternalDependent/{id}")]
-        public async Task<ActionResult<ExternalDependentDTO>> GetExternalDependent(string id)
+        public async Task<ActionResult<ExternalDependentDTO>> GetExternalDependent(int id)
         {
             try
             {
                 ExternalDependentLogicController lg = new ExternalDependentLogicController(_configuration, _application);
                 return lg.GetExternalDependentByKey(id);
+                return null;
             }
             catch (Exception ex)
             {
@@ -82,12 +83,12 @@ namespace ServiceWebApi.Controllers
         }
 
         [HttpPut("getExternalDependent/{id}")]
-        public async Task<ActionResult<GenericResponse>> EditExternalDependent(string id,[FromBody] ExternalDependentDTO dto)
+        public async Task<ActionResult<GenericResponse>> EditExternalDependent(int id,[FromBody] ExternalDependentDTO dto)
         {
             try
             {
                 ExternalDependentLogicController lg = new ExternalDependentLogicController(_configuration, _application);
-                return lg.EditExternalDependent(dto);
+                return lg.EditExternalDependent(id, dto);
             }
             catch (Exception ex)
             {

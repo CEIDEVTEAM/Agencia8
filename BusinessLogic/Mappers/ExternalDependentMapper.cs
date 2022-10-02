@@ -1,10 +1,6 @@
 ﻿using BusinessLogic.DTOs.Dependent;
 using DataAccess.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace BusinessLogic.Mappers
 {
@@ -24,8 +20,8 @@ namespace BusinessLogic.Mappers
                 Neighborhood = dto.Neighborhood,
                 Address = dto.Address,
                 Condition = dto.Condition,
-                Latitude = dto.Latitude,
-                Longitude = dto.Longitude,
+                Latitude = string.IsNullOrEmpty(dto.Latitude.ToString()) ? null : dto.Latitude.ToString(),
+                Longitude = string.IsNullOrEmpty(dto.Longitude.ToString()) ? null : dto.Longitude.ToString(),
                 AddRow = dto.AddRow,
                 UpdRow = dto.UpdRow,
             };
@@ -39,6 +35,7 @@ namespace BusinessLogic.Mappers
 
             return new ExternalDependentDTO()
             {
+                Id = ent.Id,
                 Number = ent.Number,
                 AgencyNumber = ent.Number,
                 Name = ent.Name,
@@ -46,10 +43,11 @@ namespace BusinessLogic.Mappers
                 Neighborhood = ent.Neighborhood,
                 Address = ent.Address,
                 Condition = ent.Condition,
-                Latitude = ent.Latitude,
-                Longitude = ent.Longitude,
+                Latitude = ent.Latitude == null ? null : double.Parse(ent.Latitude),
+                Longitude = ent.Longitude == null ? null : double.Parse(ent.Longitude),
                 AddRow = ent.AddRow,
                 UpdRow = ent.UpdRow,
+                ActiveFlag = ent.ActiveFlag,
             };
         }
 
@@ -74,11 +72,12 @@ namespace BusinessLogic.Mappers
             entity.Neighborhood = dto.Neighborhood;
             entity.Address = dto.Address;
             entity.Condition = dto.Condition;
-            entity.Latitude = dto.Latitude;
-            entity.Longitude = dto.Longitude;
+            entity.Latitude = dto.Latitude.ToString();
+            entity.Longitude = dto.Longitude.ToString();
             entity.AddRow = dto.AddRow;
             entity.UpdRow = dto.UpdRow;
-
+            entity.Id = dto.Id;
+            entity.ActiveFlag = dto.ActiveFlag;
 
             return entity;
 

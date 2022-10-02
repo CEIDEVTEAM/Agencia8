@@ -47,7 +47,7 @@ namespace BusinessLogic.Controllers
                             extDto.Name = item.Name;
                             extDto.Number = item.Number;
                             extDto.Address = item.Address;
-                            uow.DependentRepository.UpdateExternalDependent(extDto);
+                            uow.DependentRepository.UpdateExternalDependent((int?)item.Id, extDto);
                         }
                         else
                         {
@@ -55,6 +55,14 @@ namespace BusinessLogic.Controllers
                         }
                     }
                     uow.SaveChanges();
+
+                    List<ExternalDependentDTO> unchangedExternals = uow.DependentRepository.GetExternalDependentsUnchanged();
+
+                    foreach (var externalDependentDTO in unchangedExternals)
+                    {
+                        uow.DependentRepository.DeleteExternalDependent(externalDependentDTO);
+                    }
+
                     uow.Commit();
                     successful = true;
                 }
@@ -73,20 +81,21 @@ namespace BusinessLogic.Controllers
 
         }
 
-        public ActionResult<ExternalDependentDTO> GetExternalDependentByKey(string id)
+        public ActionResult<ExternalDependentDTO> GetExternalDependentByKey(int id)
         {
             using (var uow = new UnitOfWork(_configuration, _application))
             {
-                decimal number = decimal.Parse(id.Split("-")[0]);
-                string name = id.Split("-")[1];
+                //decimal number = decimal.Parse(id.Split("-")[0]);
+                //string name = id.Split("-")[1];
 
-                ExternalDependentDTO dto = uow.DependentRepository.GetExternalDependentByNumberAndName(number, name);
+                //ExternalDependentDTO dto = uow.DependentRepository.GetExternalDependentByNumberAndName(number, name);
+                ExternalDependentDTO dto = uow.DependentRepository.GetExternalDependentByid(id);
                 return dto;
 
             }
         }
 
-        public ActionResult<GenericResponse> EditExternalDependent(ExternalDependentDTO dto)
+        public ActionResult<GenericResponse> EditExternalDependent(int id, ExternalDependentDTO dto)
         {
             List<string> errors = new List<string>();
             bool successful = false;
@@ -97,7 +106,7 @@ namespace BusinessLogic.Controllers
 
                 try
                 {
-                    uow.DependentRepository.UpdateExternalDependent(dto);
+                    uow.DependentRepository.UpdateExternalDependent(id, dto);
 
                     uow.SaveChanges();
                     uow.Commit();

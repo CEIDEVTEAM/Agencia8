@@ -16,5 +16,7 @@ namespace DataAccess.Models
         public string? Longitude { get; set; }
         public DateTime? AddRow { get; set; }
         public DateTime? UpdRow { get; set; }
+        public decimal Id { get; set; }
+        public string ActiveFlag { get; set; }
     }
 }

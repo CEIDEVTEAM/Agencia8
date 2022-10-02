@@ -49,7 +49,8 @@ namespace BusinessLogic.DataModel.Repository
         {
             ExternalDependent entity = _emapper.MapToEntity(dto);
             entity.AddRow = DateTime.Now;
-            
+            entity.ActiveFlag = "S";
+
             _context.ExternalDependent.Add(entity);
         }
 
@@ -69,9 +70,9 @@ namespace BusinessLogic.DataModel.Repository
             uow.LogRepository.LogDependent(entity, userId, CActions.edit);
         }
 
-        public void UpdateExternalDependent(ExternalDependentDTO dto)
+        public void UpdateExternalDependent(int? id, ExternalDependentDTO dto)
         {
-            ExternalDependent entity = _context.ExternalDependent.FirstOrDefault(x => x.Number == dto.Number && x.Name == dto.Name);
+            ExternalDependent entity = _context.ExternalDependent.FirstOrDefault(x => x.Id == id);
             entity = this._emapper.MapToEditEntity(dto, entity);
 
             entity.UpdRow = DateTime.Now;
@@ -93,7 +94,17 @@ namespace BusinessLogic.DataModel.Repository
 
             uow.LogRepository.LogDependent(entity, userId, CActions.delete);
         }
+        public void DeleteExternalDependent(ExternalDependentDTO dto)
+        {
+            ExternalDependent entity = _context.ExternalDependent.FirstOrDefault(x => x.Number == dto.Number && x.Name == dto.Name);
 
+            entity.ActiveFlag = "N";
+            entity.UpdRow = DateTime.Now;
+            _context.ExternalDependent.Update(entity);
+
+        }
+
+       
         #endregion
 
         #region ANY
@@ -173,6 +184,15 @@ namespace BusinessLogic.DataModel.Repository
         public ExternalDependentDTO GetExternalDependentByNumberAndName(decimal number, string name)
         {
             return _emapper.MapToObject(_context.ExternalDependent.Where(x=>x.Number==number && x.Name== name).FirstOrDefault());
+        }
+        internal ExternalDependentDTO GetExternalDependentByid(int id)
+        {
+            return _emapper.MapToObject(_context.ExternalDependent.Where(x => x.Id == id).FirstOrDefault());
+        }
+
+        public List<ExternalDependentDTO> GetExternalDependentsUnchanged()
+        {
+            return _emapper.MapToObject(_context.ExternalDependent.Where(x => x.UpdRow > (DateTime.Now.AddDays(10))).ToList());
         }
 
         #endregion

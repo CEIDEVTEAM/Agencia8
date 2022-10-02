@@ -67,7 +67,7 @@ PageButton.propTypes = {
 export const EmptyPageButton = () => <span className="px-2 py-1">...</span>
 
 const Pagination = React.forwardRef(function Pagination(props, ref) {
-  const { totalResults, resultsPerPage, label, onChange, ...other } = props
+  const { totalResults, resultsPerPage, label, onChange, currentPage, ...other } = props
   const [pages, setPages] = useState([])
   const [activePage, setActivePage] = useState(1)
 
