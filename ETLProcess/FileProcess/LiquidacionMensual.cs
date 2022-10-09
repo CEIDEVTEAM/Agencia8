@@ -54,7 +54,7 @@ namespace ETLProcess.FileProcess
                             ObjectLiquidacionMensual obj = new ObjectLiquidacionMensual();
 
                             //NOTA => FALTA SOLUCIONAR EL TEMA DE LA FECHA!!
-                            obj.Fecha = DateTime.Now.AddDays(-1);
+                            obj.Fecha = DateTime.Now.AddDays(-370);
 
                             if (sheet == 1 || sheet == 2) //Quiniela y Tombola
                             {
@@ -66,6 +66,8 @@ namespace ETLProcess.FileProcess
                                     try
                                     {
                                         obj.Agencia = excelRange.Cells[r, 3].Value2.ToString();
+                                        if (obj.Agencia.Length > 4 && obj.Agencia.Substring(0, 4) == "Tele")
+                                            obj.Agencia = "Telefónico";
                                         obj.Apuestas_Vespertinas = Decimal.Parse(excelRange.Cells[r, 5].Value2.ToString());
                                         obj.Apuestas_Nocturnas = Decimal.Parse(excelRange.Cells[r, 6].Value2.ToString());
                                         obj.Aciertos_Vespertinos = Decimal.Parse(excelRange.Cells[r, 9].Value2.ToString());
@@ -91,6 +93,8 @@ namespace ETLProcess.FileProcess
                                     try
                                     {
                                         obj.Agencia = excelRange.Cells[r, 3].Value2.ToString();
+                                        if (obj.Agencia.Length > 4 && obj.Agencia.Substring(0, 4) == "Tele")
+                                            obj.Agencia = "Telefónico";
                                         obj.Apuestas_Nocturnas = Decimal.Parse(excelRange.Cells[r, 5].Value2.ToString());
                                         obj.Aciertos_Nocturnos = Decimal.Parse(excelRange.Cells[r, 7].Value2.ToString());
                                         obj.Aportes = Decimal.Parse(excelRange.Cells[r, 8].Value2.ToString());
@@ -114,6 +118,8 @@ namespace ETLProcess.FileProcess
                                     try
                                     {
                                         obj.Agencia = excelRange.Cells[r, 3].Value2.ToString();
+                                        if (obj.Agencia.Length > 4 && obj.Agencia.Substring(0, 4) == "Tele")
+                                            obj.Agencia = "Telefónico";
                                         obj.Apuestas_Nocturnas = Decimal.Parse(excelRange.Cells[r, 4].Value2.ToString());
                                         obj.Aciertos_Nocturnos = Decimal.Parse(excelRange.Cells[r, 6].Value2.ToString());
                                     }
@@ -137,6 +143,8 @@ namespace ETLProcess.FileProcess
                                     try
                                     {
                                         obj.Agencia = excelRange.Cells[r, 3].Value2.ToString();
+                                        if (obj.Agencia.Length > 4 && obj.Agencia.Substring(0, 4) == "Tele")
+                                            obj.Agencia = "Telefónico";
                                         obj.Apuestas_Nocturnas = Decimal.Parse(excelRange.Cells[r, 4].Value2.ToString());
                                         obj.Aciertos_Nocturnos = Decimal.Parse(excelRange.Cells[r, 7].Value2.ToString());
                                     }

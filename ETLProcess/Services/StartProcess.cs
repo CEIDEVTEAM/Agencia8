@@ -64,6 +64,8 @@ namespace ETLProcess.Services
                 excelApp.Quit();
                 Marshal.ReleaseComObject(excelApp);
 
+                _logger.LogInformation("Pausa por 5 seg para dar tiempo a que libere los archivos procesados");
+                Thread.Sleep(5000); 
                 UpdateFileNames(processedFiles);
             }
         }

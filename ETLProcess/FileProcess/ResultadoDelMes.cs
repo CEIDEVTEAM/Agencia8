@@ -99,7 +99,18 @@ namespace ETLProcess.FileProcess
 
                         try
                         {
-                            obj.Fecha = DateTime.Now;
+                            obj.Fecha = DateTime.Parse(excelRange.Cells[5, 3].Value2.ToString());
+                            string sqlDelete = @"Delete from Resultado_del_mes where Fecha = @Fecha";
+                            connection.Execute(sqlDelete, obj, transaction: tran);
+                        }
+                        catch (Exception)
+                        {
+                            logger.LogError($"Error al borrar registro con misma fecha ({excelRange.Cells[5, 3].Value2.ToString()}).");
+                            throw new Exception();
+                        }
+
+                        try
+                        {
                             obj.Saldo_en_caja_fecha = DateTime.Parse(excelRange.Cells[5, 3].Value2.ToString());
                             obj.Saldo_en_caja = Decimal.Parse(excelRange.Cells[5, 7].Value2.ToString());
                             obj.Saldo_cuenta_dolares_fecha = DateTime.Parse(excelRange.Cells[7, 3].Value2.ToString());
@@ -119,11 +130,10 @@ namespace ETLProcess.FileProcess
                             obj.Saldo_comision_mostrador_fecha = DateTime.Parse(excelRange.Cells[16, 3].Value2.ToString());
                             obj.Saldo_comision_mostrador = Decimal.Parse(excelRange.Cells[16, 7].Value2.ToString());
                             obj.Aportes_pozos_cinco_de_oro_fecha = DateTime.Parse(excelRange.Cells[17, 3].Value2.ToString());
-                            
                             obj.Aportes_pozos_cinco_de_oro = Decimal.Parse(excelRange.Cells[17, 7].Value2.ToString());
                             obj.Recargas_inicio = DateTime.Parse(excelRange.Cells[18, 3].Value2.ToString());
-                            obj.Recargas_fin= DateTime.Parse(excelRange.Cells[18, 5].Value2.ToString());
-                            obj.Recargas = Decimal.Parse(excelRange.Cells[15, 7].Value2.ToString());
+                            obj.Recargas_fin = DateTime.Parse(excelRange.Cells[18, 5].Value2.ToString());
+                            obj.Recargas = Decimal.Parse(excelRange.Cells[18, 7].Value2.ToString());
                             obj.Compras_raspaditas_inicio = DateTime.Parse(excelRange.Cells[21, 3].Value2.ToString());
                             obj.Compras_raspaditas_fin = DateTime.Parse(excelRange.Cells[21, 5].Value2.ToString());
                             obj.Compras_raspaditas = Decimal.Parse(excelRange.Cells[21, 7].Value2.ToString());
