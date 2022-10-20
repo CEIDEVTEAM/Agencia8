@@ -28,6 +28,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.editorconfig = .editorconfig
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ETL", "ETL", "{A300B2B3-3B5D-4172-8047-51EBFCBF8F8C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ETLProcess", "ETLProcess\ETLProcess.csproj", "{CD51AD8E-C433-4288-B651-90034396C661}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -54,6 +58,10 @@ Global
 		{9D74C8AF-83B1-4929-A214-071F30909A79}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9D74C8AF-83B1-4929-A214-071F30909A79}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9D74C8AF-83B1-4929-A214-071F30909A79}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CD51AD8E-C433-4288-B651-90034396C661}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CD51AD8E-C433-4288-B651-90034396C661}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CD51AD8E-C433-4288-B651-90034396C661}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CD51AD8E-C433-4288-B651-90034396C661}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -64,6 +72,7 @@ Global
 		{CEB5EBE2-63D0-498D-B5DC-F663DD148947} = {A4CD104A-1219-44F8-8715-2AD991580590}
 		{E7E3F509-5EEE-4617-9E95-309F8D608436} = {3829BE23-9373-420E-9873-56186F0DA3D8}
 		{9D74C8AF-83B1-4929-A214-071F30909A79} = {0166A1A6-2645-404F-A4FA-183B0AFF84A1}
+		{CD51AD8E-C433-4288-B651-90034396C661} = {A300B2B3-3B5D-4172-8047-51EBFCBF8F8C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {AC958E4F-8530-4778-BF77-984BDF8F957A}
