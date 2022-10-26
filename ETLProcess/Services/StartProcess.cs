@@ -115,6 +115,12 @@ namespace ETLProcess.Services
                 case "ResultadoDelMes":
                     processData = new ResultadoDelMes();
                     break;
+                case "SaldoCuentasSubAgentes":
+                    processData = new SaldosSubAgentes();
+                    break;
+                case "LiquidacionMensualPeriodo":
+                    processData = new LiquidacionMensualPeriodo();
+                    break;
                 default:
                     throw new Exception($"Lectura no implementada para el archivo {fileName}");
             }

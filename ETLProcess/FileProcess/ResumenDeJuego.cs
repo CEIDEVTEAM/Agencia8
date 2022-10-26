@@ -73,7 +73,7 @@ namespace ETLProcess.FileProcess
                             throw new Exception();
                         }
 
-                        for (int r = 4; r <= rows; r++)
+                        for (int r = 4; r <= rows - 1; r++)
                         {
                             try
                             {
@@ -91,7 +91,7 @@ namespace ETLProcess.FileProcess
                             }
                             catch
                             {
-                                logger.LogError($"Error al convertir datos en la fila: {r}, hoja:{sheet}");
+                                logger.LogError($"Error al convertir datos en la fila: {r}, hoja: {sheet}");
                                 throw new Exception();
                             }
 

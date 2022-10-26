@@ -12,6 +12,7 @@ namespace ETLProcess.Services
     {
         private readonly IOptions<DatabaseSettings> _config;
         private SqlConnection conn;
+        private bool flagTranConn = false;
 
         public DapperService(IOptions<DatabaseSettings> config)
         {
@@ -23,27 +24,56 @@ namespace ETLProcess.Services
             conn.Close();
         }
 
-        public DbConnection GetDbconnection()
+        public DbConnection GetDbconnection(bool flagTran = false)
         {
-            conn = new SqlConnection(_config.Value.ConnectionString);
+            if (flagTran)
+            {
+                conn = new SqlConnection(_config.Value.ConnectionStringTransactional);
+                flagTranConn = true;
+            }
+            else
+                conn = new SqlConnection(_config.Value.ConnectionString);
+
             return conn;
         }
 
         public T Get<T>(string sp, DynamicParameters parms, CommandType commandType = CommandType.Text)
         {
-            using (IDbConnection db = new SqlConnection(_config.Value.ConnectionString))
+            if (flagTranConn)
             {
-                db.Open();
-                return db.Query<T>(sp, parms, commandType: commandType).FirstOrDefault();
+                using (IDbConnection db = new SqlConnection(_config.Value.ConnectionStringTransactional))
+                {
+                    db.Open();
+                    return db.Query<T>(sp, parms, commandType: commandType).FirstOrDefault();
+                }
+            }
+            else
+            {
+                using (IDbConnection db = new SqlConnection(_config.Value.ConnectionString))
+                {
+                    db.Open();
+                    return db.Query<T>(sp, parms, commandType: commandType).FirstOrDefault();
+                }
             }
         }
 
         public List<T> GetAll<T>(string sp, DynamicParameters parms, CommandType commandType = CommandType.StoredProcedure)
         {
-            using (IDbConnection db = new SqlConnection(_config.Value.ConnectionString))
+            if (flagTranConn)
             {
-                db.Open();
-                return db.Query<T>(sp, parms, commandType: commandType).ToList();
+                using (IDbConnection db = new SqlConnection(_config.Value.ConnectionStringTransactional))
+                {
+                    db.Open();
+                    return db.Query<T>(sp, parms, commandType: commandType).ToList();
+                }
+            }
+            else
+            {
+                using (IDbConnection db = new SqlConnection(_config.Value.ConnectionString))
+                {
+                    db.Open();
+                    return db.Query<T>(sp, parms, commandType: commandType).ToList();
+                }
             }
         }
 
@@ -51,14 +81,30 @@ namespace ETLProcess.Services
         {
             T result;
 
-            using (IDbConnection db = new SqlConnection(_config.Value.ConnectionString))
+            if (flagTranConn)
             {
-                db.Open();
-
-                using (var tran = db.BeginTransaction())
+                using (IDbConnection db = new SqlConnection(_config.Value.ConnectionStringTransactional))
                 {
-                    result = db.Query<T>(sp, parms, commandType: commandType, transaction: tran).FirstOrDefault();
-                    tran.Commit();
+                    db.Open();
+
+                    using (var tran = db.BeginTransaction())
+                    {
+                        result = db.Query<T>(sp, parms, commandType: commandType, transaction: tran).FirstOrDefault();
+                        tran.Commit();
+                    }
+                }
+            }
+            else
+            {
+                using (IDbConnection db = new SqlConnection(_config.Value.ConnectionString))
+                {
+                    db.Open();
+
+                    using (var tran = db.BeginTransaction())
+                    {
+                        result = db.Query<T>(sp, parms, commandType: commandType, transaction: tran).FirstOrDefault();
+                        tran.Commit();
+                    }
                 }
             }
 
@@ -68,14 +114,31 @@ namespace ETLProcess.Services
         public T Update<T>(string sp, DynamicParameters parms, CommandType commandType = CommandType.StoredProcedure)
         {
             T result;
-            using (IDbConnection db = new SqlConnection(_config.Value.ConnectionString))
-            {
-                db.Open();
 
-                using (var tran = db.BeginTransaction())
+            if (flagTranConn)
+            {
+                using (IDbConnection db = new SqlConnection(_config.Value.ConnectionStringTransactional))
                 {
-                    result = db.Query<T>(sp, parms, commandType: commandType, transaction: tran).FirstOrDefault();
-                    tran.Commit();
+                    db.Open();
+
+                    using (var tran = db.BeginTransaction())
+                    {
+                        result = db.Query<T>(sp, parms, commandType: commandType, transaction: tran).FirstOrDefault();
+                        tran.Commit();
+                    }
+                }
+            }
+            else
+            {
+                using (IDbConnection db = new SqlConnection(_config.Value.ConnectionString))
+                {
+                    db.Open();
+
+                    using (var tran = db.BeginTransaction())
+                    {
+                        result = db.Query<T>(sp, parms, commandType: commandType, transaction: tran).FirstOrDefault();
+                        tran.Commit();
+                    }
                 }
             }
 
