@@ -70,7 +70,7 @@ namespace ServiceWebApi.Controllers
             try
             {
                 CandidateLogicController lg = new CandidateLogicController(_configuration, _application);
-                var userName = "admin";//HttpContext.User.Claims.FirstOrDefault(x => x.Type == "userName").Value; EDU
+                var userName = HttpContext.User.Claims.FirstOrDefault(x => x.Type == "userName").Value;
 
                 return await lg.AddCandidate(dto, userName);
             }
@@ -116,7 +116,7 @@ namespace ServiceWebApi.Controllers
             try
             {
                 CandidateLogicController lg = new CandidateLogicController(_configuration, _application);
-                var userName = "admin";//HttpContext.User.Claims.FirstOrDefault(x => x.Type == "userName").Value; EDU
+                var userName = HttpContext.User.Claims.FirstOrDefault(x => x.Type == "userName").Value;
                 dto.IdCandidate = id;
                 return lg.AddCandidateStep(dto, userName);
             }
@@ -132,7 +132,7 @@ namespace ServiceWebApi.Controllers
             try
             {
                 CandidateLogicController lg = new CandidateLogicController(_configuration, _application);
-                var userName = "admin";//HttpContext.User.Claims.FirstOrDefault(x => x.Type == "userName").Value; EDU
+                var userName = HttpContext.User.Claims.FirstOrDefault(x => x.Type == "userName").Value;
 
                 return lg.RecomendedDecision(id);
             }
@@ -148,7 +148,7 @@ namespace ServiceWebApi.Controllers
             try
             {
                 CandidateLogicController lg = new CandidateLogicController(_configuration, _application);
-                var userName = "admin";//HttpContext.User.Claims.FirstOrDefault(x => x.Type == "userName").Value; EDU
+                var userName = HttpContext.User.Claims.FirstOrDefault(x => x.Type == "userName").Value;
 
                 return lg.GetNeighborhoods();
             }

@@ -14,14 +14,16 @@ namespace ETLProcess.FileProcess
 {
     public class LiquidacionMensualPeriodo : IProcessData
     {
-        public const string FileName = "Liquidacion Mensual Bancas (Todos).xls - PERIODOS";
+        public const string FileName = "Liquidacion Mensual Bancas (Todos).xls - PERIODO";
 
         public void Execute(ExcelApp.Workbook excelWorkbook, IDapper dapper, ILogger logger)
         {
             try
             {
                 string sql = @"INSERT INTO Liquidacion_Mensual_Periodo (
-                                                    Fecha, 
+                                                    Fecha_Inicio, 
+                                                    Fecha_Fin, 
+                                                    Id_Periodo, 
                                                     Agencia, 
                                                     Juego, 
                                                     Apuestas_Vespertinas, 
@@ -30,7 +32,9 @@ namespace ETLProcess.FileProcess
                                                     Aciertos_Nocturnos,
                                                     Aportes) 
                                                VALUES (
-                                                    @Fecha, 
+                                                    @Fecha_Inicio, 
+                                                    @Fecha_Fin, 
+                                                    @Id_Periodo, 
                                                     @Agencia, 
                                                     @Juego, 
                                                     @Apuestas_Vespertinas, 
@@ -45,34 +49,37 @@ namespace ETLProcess.FileProcess
 
                     using (var tran = connection.BeginTransaction())
                     {
+                        ObjectLiquidacionMensualPeriodo obj = new ObjectLiquidacionMensualPeriodo();
+
+                        try
+                        {
+                            string sqlGetPeriod = @"Select Id from Period where Active_Flag = 'S'";
+                            var idPeriodo = connection.ExecuteScalar(sqlGetPeriod, param: null, transaction: tran);
+
+
+                            if (idPeriodo == null)
+                                throw new Exception("No existe periodo activo");
+
+                            obj.Id_Periodo = decimal.Parse(idPeriodo.ToString());
+
+                            string sqlDelete = @"Delete from Liquidacion_Mensual_Periodo where Id_Periodo = @Id_Periodo";
+                            connection.Execute(sqlDelete, obj, transaction: tran);
+                        }
+                        catch (Exception)
+                        {
+                            logger.LogError($"Error al borrar registros del mismo período.");
+                            throw new Exception();
+                        }
+
+                        obj.Fecha_Inicio = DateTime.Now.AddDays((DateTime.Now.Day * -1) + 1);
+                        obj.Fecha_Fin = DateTime.Now;
+
                         for (int sheet = 1; sheet <= 5; sheet++)
                         {
                             ExcelApp._Worksheet excelSheet = excelWorkbook.Sheets[sheet];
                             ExcelApp.Range excelRange = excelSheet.UsedRange;
 
                             int rows = excelRange.Rows.Count;
-                            ObjectLiquidacionMensualPeriodo obj = new ObjectLiquidacionMensualPeriodo();
-
-                            try
-                            {
-                                string sqlGetPeriod = @"Select Id from Period where ActiveFl = 'S'";
-                                int? idPeriodo = connection.Execute(sqlGetPeriod);
-
-                                if (idPeriodo == null)
-                                    throw new Exception("No existe periodo activo");
-
-                                string sqlDelete = @"Delete from Liquidacion_Mensual_Periodo where Id = @IdPeriodo";
-                                connection.Execute(sqlDelete, obj, transaction: tran);
-                            }
-                            catch (Exception)
-                            {
-                                logger.LogError($"Error al borrar registro con misma fecha ({excelRange.Cells[5, 3].Value2.ToString()}).");
-                                throw new Exception();
-                            }
-
-
-                            obj.FechaInicio = DateTime.Now.AddDays(DateTime.Now.Day * -1);
-                            obj.FechaFin = DateTime.Now;
 
                             if (sheet == 1 || sheet == 2) //Quiniela y Tombola
                             {
@@ -207,9 +214,9 @@ namespace ETLProcess.FileProcess
 
         private class ObjectLiquidacionMensualPeriodo
         {
-            public DateTime FechaInicio { get; set; }
-            public DateTime FechaFin { get; set; }
-            public Decimal IdPeriodo { get; set; }
+            public DateTime Fecha_Inicio { get; set; }
+            public DateTime Fecha_Fin { get; set; }
+            public Decimal Id_Periodo { get; set; }
             public string Agencia { get; set; }
             public string Juego { get; set; }
             public Decimal? Apuestas_Vespertinas { get; set; }
