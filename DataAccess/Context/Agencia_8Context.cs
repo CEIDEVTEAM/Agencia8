@@ -43,6 +43,12 @@ namespace DataAccess.Context
         public virtual DbSet<VExCandidateDependent> VExCandidateDependent { get; set; } = null!;
         public virtual DbSet<VDependentCandidateNumber> VDependentCandidateNumbers { get; set; } = null!;
 
+        public virtual DbSet<Concept> Concept { get; set; } = null!;
+        public virtual DbSet<LiquidacionMensualPeriodo> LiquidacionMensualPeriodo { get; set; } = null!;
+        public virtual DbSet<Period> Period { get; set; } = null!;
+        public virtual DbSet<ProjectionParam> ProjectionParam { get; set; } = null!;
+        public virtual DbSet<Raspadita> Raspadita { get; set; } = null!;
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
@@ -125,7 +131,7 @@ namespace DataAccess.Context
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Decision_Support");
 
-               
+
             });
 
             modelBuilder.Entity<ContactPerson>(entity =>
@@ -976,7 +982,7 @@ namespace DataAccess.Context
                 entity.Property(e => e.IdDecisionSupport)
                   .HasColumnType("numeric(10, 0)")
                   .HasColumnName("Id_Decision_Support");
-                
+
             });
 
             modelBuilder.Entity<VDependent>(entity =>
@@ -1270,6 +1276,196 @@ namespace DataAccess.Context
                 entity.ToView("V_DependentCandidateNumbers");
 
                 entity.Property(e => e.Number).HasColumnType("numeric(10, 0)");
+            });
+
+            modelBuilder.Entity<Concept>(entity =>
+            {
+                entity.Property(e => e.Id)
+                    .HasColumnType("numeric(10, 0)")
+                    .ValueGeneratedOnAdd();
+
+                entity.Property(e => e.AddRow)
+                    .HasColumnType("date")
+                    .HasColumnName("Add_Row");
+
+                entity.Property(e => e.ParamId)
+                    .HasColumnType("numeric(10, 0)")
+                    .HasColumnName("Param_Id");
+
+                entity.Property(e => e.PeriodId)
+                    .HasColumnType("numeric(10, 0)")
+                    .HasColumnName("Period_Id");
+
+                entity.Property(e => e.UpdRow)
+                    .HasColumnType("date")
+                    .HasColumnName("Upd_Row");
+
+                entity.Property(e => e.Value).HasColumnType("numeric(10, 0)");
+
+                entity.HasOne(d => d.Param)
+                    .WithMany(p => p.Concepts)
+                    .HasForeignKey(d => d.ParamId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Concepts_Projection_Params");
+
+                entity.HasOne(d => d.Period)
+                    .WithMany(p => p.Concepts)
+                    .HasForeignKey(d => d.PeriodId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Concepts_Period");
+            });
+
+            modelBuilder.Entity<LiquidacionMensualPeriodo>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("Liquidacion_Mensual_Periodo");
+
+                entity.Property(e => e.AciertosNocturnos)
+                    .HasColumnType("numeric(10, 2)")
+                    .HasColumnName("Aciertos_Nocturnos");
+
+                entity.Property(e => e.AciertosVespertinos)
+                    .HasColumnType("numeric(10, 2)")
+                    .HasColumnName("Aciertos_Vespertinos");
+
+                entity.Property(e => e.Agencia)
+                    .HasMaxLength(10)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Aportes).HasColumnType("numeric(10, 2)");
+
+                entity.Property(e => e.ApuestasNocturnas)
+                    .HasColumnType("numeric(10, 2)")
+                    .HasColumnName("Apuestas_Nocturnas");
+
+                entity.Property(e => e.ApuestasVespertinas)
+                    .HasColumnType("numeric(10, 2)")
+                    .HasColumnName("Apuestas_Vespertinas");
+
+                entity.Property(e => e.FechaFin)
+                    .HasColumnType("date")
+                    .HasColumnName("Fecha_Fin");
+
+                entity.Property(e => e.FechaInicio)
+                    .HasColumnType("date")
+                    .HasColumnName("Fecha_Inicio");
+
+                entity.Property(e => e.IdPeriodo)
+                    .HasColumnType("numeric(10, 0)")
+                    .HasColumnName("Id_Periodo");
+
+                entity.Property(e => e.Juego)
+                    .HasMaxLength(30)
+                    .IsUnicode(false);
+
+                entity.HasOne(d => d.IdPeriodoNavigation)
+                    .WithMany()
+                    .HasForeignKey(d => d.IdPeriodo)
+                    .HasConstraintName("FK_Liquidacion_Mensual_Periodo_Period");
+            });
+
+            modelBuilder.Entity<Period>(entity =>
+            {
+                entity.ToTable("Period");
+
+                entity.Property(e => e.Id)
+                    .HasColumnType("numeric(10, 0)")
+                    .ValueGeneratedOnAdd();
+
+                entity.Property(e => e.ActiveFlag)
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .HasColumnName("Active_Flag");
+
+                entity.Property(e => e.AddRow)
+                    .HasColumnType("date")
+                    .HasColumnName("Add_Row");
+
+                entity.Property(e => e.Description)
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ReferenceDate)
+                    .HasColumnType("date")
+                    .HasColumnName("Reference_Date");
+
+                entity.Property(e => e.UpdRow)
+                    .HasColumnType("date")
+                    .HasColumnName("Upd_Row");
+            });
+
+            modelBuilder.Entity<ProjectionParam>(entity =>
+            {
+                entity.ToTable("Projection_Params");
+
+                entity.Property(e => e.Id)
+                    .HasColumnType("numeric(10, 0)")
+                    .ValueGeneratedOnAdd();
+
+                entity.Property(e => e.ActualDefaultValue)
+                    .HasColumnType("numeric(10, 2)")
+                    .HasColumnName("Actual_Default_Value");
+
+                entity.Property(e => e.AddRow)
+                    .HasColumnType("date")
+                    .HasColumnName("Add_Row");
+
+                entity.Property(e => e.Description)
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Name)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Type)
+                    .HasMaxLength(20)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.UpdRow)
+                    .HasColumnType("date")
+                    .HasColumnName("Upd_Row");
+
+                entity.Property(e => e.Usage)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+            });
+
+            modelBuilder.Entity<Raspadita>(entity =>
+            {
+                entity.Property(e => e.Id)
+                    .HasColumnType("numeric(10, 0)")
+                    .ValueGeneratedOnAdd();
+
+                entity.Property(e => e.Aciertos).HasColumnType("numeric(10, 2)");
+
+                entity.Property(e => e.AddRow)
+                    .HasColumnType("date")
+                    .HasColumnName("Add_Row");
+
+                entity.Property(e => e.Agencia)
+                    .HasMaxLength(10)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Apuestas).HasColumnType("numeric(10, 2)");
+
+                entity.Property(e => e.Partida).HasColumnType("numeric(10, 2)");
+
+                entity.Property(e => e.PeriodId)
+                    .HasColumnType("numeric(10, 0)")
+                    .HasColumnName("Period_Id");
+
+                entity.Property(e => e.UpdRow)
+                    .HasColumnType("date")
+                    .HasColumnName("Upd_Row");
+
+                entity.Property(e => e.Utilidad).HasColumnType("numeric(10, 2)");
+
+                entity.HasOne(d => d.Period)
+                    .WithMany(p => p.Raspadita)
+                    .HasForeignKey(d => d.PeriodId)
+                    .HasConstraintName("FK_Raspadita_Period");
             });
 
             OnModelCreatingPartial(modelBuilder);

@@ -10,6 +10,7 @@ namespace ETLProcess.Configuration
     {
         public const string Position = "DatabaseSettings";
         public string ConnectionString { get; set; }
+        public string ConnectionStringTransactional { get; set; }
 
 
     }

@@ -65,7 +65,7 @@ namespace ETLProcess.Services
                 Marshal.ReleaseComObject(excelApp);
 
                 _logger.LogInformation("Pausa por 5 seg para dar tiempo a que libere los archivos procesados");
-                Thread.Sleep(5000); 
+                Thread.Sleep(5000);
                 UpdateFileNames(processedFiles);
             }
         }
@@ -85,9 +85,10 @@ namespace ETLProcess.Services
                     validateDoc = excelApp.Workbooks.Open($"{item.FolderRoute}{item.FileName}");
 
                     if (validateDoc != null)
+                    {
                         validateDocs.Add(item);
-
-                    ReleaseObject.ReleaseObjectService(validateDoc);
+                        ReleaseObject.ReleaseObjectService(validateDoc);
+                    }
                 }
                 catch (Exception)
                 {
@@ -114,6 +115,15 @@ namespace ETLProcess.Services
                     break;
                 case "ResultadoDelMes":
                     processData = new ResultadoDelMes();
+                    break;
+                case "SaldoCuentasSubAgentes":
+                    processData = new SaldosSubAgentes();
+                    break;
+                case "LiquidacionMensualPeriodo":
+                    processData = new LiquidacionMensualPeriodo();
+                    break;
+                case "ResultadoDelMesPeriodo":
+                    processData = new ResultadoDelMesPeriodo();
                     break;
                 default:
                     throw new Exception($"Lectura no implementada para el archivo {fileName}");
