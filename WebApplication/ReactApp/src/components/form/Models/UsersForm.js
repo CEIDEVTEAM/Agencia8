@@ -26,15 +26,14 @@ export default function UserForm(props) {
                 userName: Yup.string().required('Este campo es requerido')
                     .max(30, 'La longitud máxima es de 30 caracteres'),
                 password: Yup.string().required('Este campo es requerido')
-                    .max(200, 'La longitud máxima es de 50 caracteres'),
+                    .max(200, 'La longitud máxima es de 200 caracteres'),
                 email: Yup.string().email('email inválido').required('Este campo es requerido')
                     .max(50, 'La longitud máxima es de 50 caracteres'),
                 address: Yup.string().required('Este campo es requerido')
-                    .max(100, 'La longitud máxima es de 50 caracteres'),
+                    .max(100, 'La longitud máxima es de 100 caracteres'),
                 phone: Yup.string().required('Este campo es requerido')
-                    .max(15, 'La longitud máxima es de 50 caracteres'),
-                idRole: Yup.string().required('Este campo es requerido')
-                    .max(10, 'La longitud máxima es de 50 caracteres'),
+                    .max(15, 'La longitud máxima es de 15 caracteres'),
+                idRole: Yup.string().required('Este campo es requerido'),
 
             })}
         >

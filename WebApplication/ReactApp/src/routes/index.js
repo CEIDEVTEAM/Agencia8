@@ -27,6 +27,10 @@ const ListExternalDependent = lazy(() => import('../pages/Dependent/ListExternal
 //PARAMETROS DECISION
 const ListDecitionParams = lazy(() => import('../pages/config/ListDecitionParams'))
 
+//Analisis
+const Analisis = lazy(() => import('../pages/analisis/Analisis'))
+
+
 
 
 const routes = [
@@ -138,6 +142,12 @@ const routes = [
     component: ListExternalDependent,
     isAdmin: true,
     resourse: "ExternalDependent"
+  },
+  {
+    path: '/analisis/Analisis',
+    component: Analisis,
+    isAdmin: true,
+    resourse: "Analisis"
   },
 
 

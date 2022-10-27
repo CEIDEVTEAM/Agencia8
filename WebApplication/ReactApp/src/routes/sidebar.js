@@ -113,6 +113,12 @@ const routes = [
       },
     ],
   },
+  {
+    path: '/app/analisis/Analisis',
+    icon: 'ChartsIcon',
+    name: 'Análisis',
+    resourse: "Analisis"
+  },
 ]
 
 export default routes

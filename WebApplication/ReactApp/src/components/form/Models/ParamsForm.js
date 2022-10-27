@@ -16,9 +16,9 @@ export default function ParamsForm(props) {
 
             validationSchema={Yup.object({
                 // name: Yup.string().required('Este campo es requerido')
-                //     .max(50, 'La longitud máxima es de 30 caracteres'),
+                //     .max(50, 'La longitud máxima es de 50 caracteres'),
                 description: Yup.string().required('Este campo es requerido')
-                    .max(100, 'La longitud máxima es de 30 caracteres'),
+                    .max(100, 'La longitud máxima es de 100 caracteres'),
                 value: Yup.number().required('Este campo es requerido')
                 
             })}
