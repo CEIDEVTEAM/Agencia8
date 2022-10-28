@@ -47,7 +47,7 @@ namespace BusinessLogic.Mappers
             return colObject;
         }
 
-        public Period MapToEditEntity(ConceptDTO dto, Period entity)
+        public Period MapToEditEntity(PeriodDTO dto, Period entity)
         {
             if (dto == null || entity == null)
                 throw new Exception("No hay objeto/entidad para mapear");

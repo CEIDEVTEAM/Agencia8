@@ -72,7 +72,7 @@ namespace BusinessLogic.DataModel.Repository
             return _context.Period.AsNoTracking().AsQueryable();
         }
 
-        public ConceptDTO GetPeriodById(decimal id)
+        public PeriodDTO GetPeriodById(decimal id)
         {
             var x = _context.Period.FirstOrDefault(x => x.Id == id);
             return _mapper.MapToObject(x);
