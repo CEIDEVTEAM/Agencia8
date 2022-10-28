@@ -1,22 +1,22 @@
 ﻿using BusinessLogic.DataModel;
 using BusinessLogic.DTOs.Generals;
 using Microsoft.Extensions.Configuration;
-using BusinessLogic.DTOs.ProjectionParam;
+using BusinessLogic.DTOs.Concept;
 
 namespace BusinessLogic.Controllers
 {
-    public class ProjectionParamLogicController
+    public class ConceptLogicController
     {
         private IConfiguration _configuration;
         private string _application;
 
-        public ProjectionParamLogicController(IConfiguration configuration, string application)
+        public ConceptLogicController(IConfiguration configuration, string application)
         {
             this._configuration = configuration;
             this._application = application;
         }
 
-        public async Task<GenericResponse> AddProjectionParam(ProjectionParamDTO dto)
+        public async Task<GenericResponse> AddConcept(ConceptDTO dto)
         {
             List<string> errors = new List<string>();
             bool successful = false;
@@ -27,11 +27,13 @@ namespace BusinessLogic.Controllers
 
                 try
                 {
+                    dto.PeriodId = uow.PeriodRepository.GetActivePeriod();
+
                     errors = Validations(dto, uow, true);
 
                     if (!errors.Any())
                     {
-                        uow.ProjectionParamRepository.AddProjectionParam(dto);
+                        uow.ConceptRepository.AddConcept(dto);
 
                         uow.SaveChanges();
                         uow.Commit();
@@ -53,7 +55,7 @@ namespace BusinessLogic.Controllers
 
         }
 
-        public async Task<GenericResponse> EditProjectionParam(ProjectionParamDTO dto)
+        public async Task<GenericResponse> EditConcept(ConceptDTO dto)
         {
             List<string> errors = new List<string>();
             bool successful = false;
@@ -68,7 +70,7 @@ namespace BusinessLogic.Controllers
 
                     if (!errors.Any())
                     {
-                        uow.ProjectionParamRepository.UpdateProjectionParam(dto);
+                        uow.ConceptRepository.UpdateConcept(dto);
 
                         uow.SaveChanges();
                         uow.Commit();
@@ -90,35 +92,26 @@ namespace BusinessLogic.Controllers
 
         }
 
-        public ProjectionParamDTO GetProjectionParamById(int id)
+        public ConceptDTO GetConceptById(int id)
         {
             using (var uow = new UnitOfWork(_configuration, _application))
             {
-                return uow.ProjectionParamRepository.GetProjectionParamById(id);
+                return uow.ConceptRepository.GetConceptById(id);
             }
         }
-
-        public List<ProjectionParamDTO> GetProjectionParams()
-        {
-            using (var uow = new UnitOfWork(_configuration, _application))
-            {
-                return uow.ProjectionParamRepository.GetProjectionParamsList();
-            }
-        }
-
 
 
         #region VALIDATIONS
 
-        public List<string> Validations(ProjectionParamDTO projectionParam, UnitOfWork uow, bool isAdd = false)
+        public List<string> Validations(ConceptDTO concept, UnitOfWork uow, bool isAdd = false)
         {
             List<string> colerrors = new List<string>();
 
-            if (!isAdd && !uow.ProjectionParamRepository.ExistProjectionParamById(projectionParam.Id))
-                colerrors.Add($"El parámetro: {projectionParam.Name} no existe.");
+            if (!isAdd && !uow.ConceptRepository.ExistConceptById(concept.Id))
+                colerrors.Add($"El parámetro: {concept.Id} no existe.");
 
-            if (isAdd && uow.ProjectionParamRepository.ExistProjectionParamByName(projectionParam.Name))
-                colerrors.Add($"El parámetro: {projectionParam.Name} ya está registrado.");
+            if (isAdd && uow.ConceptRepository.ExistConceptByParamAndPeriod(concept.ParamId, concept.PeriodId))
+                colerrors.Add($"El parámetro ya está registrado para el periodo activo.");
 
             return colerrors;
         }

@@ -4,12 +4,6 @@ using BusinessLogic.DTOs.Dependent;
 using BusinessLogic.DTOs.ShopData;
 using CommonSolution.Constants;
 using DataAccess.Models;
-using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BusinessLogic.Mappers
 {

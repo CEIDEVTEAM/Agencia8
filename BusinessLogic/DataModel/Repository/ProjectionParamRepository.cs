@@ -74,6 +74,11 @@ namespace BusinessLogic.DataModel.Repository
             return _context.ProjectionParam.AsNoTracking().AsQueryable();
         }
 
+        public List<ProjectionParamDTO> GetProjectionParamsList()
+        {
+            return this._mapper.MapToObject(_context.ProjectionParam.AsNoTracking().ToList());
+        }
+
         public ProjectionParamDTO GetProjectionParamById(decimal id)
         {
             var x = _context.ProjectionParam.FirstOrDefault(x => x.Id == id);

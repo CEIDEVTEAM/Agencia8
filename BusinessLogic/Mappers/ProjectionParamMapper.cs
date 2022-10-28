@@ -1,17 +1,5 @@
-﻿using BusinessLogic.DTOs.Candidate;
-using BusinessLogic.DTOs.ContactPerson;
-using BusinessLogic.DTOs.Dependent;
-using BusinessLogic.DTOs.ProjectionParam;
-using BusinessLogic.DTOs.ShopData;
-using CommonSolution.Constants;
+﻿using BusinessLogic.DTOs.ProjectionParam;
 using DataAccess.Models;
-using Nest;
-using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BusinessLogic.Mappers
 {
