@@ -30,7 +30,10 @@ const ListDecitionParams = lazy(() => import('../pages/config/ListDecitionParams
 //Analisis
 const Analisis = lazy(() => import('../pages/analisis/Analisis'))
 
-
+//PROYECCIÓN
+const ListParams = lazy(() => import('../pages/projection/ListParams'))
+const NewParam = lazy(() => import('../pages/projection/NewParam'))
+const Projection = lazy(() => import('../pages/projection/Projection'))
 
 
 const routes = [
@@ -148,6 +151,30 @@ const routes = [
     component: Analisis,
     isAdmin: true,
     resourse: "Analisis"
+  },
+  {
+    path: '/analisis/Analisis',
+    component: Analisis,
+    isAdmin: true,
+    resourse: "Analisis"
+  },
+  {
+    path: '/projection/ListParams',
+    component: ListParams,
+    isAdmin: true,
+    resourse: "ListParams"
+  },
+  {
+    path: '/projection/NewParam',
+    component: NewParam,
+    isAdmin: true,
+    resourse: "NewParam"
+  },
+  {
+    path: '/projection/Projection',
+    component: Projection,
+    isAdmin: true,
+    resourse: "ProjectionMensual"
   },
 
 

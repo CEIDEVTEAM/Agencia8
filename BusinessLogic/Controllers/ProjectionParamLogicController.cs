@@ -120,7 +120,7 @@ namespace BusinessLogic.Controllers
             if (!isAdd && !uow.ProjectionParamRepository.ExistProjectionParamById(projectionParam.Id))
                 colerrors.Add($"El parámetro: {projectionParam.Name} no existe.");
 
-            if (isAdd && !uow.ProjectionParamRepository.ExistProjectionParamByName(projectionParam.Name))
+            if (isAdd && uow.ProjectionParamRepository.ExistProjectionParamByName(projectionParam.Name))
                 colerrors.Add($"El parámetro: {projectionParam.Name} ya está registrado.");
 
             return colerrors;

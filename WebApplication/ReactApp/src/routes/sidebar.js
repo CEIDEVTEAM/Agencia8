@@ -119,6 +119,34 @@ const routes = [
     name: 'Análisis',
     resourse: "Analisis"
   },
+  {
+    icon: 'MoneyIcon',
+    name: 'Proyección Mensual',
+    resourse: "Proyeccion",
+    routes: [
+      // submenu
+      {
+        path: '/app/projection/ListParams',
+        name: 'Parametros de Proyección',
+        resourse: "ListParams",
+        exact: true
+      },
+      {
+        path: '/app/projection/NewParam',
+        name: 'Crear Parámetro',
+        resourse: "NewParam",
+        exact: true
+      },
+      {
+        path: '/app/projection/Projection',
+        name: 'Proyección Mensual',
+        resourse: "ProjectionMensual",
+        exact: true
+      },
+    ],
+  },
+  
+  
 ]
 
 export default routes

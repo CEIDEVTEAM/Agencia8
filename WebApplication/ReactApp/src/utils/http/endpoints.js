@@ -28,6 +28,6 @@ export const proccessExternalsUrl = `${apiURL}/dependent/processExternals`;
 export const decitionParamUrl = `${apiURL}/decitionParam`;
 
 
-export const projectionParamsUrl = `${apiURL}/projectionParamList`;//falta back
-export const urlNewParam = `${apiURL}/decitionParam`;//falta back
+export const projectionParamUrl = `${apiURL}/projectionParam`;
+export const urlNewParam = `${apiURL}/projectionParam/addProjectionParam`;
 

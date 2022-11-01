@@ -14,7 +14,7 @@ import {
 import Pagination from '../../utils/generals/Pagination';
 
 import { EditIcon, TrashIcon, SearchIcon } from '../../icons'
-import { projectionParamsUrl } from '../../utils/http/endpoints';
+import { projectionParamUrl } from '../../utils/http/endpoints';
 import PageTitle from '../../components/Typography/PageTitle';
 import EditParam from './EditParam';
 
@@ -39,7 +39,7 @@ export default function ListParams() {
   }, [page, setPage, openModal, openDeleteModal, search])
 
   function loadData() {
-    axios.get(projectionParamsUrl, {
+    axios.get(projectionParamUrl, {
       params: { page, recordsPerPage, search }
     })
       .then((response) => {
@@ -76,7 +76,7 @@ export default function ListParams() {
 
 
   const labels = ["Nombre", "Descripción", "Tipo", "Uso","Valor Actual"]
-  const columns = ["name", "description", "type", "usage","actualDefaulValue"]
+  const columns = ["name", "description", "type", "usage","actualDefaultValue"]
 
   return (
     <>
