@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Text;
+using static BusinessLogic.DTOs.Candidate.CandidateStepDataDTO;
 
 namespace ServiceWebApi.Controllers
 {
@@ -78,12 +79,26 @@ namespace ServiceWebApi.Controllers
         }
 
         [HttpPut("{id:int}")]
-        public async Task<ActionResult<GenericResponse>> EditProjectionParame([FromBody] ProjectionParamDTO dto)
+        public async Task<ActionResult<GenericResponse>> EditProjectionParam([FromBody] ProjectionParamDTO dto)
         {
             try
             {
                 ProjectionParamLogicController lg = new ProjectionParamLogicController(_configuration, _application);
                 return await lg.EditProjectionParam(dto);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("No es posible comunicarse con el proveedor.");
+            }
+        }
+
+        [HttpGet("projectionParam")] //PARA CARGAR EL SELECT
+        public async Task<ActionResult<List<ProjectionParamDTO>>> GetProjectionParam()
+        {
+            try
+            {
+                ProjectionParamLogicController lg = new ProjectionParamLogicController(_configuration, _application);
+                return lg.GetProjectionParams();
             }
             catch (Exception ex)
             {

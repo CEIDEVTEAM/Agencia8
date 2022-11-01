@@ -148,8 +148,6 @@ namespace ServiceWebApi.Controllers
             try
             {
                 CandidateLogicController lg = new CandidateLogicController(_configuration, _application);
-                var userName = HttpContext.User.Claims.FirstOrDefault(x => x.Type == "userName").Value;
-
                 return lg.GetNeighborhoods();
             }
             catch (Exception ex)

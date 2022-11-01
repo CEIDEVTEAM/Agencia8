@@ -28,6 +28,8 @@ namespace BusinessLogic.DataModel
         public DecisionParamRepository DecisionParamRepository { get; set; }
         public DecisionSupportRepository DecisionSupportRepository { get; set; }
         public ProjectionParamRepository ProjectionParamRepository { get; set; }
+        public ConceptRepository ConceptRepository { get; set; }
+        public PeriodRepository PeriodRepository { get; set; }
 
         #endregion
 
@@ -44,6 +46,8 @@ namespace BusinessLogic.DataModel
             this.DecisionParamRepository = new DecisionParamRepository(this._context);
             this.DecisionSupportRepository = new DecisionSupportRepository(this._context);
             this.ProjectionParamRepository = new ProjectionParamRepository(this._context);
+            this.ConceptRepository = new ConceptRepository(this._context);
+            this.PeriodRepository = new PeriodRepository(this._context);
         }
 
         public void BeginTransaction()
