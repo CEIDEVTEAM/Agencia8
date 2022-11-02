@@ -74,9 +74,9 @@ namespace BusinessLogic.DataModel.Repository
 
         #region GET
 
-        public IQueryable<Concept> GetConcepts()
+        public IQueryable<VConcept> GetConcepts()
         {
-            return _context.Concept.AsNoTracking().AsQueryable();
+            return _context.VConcept.AsNoTracking().AsQueryable();
         }
 
         public ConceptDTO GetConceptById(decimal id)

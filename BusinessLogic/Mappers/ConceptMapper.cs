@@ -46,6 +46,34 @@ namespace BusinessLogic.Mappers
             return colObject;
         }
 
+        public ConceptCompleteDTO MapToObject(VConcept entity)
+        {
+            if (entity == null)
+                throw new Exception("No hay entidad para mapear");
+
+            return new ConceptCompleteDTO()
+            {
+                Id = entity.Id,
+                Description = entity.Description,
+                Name = entity.Name,
+                Type = entity.Type,
+                ParamId = entity.ParamId,
+                Value = entity.Value,
+                PeriodId = entity.PeriodId,
+                AddRow = entity.AddRow,
+                UpdRow = entity.UpdRow,
+            };
+        }
+
+        public List<ConceptCompleteDTO> MapToObject(List<VConcept> colEntity)
+        {
+            List<ConceptCompleteDTO> colObject = new List<ConceptCompleteDTO>();
+
+            colEntity.ForEach(x => colObject.Add(this.MapToObject(x)));
+
+            return colObject;
+        }
+
         public Concept MapToEditEntity(ConceptDTO dto, Concept entity)
         {
             if (dto == null || entity == null)
