@@ -48,6 +48,8 @@ namespace DataAccess.Context
         public virtual DbSet<Period> Period { get; set; } = null!;
         public virtual DbSet<ProjectionParam> ProjectionParam { get; set; } = null!;
         public virtual DbSet<Raspadita> Raspadita { get; set; } = null!;
+        public virtual DbSet<VConcept> VConcept { get; set; } = null!;
+
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -1466,6 +1468,45 @@ namespace DataAccess.Context
                     .WithMany(p => p.Raspadita)
                     .HasForeignKey(d => d.PeriodId)
                     .HasConstraintName("FK_Raspadita_Period");
+            });
+
+            modelBuilder.Entity<VConcept>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("V_Concepts");
+
+                entity.Property(e => e.AddRow)
+                    .HasColumnType("date")
+                    .HasColumnName("Add_Row");
+
+                entity.Property(e => e.Description)
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Id).HasColumnType("numeric(10, 0)");
+
+                entity.Property(e => e.Name)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ParamId)
+                    .HasColumnType("numeric(10, 0)")
+                    .HasColumnName("Param_Id");
+
+                entity.Property(e => e.PeriodId)
+                    .HasColumnType("numeric(10, 0)")
+                    .HasColumnName("Period_Id");
+
+                entity.Property(e => e.Type)
+                    .HasMaxLength(20)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.UpdRow)
+                    .HasColumnType("date")
+                    .HasColumnName("Upd_Row");
+
+                entity.Property(e => e.Value).HasColumnType("numeric(10, 0)");
             });
 
             OnModelCreatingPartial(modelBuilder);

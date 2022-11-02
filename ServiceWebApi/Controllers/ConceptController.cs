@@ -29,7 +29,7 @@ namespace ServiceWebApi.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<ConceptDTO>>> ConceptList([FromQuery] PaginationDTO dto)
+        public async Task<ActionResult<List<ConceptCompleteDTO>>> ConceptList([FromQuery] PaginationDTO dto)
         {
             try
             {
