@@ -63,15 +63,15 @@ namespace BusinessLogic.DataModel.Repository
         {
             return _context.ProjectionParam.Any(x => x.Name == name);
         }
-        
+
 
         #endregion
 
         #region GET
 
-        public IQueryable<ProjectionParam> GetProjectionParams()
+        public IQueryable<ProjectionParam> GetProjectionParams(string search)
         {
-            return _context.ProjectionParam.AsNoTracking().AsQueryable();
+            return _context.ProjectionParam.AsNoTracking().Where(x => x.Name.ToLower().Contains(search.ToLower())).AsQueryable();
         }
 
         public List<ProjectionParamDTO> GetProjectionParamsList()

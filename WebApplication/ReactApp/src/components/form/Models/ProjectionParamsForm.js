@@ -1,11 +1,9 @@
-import { Formik, Form, FormikHelpers } from "formik";
-import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Formik, Form } from "formik";
+import React, {  useState } from "react";
 import * as Yup from 'yup'
 import FormText from '../form-groups/FormText'
 import FormSelect from '../form-groups/FormSelect'
-import { Label, Button } from '@windmill/react-ui'
-import SectionTitle from '../../../components/Typography/SectionTitle'
+import { Button } from '@windmill/react-ui'
 
 
 export default function ProjectionParamsForm(props) {

@@ -37,7 +37,7 @@ namespace ServiceWebApi.Controllers
             {
                 using (var uow = new UnitOfWork(this._configuration, _application))
                 {
-                    var queryable = uow.ProjectionParamRepository.GetProjectionParams();
+                    var queryable = uow.ProjectionParamRepository.GetProjectionParams(dto.Search);
 
                     await HttpContext.InsertHeaderPaginationParams(queryable);
                     var projectionParams = await queryable.OrderBy(x => x.Name).Paginate(dto).ToListAsync();

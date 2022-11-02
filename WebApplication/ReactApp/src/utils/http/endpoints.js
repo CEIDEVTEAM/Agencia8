@@ -31,3 +31,7 @@ export const decitionParamUrl = `${apiURL}/decitionParam`;
 export const projectionParamUrl = `${apiURL}/projectionParam`;
 export const urlNewParam = `${apiURL}/projectionParam/addProjectionParam`;
 
+export const conceptsUrl = `${apiURL}/concept`;
+export const urlParamsOptions = `${apiURL}/concept/projectionParam`;
+
+
