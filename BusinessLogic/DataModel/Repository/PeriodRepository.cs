@@ -62,9 +62,9 @@ namespace BusinessLogic.DataModel.Repository
 
         #region GET
 
-        public decimal GetActivePeriod()
+        public decimal? GetActivePeriod()
         {
-            return _context.Period.FirstOrDefault(x => x.ActiveFlag == "S").Id;
+            return _context.Period.FirstOrDefault(x => x.ActiveFlag == "S")?.Id;
         }
 
         public IQueryable<Period> GetPeriods()

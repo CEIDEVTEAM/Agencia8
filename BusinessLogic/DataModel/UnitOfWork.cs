@@ -30,6 +30,7 @@ namespace BusinessLogic.DataModel
         public ProjectionParamRepository ProjectionParamRepository { get; set; }
         public ConceptRepository ConceptRepository { get; set; }
         public PeriodRepository PeriodRepository { get; set; }
+        public RaspaditaRepository RaspaditaRepository { get; set; }
 
         #endregion
 
@@ -48,6 +49,7 @@ namespace BusinessLogic.DataModel
             this.ProjectionParamRepository = new ProjectionParamRepository(this._context);
             this.ConceptRepository = new ConceptRepository(this._context);
             this.PeriodRepository = new PeriodRepository(this._context);
+            this.RaspaditaRepository = new RaspaditaRepository(this._context);
         }
 
         public void BeginTransaction()

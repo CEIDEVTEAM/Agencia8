@@ -2,21 +2,22 @@
 using BusinessLogic.DTOs.Generals;
 using Microsoft.Extensions.Configuration;
 using BusinessLogic.DTOs.Concept;
+using BusinessLogic.DTOs.Raspadita;
 
 namespace BusinessLogic.Controllers
 {
-    public class ConceptLogicController
+    public class RaspaditaLogicController
     {
         private IConfiguration _configuration;
         private string _application;
 
-        public ConceptLogicController(IConfiguration configuration, string application)
+        public RaspaditaLogicController(IConfiguration configuration, string application)
         {
             this._configuration = configuration;
             this._application = application;
         }
 
-        public async Task<GenericResponse> AddConcept(ConceptDTO dto)
+        public async Task<GenericResponse> AddRaspadita(RaspaditaDTO dto)
         {
             List<string> errors = new List<string>();
             bool successful = false;
@@ -27,18 +28,13 @@ namespace BusinessLogic.Controllers
 
                 try
                 {
+                    dto.PeriodId = uow.PeriodRepository.GetActivePeriod();
+
                     errors = Validations(dto, uow, true);
-
-                    decimal? activePeriod = uow.PeriodRepository.GetActivePeriod();
-
-                    if (activePeriod == null)
-                        errors.Add("No hay periodo activo");
-                    else
-                        dto.PeriodId = activePeriod ?? -1;
 
                     if (!errors.Any())
                     {
-                        uow.ConceptRepository.AddConcept(dto);
+                        uow.RaspaditaRepository.AddRaspadita(dto);
 
                         uow.SaveChanges();
                         uow.Commit();
@@ -60,7 +56,7 @@ namespace BusinessLogic.Controllers
 
         }
 
-        public async Task<GenericResponse> EditConcept(ConceptDTO dto)
+        public async Task<GenericResponse> EditRaspadita(RaspaditaDTO dto)
         {
             List<string> errors = new List<string>();
             bool successful = false;
@@ -75,7 +71,7 @@ namespace BusinessLogic.Controllers
 
                     if (!errors.Any())
                     {
-                        uow.ConceptRepository.UpdateConcept(dto);
+                        uow.RaspaditaRepository.UpdateRaspadita(dto);
 
                         uow.SaveChanges();
                         uow.Commit();
@@ -97,26 +93,23 @@ namespace BusinessLogic.Controllers
 
         }
 
-        public ConceptDTO GetConceptById(int id)
+        public RaspaditaDTO GetRaspaditaById(int id)
         {
             using (var uow = new UnitOfWork(_configuration, _application))
             {
-                return uow.ConceptRepository.GetConceptById(id);
+                return uow.RaspaditaRepository.GetRaspaditaById(id);
             }
         }
 
 
         #region VALIDATIONS
 
-        public List<string> Validations(ConceptDTO concept, UnitOfWork uow, bool isAdd = false)
+        public List<string> Validations(RaspaditaDTO raspadita, UnitOfWork uow, bool isAdd = false)
         {
             List<string> colerrors = new List<string>();
 
-            if (!isAdd && !uow.ConceptRepository.ExistConceptById(concept.Id))
-                colerrors.Add($"El parámetro: {concept.Id} no existe.");
-
-            if (isAdd && uow.ConceptRepository.ExistConceptByParamAndPeriod(concept.ParamId, concept.PeriodId))
-                colerrors.Add($"El parámetro ya está registrado para el periodo activo.");
+            if (!isAdd && !uow.RaspaditaRepository.ExistRaspaditaById(raspadita.Id))
+                colerrors.Add($"La raspadita: {raspadita.Id} no existe.");
 
             return colerrors;
         }
