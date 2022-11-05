@@ -20,12 +20,13 @@ namespace BusinessLogic.DataModel.Repository
 
         #region ADD
 
-        public void AddPeriod(PeriodDTO dto)
+        public void AddPeriod(UnitOfWork uow, PeriodDTO dto)
         {
             Period entity = _mapper.MapToEntity(dto);
             entity.AddRow = DateTime.Now;
 
             _context.Period.AddAsync(entity);
+            uow.SaveChanges();
             dto.Id = entity.Id;
         }
 

@@ -46,12 +46,13 @@ namespace BusinessLogic.Controllers
 
                         dto.ActiveFlag = "S";
 
-                        uow.PeriodRepository.AddPeriod(dto);
+                        uow.PeriodRepository.AddPeriod(uow, dto);
 
                         uow.SaveChanges();
                         uow.Commit();
                         successful = true;
                     }
+
 
                     AddConcepts(uow, dto.Id);
                     AddRaspaditas(uow, dto.Id);
