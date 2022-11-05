@@ -14,14 +14,13 @@ import {
 import Pagination from '../../utils/generals/Pagination';
 
 import { EditIcon, TrashIcon, SearchIcon } from '../../icons'
-import { conceptsUrl } from '../../utils/http/endpoints';
+import { raspaditaUrl } from '../../utils/http/endpoints';
 import PageTitle from '../../components/Typography/PageTitle';
 import EditConcept from './EditConcept';
 import NewConcept from './NewConcept';
-import confirmation from '../../utils/generals/confirmation';
 
 
-export default function ListConcepts() {
+export default function Raspadita() {
 
   const recordsPerPage = 30
   const [totalResults, setTotalResults] = useState(0);
@@ -42,7 +41,7 @@ export default function ListConcepts() {
   }, [page, setPage, openModal, openDeleteModal, search])
 
   function loadData() {
-    axios.get(conceptsUrl, {
+    axios.get(raspaditaUrl, {
       params: { page, recordsPerPage, search }
     })
       .then((response) => {
@@ -55,14 +54,10 @@ export default function ListConcepts() {
   } 
 
 
+
   async function logicDelete(id) {
-    try {
-      await axios.delete(`${conceptsUrl}/${id}`)
-      loadData();
-    }
-    catch (error) {
-      console.log(error.response.data);
-    }
+    setModalDeleteOpen(true)
+    setId(id);
   }
 
 
@@ -87,7 +82,6 @@ export default function ListConcepts() {
   }
   function onCloseNew() {
     setModalNewOpen(false)
-    loadData();
   }
 
 
@@ -97,7 +91,7 @@ export default function ListConcepts() {
 
   return (
     <>
-      <PageTitle>Conceptos del Mes</PageTitle>
+      <PageTitle>Raspadita</PageTitle>
       <div className="relative w-full max-w-xl mr-6 focus-within:text-purple-500">
         <div className="absolute inset-y-0 flex items-center pl-2">
           {/* <SearchIcon className="w-4 h-4" aria-hidden="true" /> */}
@@ -133,9 +127,6 @@ export default function ListConcepts() {
                   <div className="flex items-center space-x-4">
                     <Button title="Editar" onClick={() => handleEdit(data.id)} layout="link" size="icon" aria-label="Edit">
                       <EditIcon className="w-5 h-5" aria-hidden="true" />
-                    </Button>
-                    <Button onClick={() => confirmation(() => logicDelete(data.id))} layout="link" size="icon" aria-label="Delete">
-                      <TrashIcon className="w-5 h-5" aria-hidden="true" />
                     </Button>
                     
                   </div>

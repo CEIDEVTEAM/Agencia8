@@ -1,7 +1,9 @@
 ﻿using BusinessLogic.DTOs.Concept;
+using BusinessLogic.DTOs.Generals;
 using BusinessLogic.Mappers;
 using DataAccess.Context;
 using DataAccess.Models;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace BusinessLogic.DataModel.Repository
@@ -48,9 +50,9 @@ namespace BusinessLogic.DataModel.Repository
 
         #region DELETE
 
-        public void DeleteConcept(ConceptDTO concept)
+        public void DeleteConceptById(int concept)
         {
-            Concept entity = _context.Concept.FirstOrDefault(x => x.Id == concept.Id);
+            Concept entity = _context.Concept.FirstOrDefault(x => x.Id == concept);
 
             if (entity != null)
                 _context.Concept.Remove(entity);
@@ -79,11 +81,13 @@ namespace BusinessLogic.DataModel.Repository
             return _context.VConcept.AsNoTracking().AsQueryable();
         }
 
-        public ConceptDTO GetConceptById(decimal id)
+        public ConceptCompleteDTO GetConceptById(decimal id)
         {
-            var x = _context.Concept.FirstOrDefault(x => x.Id == id);
+            var x = _context.VConcept.FirstOrDefault(x => x.Id == id);
             return _mapper.MapToObject(x);
         }
+
+     
 
         #endregion
 

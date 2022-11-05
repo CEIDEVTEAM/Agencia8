@@ -2,6 +2,7 @@
 using BusinessLogic.DTOs.Generals;
 using Microsoft.Extensions.Configuration;
 using BusinessLogic.DTOs.Concept;
+using Microsoft.AspNetCore.Mvc;
 
 namespace BusinessLogic.Controllers
 {
@@ -92,7 +93,7 @@ namespace BusinessLogic.Controllers
 
         }
 
-        public ConceptDTO GetConceptById(int id)
+        public ConceptCompleteDTO GetConceptById(int id)
         {
             using (var uow = new UnitOfWork(_configuration, _application))
             {
@@ -114,6 +115,39 @@ namespace BusinessLogic.Controllers
                 colerrors.Add($"El parámetro ya está registrado para el periodo activo.");
 
             return colerrors;
+        }
+
+        public async Task<GenericResponse> DeleteConcept(int id)
+        {
+            List<string> errors = new List<string>();
+            bool successful = false;
+
+            using (var uow = new UnitOfWork(_configuration, _application))
+            {
+                uow.BeginTransaction();
+
+                try
+                {
+
+                    uow.ConceptRepository.DeleteConceptById(id);
+
+                    uow.SaveChanges();
+                    uow.Commit();
+                    successful = true;
+
+                }
+                catch (Exception ex)
+                {
+                    errors.Add("Error al comunicarse con la base de datos");
+                    uow.Rollback();
+                }
+            }
+
+            return new GenericResponse()
+            {
+                Errors = errors,
+                Successful = successful
+            };
         }
 
         #endregion

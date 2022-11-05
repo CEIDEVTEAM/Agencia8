@@ -10,8 +10,8 @@ const FormSelect = (props) => {
           <Field as="select" name={props.campo} className={props.className}
             disabled={props.disabled} placeholder={props.placeholder} type={props.type}>
                 <option value="0">--Seleccione--</option>
-                {props.options.map(op => <option key={op.id}
-                value={op.id}>{op.name}</option>)}
+                {props.options? props.options.map(op => <option key={op.id}
+                value={op.id}>{op.name}</option>): null}
             </Field>
            <ErrorMessage name={props.campo}>{mensaje =>
                  <ShowFieldError mensaje={mensaje} />}</ErrorMessage>

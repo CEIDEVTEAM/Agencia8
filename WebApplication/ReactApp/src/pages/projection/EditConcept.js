@@ -1,8 +1,8 @@
 import React from "react";
-import { projectionParamUrl } from "../../utils/http/endpoints";
+import { conceptsUrl } from "../../utils/http/endpoints";
 import Edit from "../../utils/Edit/Edit";
 import { Modal, ModalHeader, ModalBody, ModalFooter, Button } from '@windmill/react-ui'
-import ConceptForm from "../../components/form/Models/ConceptForm";
+import EditConceptForm from "../../components/form/Models/EditConceptForm";
 
 function EditConcept(props) {
 
@@ -12,11 +12,11 @@ function EditConcept(props) {
 
     return (
         <Modal isOpen={props.isOpen} onClose={handleClose} >
-            <ModalHeader>Editar Parametros de Projección</ModalHeader>
+            <ModalHeader>Editar Concepto</ModalHeader>
             <ModalBody >
-                <Edit url={projectionParamUrl} id={props.id}>
+                <Edit url={conceptsUrl} id={props.id}>
                     {(entidad, editar) =>
-                        <ConceptForm model={entidad} isEdit={true}
+                        <EditConceptForm model={entidad} isEdit={true}
                             onSubmit={async valores => {
                                 await editar(valores)
                             }} />}

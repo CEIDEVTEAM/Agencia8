@@ -49,7 +49,7 @@ namespace ServiceWebApi.Controllers
         }
 
         [HttpGet("{id:int}")]
-        public async Task<ActionResult<ConceptDTO>> Get(int id)
+        public async Task<ActionResult<ConceptCompleteDTO>> Get(int id)
         {
             try
             {
@@ -83,6 +83,20 @@ namespace ServiceWebApi.Controllers
             {
                 ConceptLogicController lg = new ConceptLogicController(_configuration, _application);
                 return await lg.EditConcept(dto);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("No es posible comunicarse con el proveedor.");
+            }
+        }
+
+        [HttpDelete("{id:int}")]
+        public async Task<ActionResult<GenericResponse>> DeleteConcept(int id)
+        {
+            try
+            {
+                ConceptLogicController lg = new ConceptLogicController(_configuration, _application);
+                return await lg.DeleteConcept(id);
             }
             catch (Exception ex)
             {

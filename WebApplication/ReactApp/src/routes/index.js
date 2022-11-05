@@ -34,6 +34,7 @@ const Analisis = lazy(() => import('../pages/analisis/Analisis'))
 const ListParams = lazy(() => import('../pages/projection/ListParams'))
 const NewParam = lazy(() => import('../pages/projection/NewParam'))
 const Projection = lazy(() => import('../pages/projection/Projection'))
+const ListConcepts = lazy(() => import('../pages/projection/ListConcepts'))
 
 
 const routes = [
@@ -175,6 +176,12 @@ const routes = [
     component: Projection,
     isAdmin: true,
     resourse: "ProjectionMensual"
+  },
+  {
+    path: '/projection/ListConcepts',
+    component: ListConcepts,
+    isAdmin: true,
+    resourse: "ListConcepts"
   },
 
 

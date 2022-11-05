@@ -1282,6 +1282,7 @@ namespace DataAccess.Context
 
             modelBuilder.Entity<Concept>(entity =>
             {
+                entity.ToTable("Concepts");
                 entity.Property(e => e.Id)
                     .HasColumnType("numeric(10, 0)")
                     .ValueGeneratedOnAdd();

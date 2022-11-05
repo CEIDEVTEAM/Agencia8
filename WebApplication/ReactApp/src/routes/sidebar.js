@@ -143,6 +143,12 @@ const routes = [
         resourse: "ProjectionMensual",
         exact: true
       },
+      {
+        path: '/app/projection/ListConcepts',
+        name: 'Conceptos',
+        resourse: "ListConcepts",
+        exact: true
+      },
     ],
   },
   

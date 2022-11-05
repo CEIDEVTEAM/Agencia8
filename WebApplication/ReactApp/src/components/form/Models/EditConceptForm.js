@@ -4,11 +4,9 @@ import * as Yup from 'yup'
 import FormText from '../form-groups/FormText'
 import FormSelect from '../form-groups/FormSelect'
 import { Button } from '@windmill/react-ui'
-import axios from 'axios';
-import { urlParamsOptions } from '../../../utils/http/endpoints'
+import SectionTitle from '../../../components/Typography/SectionTitle'
 
-
-export default function ConceptForm(props) {
+export default function EditConceptForm(props) {
 
     const [params, setParams] = useState(props.params)
     
@@ -27,8 +25,8 @@ export default function ConceptForm(props) {
             {(formikProps) => (
                 <Form>
                     <hr />
+                    <SectionTitle>Nombre: {props.model.name}</SectionTitle>                        
                     <div className="grid md:grid-cols-2 md:gap-6">                        
-                        <FormSelect options={params} campo="paramId" label="Parámetro" />                        
                         <FormText campo="value" label="Valor" />
                     </div>
                     <br />

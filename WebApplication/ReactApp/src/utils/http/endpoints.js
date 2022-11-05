@@ -32,6 +32,8 @@ export const projectionParamUrl = `${apiURL}/projectionParam`;
 export const urlNewParam = `${apiURL}/projectionParam/addProjectionParam`;
 
 export const conceptsUrl = `${apiURL}/concept`;
-export const urlParamsOptions = `${apiURL}/concept/projectionParam`;
+export const newConceptUrl = `${apiURL}/concept/addConcept`;
+export const urlParamsOptions = `${apiURL}/projectionParam/projectionParam`;
+export const raspaditaUrl = `${apiURL}/projectionParam/projectionParam`;
 
 
