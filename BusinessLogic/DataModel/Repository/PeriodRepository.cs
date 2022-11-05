@@ -20,14 +20,13 @@ namespace BusinessLogic.DataModel.Repository
 
         #region ADD
 
-        public decimal AddPeriod(PeriodDTO dto)
+        public void AddPeriod(PeriodDTO dto)
         {
             Period entity = _mapper.MapToEntity(dto);
             entity.AddRow = DateTime.Now;
 
             _context.Period.AddAsync(entity);
-
-            return entity.Id;
+            dto.Id = entity.Id;
         }
 
         #endregion
@@ -65,6 +64,11 @@ namespace BusinessLogic.DataModel.Repository
         public decimal? GetActivePeriod()
         {
             return _context.Period.FirstOrDefault(x => x.ActiveFlag == "S")?.Id;
+        }
+
+        public PeriodDTO GetActivePeriodObject()
+        {
+            return _mapper.MapToObject(_context.Period.FirstOrDefault(x => x.ActiveFlag == "S"));
         }
 
         public IQueryable<Period> GetPeriods()

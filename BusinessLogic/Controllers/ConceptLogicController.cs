@@ -98,30 +98,6 @@ namespace BusinessLogic.Controllers
 
         }
 
-        public ConceptCompleteDTO GetConceptById(int id)
-        {
-            using (var uow = new UnitOfWork(_configuration, _application))
-            {
-                return uow.ConceptRepository.GetConceptById(id);
-            }
-        }
-
-
-        #region VALIDATIONS
-
-        public List<string> Validations(ConceptDTO concept, UnitOfWork uow, bool isAdd = false)
-        {
-            List<string> colerrors = new List<string>();
-
-            if (!isAdd && !uow.ConceptRepository.ExistConceptById(concept.Id))
-                colerrors.Add($"El parámetro: {concept.Id} no existe.");
-
-            if (isAdd && uow.ConceptRepository.ExistConceptByParamAndPeriod(concept.ParamId, concept.PeriodId))
-                colerrors.Add($"El parámetro ya está registrado para el periodo activo.");
-
-            return colerrors;
-        }
-
         public async Task<GenericResponse> DeleteConcept(int id)
         {
             List<string> errors = new List<string>();
@@ -154,6 +130,31 @@ namespace BusinessLogic.Controllers
                 Successful = successful
             };
         }
+
+        public ConceptCompleteDTO GetConceptById(int id)
+        {
+            using (var uow = new UnitOfWork(_configuration, _application))
+            {
+                return uow.ConceptRepository.GetConceptById(id);
+            }
+        }
+
+
+        #region VALIDATIONS
+
+        public List<string> Validations(ConceptDTO concept, UnitOfWork uow, bool isAdd = false)
+        {
+            List<string> colerrors = new List<string>();
+
+            if (!isAdd && !uow.ConceptRepository.ExistConceptById(concept.Id))
+                colerrors.Add($"El parámetro: {concept.Id} no existe.");
+
+            if (isAdd && uow.ConceptRepository.ExistConceptByParamAndPeriod(concept.ParamId, concept.PeriodId))
+                colerrors.Add($"El parámetro ya está registrado para el periodo activo.");
+
+            return colerrors;
+        }
+
 
         #endregion
 
