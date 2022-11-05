@@ -76,9 +76,11 @@ namespace BusinessLogic.DataModel.Repository
 
         #region GET
 
-        public IQueryable<VConcept> GetConcepts()
+        public IQueryable<VConcept> GetConcepts(UnitOfWork uow)
         {
-            return _context.VConcept.AsNoTracking().AsQueryable();
+            decimal? periodId = uow.PeriodRepository.GetActivePeriod();
+
+            return _context.VConcept.AsNoTracking().Where(x=> x.PeriodId == periodId).AsQueryable();
         }
 
         public ConceptCompleteDTO GetConceptById(decimal id)

@@ -35,7 +35,7 @@ namespace ServiceWebApi.Controllers
             {
                 using (var uow = new UnitOfWork(this._configuration, _application))
                 {
-                    var queryable = uow.ConceptRepository.GetConcepts();
+                    var queryable = uow.ConceptRepository.GetConcepts(uow);
 
                     await HttpContext.InsertHeaderPaginationParams(queryable);
                     var concepts = await queryable.OrderBy(x => x.ParamId).Paginate(dto).ToListAsync();
