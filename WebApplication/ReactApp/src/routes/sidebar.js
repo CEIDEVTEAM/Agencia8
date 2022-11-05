@@ -130,13 +130,7 @@ const routes = [
         name: 'Parametros de Proyección',
         resourse: "ListParams",
         exact: true
-      },
-      {
-        path: '/app/projection/NewParam',
-        name: 'Crear Parámetro',
-        resourse: "NewParam",
-        exact: true
-      },
+      },     
       {
         path: '/app/projection/Projection',
         name: 'Proyección Mensual',

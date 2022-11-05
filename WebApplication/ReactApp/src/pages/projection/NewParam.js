@@ -6,8 +6,10 @@ import ProjectionParamsForm from "../../components/form/Models/ProjectionParamsF
 import PageTitle from '../../components/Typography/PageTitle';
 import ToastyErrors from "../../utils/generals/ToastyErrors";
 import { toast } from 'react-toastify';
+import { Modal, ModalHeader, ModalBody, ModalFooter, Button } from '@windmill/react-ui'
 
-function NewParam() {
+
+function NewParam(props) {
 
     const history = useHistory();
     const [errors, setErrors] = useState([]);
@@ -33,9 +35,14 @@ function NewParam() {
         }
     }
 
+    const handleClose = () => {
+        props.onClose();
+    }
+
     return (
-        <>
-            <PageTitle>Crear Parámetro</PageTitle>
+        <Modal isOpen={props.isOpen} onClose={handleClose} >
+            <ModalHeader>Crear Parámetro</ModalHeader>
+            <ModalBody >
             <ToastyErrors errors={errors}/>
             <ProjectionParamsForm model={model}
                 onSubmit={async (values, { resetForm }) => {
@@ -47,7 +54,13 @@ function NewParam() {
                     }
                 }}
             />
-        </>
+        </ModalBody>
+            <ModalFooter>
+                <Button className="w-full sm:w-autoblock" size="large" layout="outline" onClick={handleClose}>
+                    Cerrar
+                </Button>
+            </ModalFooter>
+        </Modal>
     )
 }
 export default NewParam
