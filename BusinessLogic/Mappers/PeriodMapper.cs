@@ -52,10 +52,10 @@ namespace BusinessLogic.Mappers
             if (dto == null || entity == null)
                 throw new Exception("No hay objeto/entidad para mapear");
 
-            entity.Description = entity.Description;
-            entity.ReferenceDate = entity.ReferenceDate;
-            entity.ActiveFlag = entity.ActiveFlag;
-            entity.UpdRow = entity.UpdRow;
+            entity.Description = dto.Description;
+            entity.ReferenceDate = dto.ReferenceDate;
+            entity.ActiveFlag = dto.ActiveFlag;
+            entity.UpdRow = dto.UpdRow;
 
             return entity;
         }
