@@ -85,6 +85,11 @@ namespace BusinessLogic.DataModel.Repository
             return _mapper.MapToObject(x);
         }
 
+        public List<ProjectionParamDTO> GetProjectionParamsDefoult()
+        {
+            return _mapper.MapToObject(_context.ProjectionParam.AsNoTracking().Where(x => x.Type == "Matemático").ToList());
+        }
+
 
         #endregion
 
