@@ -16,8 +16,8 @@ import Pagination from '../../utils/generals/Pagination';
 import { EditIcon, TrashIcon, SearchIcon } from '../../icons'
 import { raspaditaUrl } from '../../utils/http/endpoints';
 import PageTitle from '../../components/Typography/PageTitle';
-import EditConcept from './EditConcept';
-import NewConcept from './NewConcept';
+import EditRaspadita from './EditRaspadita';
+import NewRaspadita from './NewRaspadita';
 
 
 export default function Raspadita() {
@@ -82,12 +82,13 @@ export default function Raspadita() {
   }
   function onCloseNew() {
     setModalNewOpen(false)
+    loadData();
   }
 
 
 
-  const labels = ["Nombre", "Valor", "Pediodo","Fecha alta","Fecha Edición"]
-  const columns = ["name", "value","description", "addRow","updRow"]
+  const labels = ["Agencia", "Aciertos", "Apuestas","Utilidad","Partida","Fecha Ingreso","Fecha Actualización"]
+  const columns = ["agencia", "aciertos","apuestas", "utilidad","partida","addRow","updRow"]
 
   return (
     <>
@@ -108,7 +109,7 @@ export default function Raspadita() {
         />
         <br/>
         <div>
-          <Button onClick={() =>handleNew()} >Nuevo Concepto</Button>
+          <Button onClick={() =>handleNew()} >Nuevo Ingreso</Button>
         </div>
       </div>
       <br />
@@ -146,8 +147,8 @@ export default function Raspadita() {
           />
         </TableFooter>
       </TableContainer>
-      <EditConcept isOpen={openModal} onClose={onClose} id={id}></EditConcept>
-      <NewConcept isOpen={OpenNewModal} onClose={onCloseNew} ></NewConcept>
+      <EditRaspadita isOpen={openModal} onClose={onClose} id={id}></EditRaspadita>
+      <NewRaspadita isOpen={OpenNewModal} onClose={onCloseNew} ></NewRaspadita>
       
     </>
   )

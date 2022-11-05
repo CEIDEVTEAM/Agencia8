@@ -149,6 +149,12 @@ const routes = [
         resourse: "ListConcepts",
         exact: true
       },
+      {
+        path: '/app/projection/Raspadita',
+        name: 'Raspadita',
+        resourse: "Raspadita",
+        exact: true
+      },
     ],
   },
   
