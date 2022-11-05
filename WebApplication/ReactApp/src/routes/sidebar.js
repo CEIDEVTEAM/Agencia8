@@ -149,6 +149,12 @@ const routes = [
         resourse: "Raspadita",
         exact: true
       },
+      {
+        path: '/app/projection/Period',
+        name: 'Gestionar Periodo',
+        resourse: "Period",
+        exact: true
+      },
     ],
   },
   

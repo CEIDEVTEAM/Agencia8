@@ -14,10 +14,10 @@ import {
 import Pagination from '../../utils/generals/Pagination';
 
 import { EditIcon, TrashIcon, SearchIcon } from '../../icons'
-import { projectionParamUrl } from '../../utils/http/endpoints';
+import { periodUrl } from '../../utils/http/endpoints';
 import PageTitle from '../../components/Typography/PageTitle';
 import EditParam from './EditParam';
-import NewParam from './NewParam';
+import NewPeriod from './NewPeriod';
 
 
 export default function Period() {
@@ -41,7 +41,7 @@ export default function Period() {
   }, [page, setPage, openModal, openDeleteModal, search])
 
   function loadData() {
-    axios.get(projectionParamUrl, {
+    axios.get(periodUrl, {
       params: { page, recordsPerPage, search }
     })
       .then((response) => {
@@ -84,8 +84,8 @@ export default function Period() {
     setId(id);
   }
 
-  const labels = ["Nombre","Valor Actual", "Descripción", "Tipo", "Uso",]
-  const columns = ["name","actualDefaultValue", "description", "type", "usage",]
+  const labels = ["Descripción","Fecha de Referencia", "Activo", "Fecha de Apertura"]
+  const columns = ["description","referenceDate", "activeFlag", "addRow",]
 
   return (
     <>
@@ -113,22 +113,14 @@ export default function Period() {
       <TableContainer className="mb-8">
         <Table>
           <TableHeader>
-            <tr>
-              <TableCell>Acciones</TableCell>
+            <tr>              
               {labels.map((label, i) => <TableCell key={i}>{label}</TableCell>)}
             </tr>
           </TableHeader>
           <TableBody>
             {dataTable? dataTable.map((data, i) => (
               <TableRow key={data.id}>
-                <TableCell>
-                  <div className="flex items-center space-x-4">
-                    <Button title="Editar" onClick={() => handleEdit(data.id)} layout="link" size="icon" aria-label="Edit">
-                      <EditIcon className="w-5 h-5" aria-hidden="true" />
-                    </Button>
-                    
-                  </div>
-                </TableCell>
+                
                 {columns.map((column, i) => <TableCell key={i}>{data[column]}</TableCell>)}
 
               </TableRow>
@@ -144,8 +136,7 @@ export default function Period() {
           />
         </TableFooter>
       </TableContainer>
-      <EditParam isOpen={openModal} onClose={onClose} id={id}></EditParam>
-      <NewParam isOpen={OpenNewModal} onClose={onCloseNew} ></NewParam>
+      <NewPeriod isOpen={OpenNewModal} onClose={onCloseNew} ></NewPeriod>
       
     </>
   )

@@ -37,3 +37,6 @@ export const urlParamsOptions = `${apiURL}/projectionParam/projectionParam`;
 export const raspaditaUrl = `${apiURL}/raspadita`;
 export const newRaspaditaUrl = `${apiURL}/raspadita/addRaspadita`;
 
+export const periodUrl = `${apiURL}/period`;
+export const newPeriodUrl = `${apiURL}/period/addPeriod`;
+

@@ -15,9 +15,9 @@ namespace BusinessLogic.Mappers
             return new Period()
             {
                 Description = dto.Description,
-                ReferenceDate = dto.ReferenceDate,
+                ReferenceDate = DateTime.Parse(dto.ReferenceDate),
                 ActiveFlag = dto.ActiveFlag,
-                AddRow = dto.AddRow,
+                AddRow = (DateTime)dto.AddRow,
                 UpdRow = dto.UpdRow,
             };
         }
@@ -31,7 +31,7 @@ namespace BusinessLogic.Mappers
             {
                 Id = entity.Id,
                 Description = entity.Description,
-                ReferenceDate = entity.ReferenceDate,
+                ReferenceDate = entity.ReferenceDate.ToString(),
                 ActiveFlag = entity.ActiveFlag,
                 AddRow = entity.AddRow,
                 UpdRow = entity.UpdRow,
