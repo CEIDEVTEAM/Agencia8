@@ -92,26 +92,7 @@ export default function Raspadita() {
 
   return (
     <>
-      <PageTitle>Raspadita</PageTitle>
-      <div className="relative w-full max-w-xl mr-6 focus-within:text-purple-500">
-        <div className="absolute inset-y-0 flex items-center pl-2">
-          {/* <SearchIcon className="w-4 h-4" aria-hidden="true" /> */}
-        </div>
-        {/* <Input
-          className="pl-8 text-gray-700"
-          placeholder="Búsqueda por nombre"
-          aria-label="Búsqueda"
-          onChange={(e) => {
-            if (e.target.value === "") {
-              setSearch(null)
-            } else { setSearch(e.target.value.toLowerCase()) }
-          }}
-        /> */}
-        <br/>
-        <div>
-          <Button onClick={() =>handleNew()} >Nuevo Ingreso</Button>
-        </div>
-      </div>
+      <PageTitle>Raspadita</PageTitle>    
       <br />
       <TableContainer className="mb-8">
         <Table>

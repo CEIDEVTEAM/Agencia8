@@ -4,14 +4,13 @@ import * as Yup from 'yup'
 import FormText from '../form-groups/FormText'
 import FormSelect from '../form-groups/FormSelect'
 import { Button } from '@windmill/react-ui'
+import SectionTitle from '../../../components/Typography/SectionTitle'
 
 
 
 export default function RaspaditaForm(props) {
 
-    const [options, setOptions] = useState([{ id: "1", name: "1" }, { id: "2", name: "2" }, { id: "3", name: "3" }, { id: "4", name: "4" }
-    , { id: "5", name: "5" }, { id: "6", name: "6" }, { id: "7", name: "7" }, { id: "8", name: "8" }])
-
+   
     return (
         <Formik initialValues={props.model}
             onSubmit={props.onSubmit}
@@ -29,8 +28,8 @@ export default function RaspaditaForm(props) {
             {(formikProps) => (
                 <Form>
                     <hr />
+                    <SectionTitle>Agencia: {props.model.agencia}</SectionTitle>
                     <div className="grid md:grid-cols-3 md:gap-6">
-                        <FormSelect disabled={props.isEdit} options={options} campo="agencia" label="Agencia" />
                         <FormText campo="apuestas" label="Apuestas" />
                         <FormText campo="aciertos" label="Aciertos" />
                     </div>
