@@ -1303,7 +1303,7 @@ namespace DataAccess.Context
                     .HasColumnType("date")
                     .HasColumnName("Upd_Row");
 
-                entity.Property(e => e.Value).HasColumnType("numeric(10, 0)");
+                entity.Property(e => e.Value).HasColumnType("numeric(10, 2)");
 
                 entity.HasOne(d => d.Param)
                     .WithMany(p => p.Concepts)
@@ -1507,7 +1507,7 @@ namespace DataAccess.Context
                     .HasColumnType("date")
                     .HasColumnName("Upd_Row");
 
-                entity.Property(e => e.Value).HasColumnType("numeric(10, 0)");
+                entity.Property(e => e.Value).HasColumnType("numeric(10, 2)");
             });
 
             OnModelCreatingPartial(modelBuilder);

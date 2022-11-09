@@ -63,22 +63,9 @@ namespace ServiceWebApi.Controllers
             }
         }
 
-        [HttpPost("addRaspadita")]
-        public async Task<ActionResult<GenericResponse>> AddRaspadita([FromBody] RaspaditaDTO dto)
-        {
-            try
-            {
-                RaspaditaLogicController lg = new RaspaditaLogicController(_configuration, _application);
-                return await lg.AddRaspadita(dto);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest("No es posible comunicarse con el proveedor.");
-            }
-        }
 
         [HttpPut("{id:int}")]
-        public async Task<ActionResult<GenericResponse>> EditConcept([FromBody] RaspaditaDTO dto)
+        public async Task<ActionResult<GenericResponse>> EditRaspadita([FromBody] RaspaditaDTO dto)
         {
             try
             {

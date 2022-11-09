@@ -69,6 +69,8 @@ namespace BusinessLogic.Controllers
                 {
                     errors = Validations(dto, uow);
 
+                    dto.Partida = (uow.ConceptRepository.GetProjectionParamValueByName("Tasa Gastos Administrativos Raspadita") * dto.Apuestas) / 100;
+
                     if (!errors.Any())
                     {
                         uow.RaspaditaRepository.UpdateRaspadita(dto);

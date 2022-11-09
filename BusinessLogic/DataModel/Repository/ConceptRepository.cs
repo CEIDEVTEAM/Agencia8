@@ -89,7 +89,12 @@ namespace BusinessLogic.DataModel.Repository
             return _mapper.MapToObject(x);
         }
 
-     
+        public decimal? GetProjectionParamValueByName(string name)
+        {
+            decimal? paramId = _context.ProjectionParam.FirstOrDefault(x => x.Name == name).Id;
+
+            return paramId == null ? null : _context.Concept.FirstOrDefault(x => x.ParamId == paramId).Value;
+        }
 
         #endregion
 
