@@ -35,6 +35,8 @@ const ListParams = lazy(() => import('../pages/projection/ListParams'))
 const NewParam = lazy(() => import('../pages/projection/NewParam'))
 const Projection = lazy(() => import('../pages/projection/Projection'))
 const ListConcepts = lazy(() => import('../pages/projection/ListConcepts'))
+const Raspadita = lazy(() => import('../pages/projection/Raspadita'))
+const Period = lazy(() => import('../pages/projection/Period'))
 
 
 const routes = [
@@ -182,6 +184,18 @@ const routes = [
     component: ListConcepts,
     isAdmin: true,
     resourse: "ListConcepts"
+  },
+  {
+    path: '/projection/Raspadita',
+    component: Raspadita,
+    isAdmin: true,
+    resourse: "Raspadita"
+  },
+  {
+    path: '/projection/Period',
+    component: Period,
+    isAdmin: true,
+    resourse: "Period"
   },
 
 

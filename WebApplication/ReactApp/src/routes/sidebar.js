@@ -130,13 +130,7 @@ const routes = [
         name: 'Parametros de Proyección',
         resourse: "ListParams",
         exact: true
-      },
-      {
-        path: '/app/projection/NewParam',
-        name: 'Crear Parámetro',
-        resourse: "NewParam",
-        exact: true
-      },
+      },     
       {
         path: '/app/projection/Projection',
         name: 'Proyección Mensual',
@@ -147,6 +141,18 @@ const routes = [
         path: '/app/projection/ListConcepts',
         name: 'Conceptos',
         resourse: "ListConcepts",
+        exact: true
+      },
+      {
+        path: '/app/projection/Raspadita',
+        name: 'Raspadita',
+        resourse: "Raspadita",
+        exact: true
+      },
+      {
+        path: '/app/projection/Period',
+        name: 'Gestionar Periodo',
+        resourse: "Period",
         exact: true
       },
     ],
