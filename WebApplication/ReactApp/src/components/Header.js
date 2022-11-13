@@ -129,16 +129,16 @@ function Header() {
               onClose={() => setIsProfileMenuOpen(false)}
             >
               <span>Hola, {obtenerNombreUsuario()}</span>
-              <DropdownItem tag="a" href="#">
+              {/* <DropdownItem tag="a" href="#">
                 <OutlineCogIcon className="w-4 h-4 mr-3" aria-hidden="true" />
                 <span>Configuración</span>
-              </DropdownItem>
+              </DropdownItem> */}
               <DropdownItem onClick={() => {
                                 logout();
                                 actualizar([]);
                             }}>
                 <OutlineLogoutIcon className="w-4 h-4 mr-3" aria-hidden="true" />
-                <Link to="/">Log out</Link>
+                <Link to="/">Cerrar Sesión</Link>
               </DropdownItem>
             </Dropdown>
           </li>

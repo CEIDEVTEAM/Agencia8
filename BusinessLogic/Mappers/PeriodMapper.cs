@@ -53,7 +53,7 @@ namespace BusinessLogic.Mappers
                 throw new Exception("No hay objeto/entidad para mapear");
 
             entity.Description = dto.Description;
-            entity.ReferenceDate = dto.ReferenceDate;
+            entity.ReferenceDate = DateTime.Parse(dto.ReferenceDate);
             entity.ActiveFlag = dto.ActiveFlag;
             entity.UpdRow = dto.UpdRow;
 

@@ -82,7 +82,7 @@ export default function ListUsers() {
 
   return (
     <>
-      <PageTitle>Listado de Usuarios</PageTitle>
+      <PageTitle>Gestión de Usuarios</PageTitle>
       <div className="relative w-full max-w-xl mr-6 focus-within:text-purple-500">
         <div className="absolute inset-y-0 flex items-center pl-2">
           <SearchIcon className="w-4 h-4" aria-hidden="true" />
