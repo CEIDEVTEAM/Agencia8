@@ -10,7 +10,7 @@ export default function ProjectionParamsForm(props) {
 
     const [optionsType, setOptionsType] = useState([{ id: "Matemático", name: "Matemático" }, { id: "Conceptual", name: "Conceptual" }, { id: "General", name: "General" }])
     const [optionsUsage, setOptionsUsage] = useState([{ id: "General", name: "General" }, { id: "Quiniela", name: "Quiniela" }, { id: "Tombola", name: "Tombola" }
-        , { id: "Oro", name: "Oro" }, { id: "Deportivo", name: "Deportivo" }, { id: "Pin", name: "Pin" }])
+        , { id: "Oro", name: "Oro" }, { id: "Deportivo", name: "Deportivo" }, { id: "Pin", name: "Pin" },{ id: "Raspadita", name: "Raspadita" }])
     return (
         <Formik initialValues={props.model}
             onSubmit={props.onSubmit}

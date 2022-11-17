@@ -14,13 +14,13 @@ import {
 import Pagination from '../../utils/generals/Pagination';
 
 import { EditIcon, TrashIcon, SearchIcon } from '../../icons'
-import { raspaditaUrl } from '../../utils/http/endpoints';
+import { periodUrl } from '../../utils/http/endpoints';
 import PageTitle from '../../components/Typography/PageTitle';
-import EditRaspadita from './EditRaspadita';
-import NewRaspadita from './NewRaspadita';
+import EditParam from './EditParam';
+import NewPeriod from './NewPeriod';
 
 
-export default function Raspadita() {
+export default function Period() {
 
   const recordsPerPage = 30
   const [totalResults, setTotalResults] = useState(0);
@@ -29,19 +29,19 @@ export default function Raspadita() {
 
   const [openModal, setModalOpen] = useState(false)
   const [openDeleteModal, setModalDeleteOpen] = useState(false)
-  const [OpenNewModal, setModalNewOpen] = useState(false)
   const [id, setId] = useState(0)
   const [search, setSearch] = useState(null)
- 
+  const [OpenNewModal, setModalNewOpen] = useState(false)
+
 
   useEffect(() => {
     loadData();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
 
   }, [page, setPage, openModal, openDeleteModal, search])
 
   function loadData() {
-    axios.get(raspaditaUrl, {
+    axios.get(periodUrl, {
       params: { page, recordsPerPage, search }
     })
       .then((response) => {
@@ -51,9 +51,7 @@ export default function Raspadita() {
         setTotalResults(totalRecords)
         console.log(response)
       })
-  } 
-
-
+  }
 
   async function logicDelete(id) {
     setModalDeleteOpen(true)
@@ -69,10 +67,6 @@ export default function Raspadita() {
     setModalOpen(true)
     setId(id);
   }
-  function handleNew(id) {
-    setModalNewOpen(true)
-    setId(id);
-  }
   function onClose() {
     setModalOpen(false)
   }
@@ -80,39 +74,53 @@ export default function Raspadita() {
   function onCloseDelete() {
     setModalDeleteOpen(false)
   }
+
   function onCloseNew() {
     setModalNewOpen(false)
     loadData();
   }
+  function handleNew(id) {
+    setModalNewOpen(true)
+    setId(id);
+  }
 
-
-
-  const labels = ["Agencia", "Aciertos", "Apuestas","Utilidad","Partida","Fecha Ingreso","Fecha Actualización"]
-  const columns = ["agencia", "aciertos","apuestas", "utilidad","partida","addRow","updRow"]
+  const labels = ["Descripción","Fecha de Referencia", "Activo", "Fecha de Apertura"]
+  const columns = ["description","referenceDate", "activeFlag", "addRow",]
 
   return (
     <>
-      <PageTitle>Raspadita</PageTitle>    
+      <PageTitle>Parámetros de Projección</PageTitle>
+      <div className="relative w-full max-w-xl mr-6 focus-within:text-purple-500">
+        {/* <div className="absolute inset-y-0 flex items-center pl-2">
+          <SearchIcon className="w-4 h-4" aria-hidden="true" />
+        </div> */}
+        <Input
+          className="pl-8 text-gray-700"
+          placeholder="Búsqueda por nombre"
+          aria-label="Búsqueda"
+          onChange={(e) => {
+            if (e.target.value === "") {
+              setSearch(null)
+            } else { setSearch(e.target.value.toLowerCase()) }
+          }}
+        />
+        <br/>
+        <div>
+          <Button onClick={() =>handleNew()} >Iniciar Periodo</Button>
+        </div>
+      </div>
       <br />
       <TableContainer className="mb-8">
         <Table>
           <TableHeader>
-            <tr>
-              <TableCell>Acciones</TableCell>
+            <tr>              
               {labels.map((label, i) => <TableCell key={i}>{label}</TableCell>)}
             </tr>
           </TableHeader>
           <TableBody>
             {dataTable? dataTable.map((data, i) => (
               <TableRow key={data.id}>
-                <TableCell>
-                  <div className="flex items-center space-x-4">
-                    <Button title="Editar" onClick={() => handleEdit(data.id)} layout="link" size="icon" aria-label="Edit">
-                      <EditIcon className="w-5 h-5" aria-hidden="true" />
-                    </Button>
-                    
-                  </div>
-                </TableCell>
+                
                 {columns.map((column, i) => <TableCell key={i}>{data[column]}</TableCell>)}
 
               </TableRow>
@@ -128,9 +136,10 @@ export default function Raspadita() {
           />
         </TableFooter>
       </TableContainer>
-      <EditRaspadita isOpen={openModal} onClose={onClose} id={id}></EditRaspadita>
-      <NewRaspadita isOpen={OpenNewModal} onClose={onCloseNew} ></NewRaspadita>
+      <NewPeriod isOpen={OpenNewModal} onClose={onCloseNew} ></NewPeriod>
       
     </>
   )
 }
+
+//export default ListUsers

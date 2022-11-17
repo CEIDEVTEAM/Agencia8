@@ -34,6 +34,9 @@ export const urlNewParam = `${apiURL}/projectionParam/addProjectionParam`;
 export const conceptsUrl = `${apiURL}/concept`;
 export const newConceptUrl = `${apiURL}/concept/addConcept`;
 export const urlParamsOptions = `${apiURL}/projectionParam/projectionParam`;
-export const raspaditaUrl = `${apiURL}/projectionParam/projectionParam`;
+export const raspaditaUrl = `${apiURL}/raspadita`;
+export const newRaspaditaUrl = `${apiURL}/raspadita/addRaspadita`;
 
+export const periodUrl = `${apiURL}/period`;
+export const newPeriodUrl = `${apiURL}/period/addPeriod`;
 

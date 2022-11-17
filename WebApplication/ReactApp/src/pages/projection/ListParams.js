@@ -17,6 +17,7 @@ import { EditIcon, TrashIcon, SearchIcon } from '../../icons'
 import { projectionParamUrl } from '../../utils/http/endpoints';
 import PageTitle from '../../components/Typography/PageTitle';
 import EditParam from './EditParam';
+import NewParam from './NewParam';
 
 
 export default function ListParams() {
@@ -30,6 +31,7 @@ export default function ListParams() {
   const [openDeleteModal, setModalDeleteOpen] = useState(false)
   const [id, setId] = useState(0)
   const [search, setSearch] = useState(null)
+  const [OpenNewModal, setModalNewOpen] = useState(false)
 
 
   useEffect(() => {
@@ -73,18 +75,25 @@ export default function ListParams() {
     setModalDeleteOpen(false)
   }
 
+  function onCloseNew() {
+    setModalNewOpen(false)
+    loadData();
+  }
+  function handleNew(id) {
+    setModalNewOpen(true)
+    setId(id);
+  }
 
-
-  const labels = ["Nombre", "Descripción", "Tipo", "Uso","Valor Actual"]
-  const columns = ["name", "description", "type", "usage","actualDefaultValue"]
+  const labels = ["Nombre","Valor Actual", "Descripción", "Tipo", "Uso",]
+  const columns = ["name","actualDefaultValue", "description", "type", "usage",]
 
   return (
     <>
       <PageTitle>Parámetros de Projección</PageTitle>
       <div className="relative w-full max-w-xl mr-6 focus-within:text-purple-500">
-        <div className="absolute inset-y-0 flex items-center pl-2">
+        {/* <div className="absolute inset-y-0 flex items-center pl-2">
           <SearchIcon className="w-4 h-4" aria-hidden="true" />
-        </div>
+        </div> */}
         <Input
           className="pl-8 text-gray-700"
           placeholder="Búsqueda por nombre"
@@ -95,6 +104,10 @@ export default function ListParams() {
             } else { setSearch(e.target.value.toLowerCase()) }
           }}
         />
+        <br/>
+        <div>
+          <Button onClick={() =>handleNew()} >Agregar Parámetro</Button>
+        </div>
       </div>
       <br />
       <TableContainer className="mb-8">
@@ -132,6 +145,7 @@ export default function ListParams() {
         </TableFooter>
       </TableContainer>
       <EditParam isOpen={openModal} onClose={onClose} id={id}></EditParam>
+      <NewParam isOpen={OpenNewModal} onClose={onCloseNew} ></NewParam>
       
     </>
   )

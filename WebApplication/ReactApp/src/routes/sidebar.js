@@ -10,7 +10,7 @@ const routes = [
   {
     path: '/app/dashboard', // the url
     icon: 'HomeIcon', // the component being exported from icons/index.js
-    name: 'Dashboard',
+    name: 'Inicio',
     resourse: "dashboard" // name that appear in Sidebar
   },
   {
@@ -94,7 +94,7 @@ const routes = [
       },
       {
         path: '/app/users/ListUsers',
-        name: 'Listado de Usuarios',
+        name: 'Gestión de Usuarios',
         resourse: "ListUsers",
       },
     ],
@@ -130,23 +130,29 @@ const routes = [
         name: 'Parametros de Proyección',
         resourse: "ListParams",
         exact: true
-      },
-      {
-        path: '/app/projection/NewParam',
-        name: 'Crear Parámetro',
-        resourse: "NewParam",
-        exact: true
-      },
-      {
-        path: '/app/projection/Projection',
-        name: 'Proyección Mensual',
-        resourse: "ProjectionMensual",
-        exact: true
-      },
+      },  
       {
         path: '/app/projection/ListConcepts',
         name: 'Conceptos',
         resourse: "ListConcepts",
+        exact: true
+      },
+      {
+        path: '/app/projection/Raspadita',
+        name: 'Raspadita',
+        resourse: "Raspadita",
+        exact: true
+      },
+      {
+        path: '/app/projection/Period',
+        name: 'Gestionar Periodo',
+        resourse: "Period",
+        exact: true
+      },
+      {
+        path: '/app/projection/Projection',
+        name: 'Proyección',
+        resourse: "ProjectionMensual",
         exact: true
       },
     ],
