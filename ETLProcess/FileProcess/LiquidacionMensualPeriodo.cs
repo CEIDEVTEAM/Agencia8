@@ -74,6 +74,8 @@ namespace ETLProcess.FileProcess
                         obj.Fecha_Inicio = DateTime.Now.AddDays((DateTime.Now.Day * -1) + 1);
                         obj.Fecha_Fin = DateTime.Now;
 
+                        int rowStart = 3;
+
                         for (int sheet = 1; sheet <= 5; sheet++)
                         {
                             ExcelApp._Worksheet excelSheet = excelWorkbook.Sheets[sheet];
@@ -86,7 +88,9 @@ namespace ETLProcess.FileProcess
                                 string juego = sheet == 1 ? "Quiniela" : "Tombola";
                                 obj.Juego = juego;
 
-                                for (int r = 3; r <= rows - 1; r++)
+                                rowStart = sheet == 1 ? 5 : 3;
+
+                                for (int r = rowStart; r <= rows - 1; r++)
                                 {
                                     try
                                     {

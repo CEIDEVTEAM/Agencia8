@@ -15,6 +15,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using CommonSolution.Encrypt;
 
 namespace BusinessLogic.Controllers
 {
@@ -35,6 +36,7 @@ namespace BusinessLogic.Controllers
         {
             using (var uow = new UnitOfWork(this._configuration, this._application))
             {
+                credentials.Password = Encrypt.GetSHA256(credentials.Password);
                 return uow.UserRepository.ValidateCredentials(credentials);
             }
         }
