@@ -58,8 +58,6 @@
     "tailwindcss": "1.4.6"
   },
   "keywords": [
-    "windmill",
-    "dashboard",
     "admin",
     "tailwind",
     "react"
