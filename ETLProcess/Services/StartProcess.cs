@@ -134,6 +134,8 @@ namespace ETLProcess.Services
 
         private void UpdateFileNames(Dictionary<string, string> processedFiles)
         {
+            DateTime fecha = DateTime.Now;
+
             foreach (var item in processedFiles)
             {
                 var split = item.Key.Split('.');
@@ -141,7 +143,7 @@ namespace ETLProcess.Services
                 for (int i = 0; i < split.Length; i++)
                 {
                     if (i == split.Length - 1)
-                        fileName += $"-{item.Value}.";
+                        fileName += $"-{item.Value} {fecha.Year}-{fecha.Month}-{fecha.Day}.";
 
                     fileName += $"{split[i]}";
                 }

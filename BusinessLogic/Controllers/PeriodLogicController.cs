@@ -32,7 +32,7 @@ namespace BusinessLogic.Controllers
 
                 try
                 {
-                    errors = Validations(dto, uow, true); // EDU! => => Definir las validaciones de periodo
+                    errors = Validations(dto, uow, true);
 
                     if (!errors.Any())
                     {
@@ -119,12 +119,8 @@ namespace BusinessLogic.Controllers
         {
             List<string> colerrors = new List<string>();
 
-            //if (!isAdd && !uow.ConceptRepository.ExistConceptById(concept.Id))
-            //    colerrors.Add($"El parámetro: {concept.Id} no existe.");
-
-            //if (isAdd && uow.ConceptRepository.ExistConceptByParamAndPeriod(concept.ParamId, concept.PeriodId))
-            //    colerrors.Add($"El parámetro ya está registrado para el periodo activo.");
-
+            //Sin validaciones implementadas
+              
             return colerrors;
         }
 

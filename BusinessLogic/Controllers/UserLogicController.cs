@@ -2,9 +2,11 @@
 using BusinessLogic.DataModel;
 using BusinessLogic.DTOs.Generals;
 using BusinessLogic.DTOs.User;
+using CommonSolution.Encrypt;
 using DataAccess.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using Nest;
 
 namespace BusinessLogic.Controllers
 {
@@ -36,6 +38,7 @@ namespace BusinessLogic.Controllers
 
                     if (!errors.Any())
                     {
+                        dto.Password = Encrypt.GetSHA256(dto.Password);
                         uow.UserRepository.AddUser(dto);
 
                         uow.SaveChanges();
