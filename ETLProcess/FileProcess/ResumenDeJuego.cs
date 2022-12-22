@@ -64,12 +64,31 @@ namespace ETLProcess.FileProcess
                         try
                         {
                             string date = excelRange.Cells[2, 3].Value2.ToString();
-                            date = date.Substring(0, date.Length - 1);
+                            //date = date.Substring(0, date.Length - 1);
                             obj.Fecha = DateTime.Parse(date);
                         }
                         catch
                         {
                             logger.LogError($"Error al convertir fecha, hoja:{sheet}");
+                            throw new Exception();
+                        }
+
+                        try
+                        {
+                            string sqlGetPeriod = @"Select Sub_Agente from Resumen_De_Juego where Fecha = @Fecha";
+                            var idPeriodo = connection.ExecuteScalar(sqlGetPeriod, obj, transaction: tran);
+
+                            if (idPeriodo != null)
+                            {
+                                logger.LogInformation($"Borrando registros previos con misma fecha ({obj.Fecha})");
+
+                                string sqlDelete = @"Delete from Resumen_De_Juego where Fecha = @Fecha";
+                                connection.Execute(sqlDelete, obj, transaction: tran);
+                            }
+                        }
+                        catch (Exception)
+                        {
+                            logger.LogError($"Error al borrar registros del mismo día.");
                             throw new Exception();
                         }
 
@@ -88,14 +107,15 @@ namespace ETLProcess.FileProcess
                                 obj.Comision = Decimal.Parse(excelRange.Cells[r, 10].Value2.ToString());
                                 obj.Servicio = Decimal.Parse(excelRange.Cells[r, 11].Value2.ToString());
                                 obj.Total = Decimal.Parse(excelRange.Cells[r, 12].Value2.ToString());
+
+
+                                connection.Execute(sql, obj, transaction: tran);
                             }
                             catch
                             {
                                 logger.LogError($"Error al convertir datos en la fila: {r}, hoja: {sheet}");
-                                throw new Exception();
+                                //throw new Exception();
                             }
-
-                            connection.Execute(sql, obj, transaction: tran);
 
                             SetObjectEntityDefaultValues(obj);
                         }

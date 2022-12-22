@@ -75,6 +75,25 @@ namespace ETLProcess.FileProcess
                             throw new Exception();
                         }
 
+                        try
+                        {
+                            string sqlGetPeriod = @"Select Sub_Agente from Saldo_Cuentas_Subagentes where Fecha = @Fecha";
+                            var idPeriodo = connection.ExecuteScalar(sqlGetPeriod, obj, transaction: tran);
+
+                            if (idPeriodo != null)
+                            {
+                                logger.LogInformation($"Borrando registros previos con misma fecha ({obj.Fecha})");
+
+                                string sqlDelete = @"Delete from Saldo_Cuentas_Subagentes where Fecha = @Fecha";
+                                connection.Execute(sqlDelete, obj, transaction: tran);
+                            }
+                        }
+                        catch (Exception)
+                        {
+                            logger.LogError($"Error al borrar registros del mismo día.");
+                            throw new Exception();
+                        }
+
                         for (int r = 4; r <= rows -1; r++)
                         {
                             try
@@ -91,14 +110,15 @@ namespace ETLProcess.FileProcess
                                 obj.Deuda_Viva = Decimal.Parse(excelRange.Cells[r, 11].Value2.ToString());
                                 obj.Deuda_Viva_Raspadita = Decimal.Parse(excelRange.Cells[r, 12].Value2.ToString());
                                 obj.Saldo_Final = Decimal.Parse(excelRange.Cells[r, 13].Value2.ToString());
+                                
+                                
+                                connection.Execute(sql, obj, transaction: tran);
                             }
                             catch
                             {
                                 logger.LogError($"Error al convertir datos en la fila: {r}, hoja: {sheet}");
-                                throw new Exception();
+                                //throw new Exception();
                             }
-
-                            connection.Execute(sql, obj, transaction: tran);
 
                             SetObjectEntityDefaultValues(obj);
                         }

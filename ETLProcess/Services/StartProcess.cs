@@ -138,19 +138,28 @@ namespace ETLProcess.Services
 
             foreach (var item in processedFiles)
             {
-                var split = item.Key.Split('.');
-                string fileName = @"";
-                for (int i = 0; i < split.Length; i++)
+                try
                 {
-                    if (i == split.Length - 1)
-                        fileName += $"-{item.Value} {fecha.Year}-{fecha.Month}-{fecha.Day}.";
+                    var split = item.Key.Split('.');
+                    string fileName = @"";
+                    for (int i = 0; i < split.Length; i++)
+                    {
+                        if (i == split.Length - 1)
+                            fileName += $"-{item.Value} {fecha.ToString("yyyy-MM-dd HHmmss")}.";
 
-                    fileName += $"{split[i]}";
+                        fileName += $"{split[i]}";
+                    }
+
+                    File.Move(item.Key, fileName);
+
+                    _logger.LogInformation($"Nombre de archivo modificado: {item.Key} => {fileName}");
+
                 }
-
-                File.Move(item.Key, fileName);
-
-                _logger.LogInformation($"Nombre de archivo modificado: {item.Key} => {fileName}");
+                catch (Exception ex)
+                {
+                    _logger.LogError($"Error al modificar archivo {item.Key}");
+                    _logger.LogError(ex.Message);
+                }
             };
         }
     }

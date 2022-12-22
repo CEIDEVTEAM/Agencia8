@@ -2,6 +2,7 @@
 using ETLProcess.Services;
 using ETLProcess.Services.Interfaces;
 using Microsoft.Extensions.Logging;
+using Microsoft.Office.Interop.Excel;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -45,23 +46,59 @@ namespace ETLProcess.FileProcess
 
                     using (var tran = connection.BeginTransaction())
                     {
+                        ObjectLiquidacionMensual obj = new ObjectLiquidacionMensual();
+
+                        ExcelApp._Worksheet excelSheet = excelWorkbook.Sheets[1];
+                        ExcelApp.Range excelRange = excelSheet.UsedRange;
+
+                        string strDate = excelRange.Cells[2, 2].Value2.ToString();
+
+                        strDate = strDate.Substring(6, 11);
+
+                        if (!DateTime.TryParse(strDate, out DateTime date))
+                        {
+                            logger.LogError($"Error al acceder a la fecha del archivo");
+                            throw new Exception();
+                        }
+
+                        obj.Fecha = date;
+
+                        try
+                        {
+                            string sqlGetPeriod = @"Select Juego from Liquidacion_Mensual where Fecha = @Fecha";
+                            var idPeriodo = connection.ExecuteScalar(sqlGetPeriod, obj, transaction: tran);
+
+                            if (idPeriodo != null)
+                            {
+                                logger.LogInformation($"Borrando registros previos con misma fecha ({date})");
+
+                                string sqlDelete = @"Delete from Liquidacion_Mensual where Fecha = @Fecha";
+                                connection.Execute(sqlDelete, obj, transaction: tran);
+                            }
+                        }
+                        catch (Exception)
+                        {
+                            logger.LogError($"Error al borrar registros del mismo día.");
+                            throw new Exception();
+                        }
+
+                        int rowStart = 3;
+
                         for (int sheet = 1; sheet <= 5; sheet++)
                         {
-                            ExcelApp._Worksheet excelSheet = excelWorkbook.Sheets[sheet];
-                            ExcelApp.Range excelRange = excelSheet.UsedRange;
+                            excelSheet = excelWorkbook.Sheets[sheet];
+                            excelRange = excelSheet.UsedRange;
 
                             int rows = excelRange.Rows.Count;
-                            ObjectLiquidacionMensual obj = new ObjectLiquidacionMensual();
-
-                            //NOTA => FALTA SOLUCIONAR EL TEMA DE LA FECHA!!
-                            obj.Fecha = DateTime.Now;
 
                             if (sheet == 1 || sheet == 2) //Quiniela y Tombola
                             {
                                 string juego = sheet == 1 ? "Quiniela" : "Tombola";
                                 obj.Juego = juego;
 
-                                for (int r = 3; r <= rows - 1; r++)
+                                rowStart = sheet == 1 ? 5 : 3;
+
+                                for (int r = rowStart; r <= rows - 1; r++)
                                 {
                                     try
                                     {
@@ -88,7 +125,7 @@ namespace ETLProcess.FileProcess
                             {
                                 obj.Juego = "Cinco de Oro";
 
-                                for (int r = 3; r <= rows -1; r++)
+                                for (int r = 3; r <= rows - 1; r++)
                                 {
                                     try
                                     {
@@ -113,7 +150,7 @@ namespace ETLProcess.FileProcess
                             else if (sheet == 4) //Supermatch
                             {
                                 obj.Juego = "Supermatch";
-                                for (int r = 3; r <= rows -1; r++)
+                                for (int r = 3; r <= rows - 1; r++)
                                 {
                                     try
                                     {
