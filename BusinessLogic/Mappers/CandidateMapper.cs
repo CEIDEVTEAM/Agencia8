@@ -245,7 +245,7 @@ namespace BusinessLogic.Mappers
 
             return new DependentCreationDTO
             {
-                Id = candidate.id ?? 0,
+                //Id = candidate.id ?? 0,
                 Name = candidate.name,
                 LastName = candidate.lastName,
                 BirthDate = DateTime.Parse(candidate.birthDate),

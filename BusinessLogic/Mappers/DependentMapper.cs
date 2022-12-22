@@ -23,7 +23,7 @@ namespace BusinessLogic.Mappers
             {
                 Number = dto.Number,
                 Name = dto.Name,
-                LastName = dto.Name,
+                LastName = dto.LastName,
                 BirthDate = dto.BirthDate,
                 PersonalDocument = dto.PersonalDocument,
                 Gender = dto.Gender,
