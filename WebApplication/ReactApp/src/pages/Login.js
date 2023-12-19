@@ -1,4 +1,4 @@
-import React ,{ useContext, useState }from 'react'
+import React ,{ useContext, useState, useEffect }from 'react'
 import { Link } from 'react-router-dom'
 
 //import ImageLight from '../assets/img/login-office.jpeg'
@@ -12,13 +12,19 @@ import { useHistory } from "react-router-dom";
 import { authUrl } from "../utils/http/endpoints";
 import AuthContext from "../context/AuthContext";
 
-import { guardarTokenLocalStorage, obtenerClaims } from "../utils/auth/manejadorJWT";;
+import { guardarTokenLocalStorage, obtenerClaims, logout } from "../utils/auth/manejadorJWT";;
+
 
 function Login() {
   const {actualizar} = useContext(AuthContext);
   const [errores, setErrores] = useState([]);
   const history = useHistory();
+  useEffect(() => {
+    logout();
+    actualizar([]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
 
+  }, [])
   async function login(credenciales) {
     try {
         const respuesta = await
