@@ -9,7 +9,6 @@ import {
   TableFooter,
   TableContainer,
   Button,
-  //Pagination,
   Input
 } from '@windmill/react-ui'
 import EditUser from './EditUser';
@@ -18,15 +17,15 @@ import { EditIcon, TrashIcon, SearchIcon } from '../../icons'
 import { userUrl } from '../../utils/http/endpoints';
 import PageTitle from '../../components/Typography/PageTitle';
 import confirmation from '../../utils/generals/confirmation';
-import CustomPagination from '../../utils/generals/Pagination';
-
+import CustomPagination from '../../utils/generals/CustomPagination';
 
 export default function ListUsers() {
 
-  const recordsPerPage = 2
+  const recordsPerPage = 3
   const [totalResults, setTotalResults] = useState(0);
   const [page, setPage] = useState(1)
   const [dataTable, setDataTable] = useState([])
+  const [totalDePaginas, serTotaDePaginas] = useState(0);
 
   const [openModal, setModalOpen] = useState(false)
   const [id, setId] = useState(0)
@@ -49,7 +48,8 @@ export default function ListUsers() {
           parseInt(response.headers['totalrecords']);
         setDataTable(response.data);
         setTotalResults((totalRecords))
-        console.log(response)        
+        serTotaDePaginas(Math.ceil(totalRecords / recordsPerPage))
+        console.log(response)
       })
   }
 
@@ -76,6 +76,12 @@ export default function ListUsers() {
     setModalOpen(false)
   }
 
+  function handleSearch(e) {
+    setSearch(e.target.value.toLowerCase())
+    setPage(1)
+
+  }
+
 
   const labels = ["Nombre de Usuario", "Email", "Nombre", "Direccion", "Telefono", "Rol", "Fecha Alta", "Fecha Modificación"]
   const columns = ["userName", "email", "name", "address", "phone", "roleName", "addRow", "updRow"]
@@ -94,52 +100,50 @@ export default function ListUsers() {
           onChange={(e) => {
             if (e.target.value === "") {
               setSearch(null)
-            } else { setSearch(e.target.value.toLowerCase()) }
+            } else { handleSearch(e) }
           }}
         />
       </div>
       <br />
-      {dataTable? 
-      <TableContainer className="mb-6">
-        <Table>
-          <TableHeader>
-            <tr>
-              <TableCell>Acciones</TableCell>
-              {labels.map((label, i) => <TableCell key={i}>{label}</TableCell>)}
-            </tr>
-          </TableHeader>
-          <TableBody>
-            {dataTable.map((data, i) => (
-              <TableRow key={data.id}>
-                <TableCell>
-                  <div className="flex items-center space-x-4">
-                    <Button onClick={() => handleEdit(data.id)} layout="link" size="icon" aria-label="Edit">
-                      <EditIcon className="w-5 h-5" aria-hidden="true" />
-                    </Button>
-                    <Button onClick={() => confirmation(() => logicDelete(data.id))} layout="link" size="icon" aria-label="Delete">
-                      <TrashIcon className="w-5 h-5" aria-hidden="true" />
-                    </Button>
-                  </div>
-                </TableCell>
-                {columns.map((column, i) => <TableCell key={i}>{data[column]}</TableCell>)}
+      {dataTable ?
+        <TableContainer className="mb-6">
+          <Table>
+            <TableHeader class="border px-8 py-4">
+              <tr>
+                <TableCell className="font-bold">Acciones</TableCell>
+                {labels.map((label, i) => <TableCell class="border px-8 py-4 font-bold" key={i}>{label}</TableCell>)}
+              </tr>
+            </TableHeader>
+            <TableBody>
+              {dataTable.map((data, i) => (
+                <TableRow className="hover:bg-gray-100" key={data.id}>
+                  <TableCell className="border px-8 py-4">
+                    <div className="flex items-center space-x-4">
+                      <Button onClick={() => handleEdit(data.id)} layout="link" size="icon" aria-label="Edit">
+                        <EditIcon className="w-5 h-5" aria-hidden="true" />
+                      </Button>
+                      <Button onClick={() => confirmation(() => logicDelete(data.id))} layout="link" size="icon" aria-label="Delete">
+                        <TrashIcon className="w-5 h-5" aria-hidden="true" />
+                      </Button>
+                    </div>
+                  </TableCell>
+                  {columns.map((column, i) => <TableCell className="border px-8 py-4 " key={i}>{data[column]}</TableCell>)}
 
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-        <TableFooter>
-          <CustomPagination
-            totalResults={totalResults}
-            resultsPerPage={recordsPerPage}
-            onChange={onPageChangeTable}
-            label="Table navigation"
-          />
-        </TableFooter>
-      </TableContainer>:<Loading/>
-}
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+          <TableFooter>
+            <CustomPagination
+              cantidadTotalDePaginas={totalDePaginas}
+              paginaActual={page}
+              onChange={newPage => setPage(newPage)}
+            />
+          </TableFooter>
+        </TableContainer> : <Loading />
+      }
       <EditUser isOpen={openModal} onClose={onClose} id={id}></EditUser>
     </>
   )
 }
 
-//export default ListUsers

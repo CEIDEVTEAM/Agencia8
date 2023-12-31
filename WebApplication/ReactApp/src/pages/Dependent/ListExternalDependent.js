@@ -104,7 +104,7 @@ export default function ListExternalDependent() {
 
   return (
     <>
-      <PageTitle>Sub Agentes Extenos</PageTitle>
+      <PageTitle>Sub Agentes Externos</PageTitle>
       <div className="relative w-full max-w-xl mr-6 focus-within:text-purple-500">
         <Input
           className="pl-8 text-gray-700"

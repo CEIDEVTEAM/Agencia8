@@ -53,11 +53,14 @@ export default function UserForm(props) {
                         <FormText campo="password" label="Contraseña" />
                     </div>
 
+                    <div className="flex mt-2 sm:mt-auto sm:justify-end">
 
+                        <Button  disabled={formikProps.isSubmitting}
+                        type="submit">GUARDAR</Button>
+                    </div>
 
                     <br />
-                    <Button disabled={formikProps.isSubmitting}
-                        type="submit">Ingresar</Button>
+                   
 
                 </Form>
             )}
