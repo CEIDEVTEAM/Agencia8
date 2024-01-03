@@ -1,19 +1,19 @@
 {
-  "short_name": "Windmill",
-  "name": "Windmill Dashboard React",
+  "short_name": "Dashboard",
+  "name": "Dashboard React",
   "icons": [
     {
-      "src": "favicon.ico",
+      "src": "camion.png",
       "sizes": "64x64 32x32 24x24 16x16",
       "type": "image/x-icon"
     },
     {
-      "src": "logo192.png",
+      "src": "camion.png",
       "type": "image/png",
       "sizes": "192x192"
     },
     {
-      "src": "logo512.png",
+      "src": "camion.png",
       "type": "image/png",
       "sizes": "512x512"
     }

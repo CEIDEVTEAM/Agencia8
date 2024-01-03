@@ -50,12 +50,12 @@ function Dashboard() {
 
   return (
     <>
-      <PageTitle>Dashboard</PageTitle>
+      <PageTitle>Inicio</PageTitle>
     
 
       {/* <!-- Cards --> */}
-      <div className="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-4">
-        <InfoCard title="Sub Agentes" value="120">
+      <div className="grid gap-10 mb-8 md:grid-cols-2 xl:grid-cols-4">
+        <InfoCard title="Hojas de Ruta Activas" value="120">
           <RoundIcon
             icon={PeopleIcon}
             iconColorClass="text-orange-500 dark:text-orange-100"
@@ -64,7 +64,7 @@ function Dashboard() {
           />
         </InfoCard>
 
-        <InfoCard title="Aspirantes en trámite" value="35">
+        <InfoCard title="Dato de interes" value="35">
           <RoundIcon
             icon={ChatIcon}
             iconColorClass="text-teal-500 dark:text-teal-100"

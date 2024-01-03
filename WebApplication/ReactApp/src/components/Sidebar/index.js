@@ -5,7 +5,7 @@ import MobileSidebar from './MobileSidebar'
 function Sidebar() {
   return (
     <>
-      <DesktopSidebar />
+      {/* <DesktopSidebar /> */}
       <MobileSidebar />
     </>
   )

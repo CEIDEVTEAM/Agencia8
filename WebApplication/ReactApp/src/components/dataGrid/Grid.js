@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import axios from "axios";
-import { Link } from "react-router-dom"
 import {
   Table,
   TableHeader,
@@ -10,8 +8,11 @@ import {
   TableFooter,
   TableContainer,
   Button,
-  Pagination,
+  Input
 } from '@windmill/react-ui'
+import { EditIcon, TrashIcon, SearchIcon } from '../../icons'
+import confirmation from '../../utils/generals/confirmation';
+import CustomPagination from '../../utils/generals/CustomPagination';
 
 import { EditIcon, TrashIcon } from '../../icons'
 
@@ -64,42 +65,42 @@ export const Grid = (props) => {
   }
 
   return (
-    <TableContainer className="mb-8">
+    <TableContainer className="mb-6">
       <Table>
-        <TableHeader>
+        <TableHeader class="border px-8 py-4">
           <tr>
-            <TableCell>Acciones</TableCell>
-            {props.labels.map((label, i) => <TableCell key={i}>{label}</TableCell>)}
+            <TableCell className="font-bold">Acciones</TableCell>
+            {labels.map((label, i) => <TableCell class="border px-8 py-4 font-bold" key={i}>{label}</TableCell>)}
           </tr>
         </TableHeader>
         <TableBody>
-          {dataTable.map((data, i) => (
-            <TableRow key={data.id}>
-              <TableCell>
+          {props.data.map((data, i) => (
+            <TableRow className="hover:bg-gray-100" key={data.id}>
+              <TableCell className="border px-8 py-4">
                 <div className="flex items-center space-x-4">
-                  <Button onClick={() => handleEdit(data.id)} layout="link" size="icon" aria-label="Edit">
+                  <Button onClick={() => handleEdit(props.data.id)} layout="link" size="icon" aria-label="Edit">
                     <EditIcon className="w-5 h-5" aria-hidden="true" />
                   </Button>
-                  <Button layout="link" size="icon" aria-label="Delete">
+                  <Button onClick={() => confirmation(() => logicDelete(props.data.id))} layout="link" size="icon" aria-label="Delete">
                     <TrashIcon className="w-5 h-5" aria-hidden="true" />
                   </Button>
                 </div>
               </TableCell>
-              {props.columns.map((column, i) => <TableCell key={i}>{data[column]}</TableCell>)}
+              {columns.map((column, i) => <TableCell className="border px-8 py-4 " key={i}>{data[column]}</TableCell>)}
 
             </TableRow>
           ))}
         </TableBody>
       </Table>
       <TableFooter>
-        <Pagination
-          totalResults={totalResults}
-          resultsPerPage={recordsPerPage}
-          onChange={onPageChangeTable}
-          label="Table navigation"
+        <CustomPagination
+          cantidadTotalDePaginas={totalDePaginas}
+          paginaActual={page}
+          onChange={newPage => setPage(newPage)}
         />
       </TableFooter>
     </TableContainer>
+
 
   )
 }

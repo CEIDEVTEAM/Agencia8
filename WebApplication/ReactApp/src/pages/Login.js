@@ -2,8 +2,8 @@ import React ,{ useContext, useState, useEffect }from 'react'
 import { Link } from 'react-router-dom'
 
 //import ImageLight from '../assets/img/login-office.jpeg'
-import ImageLight from '../assets/img/bolillero.jpg'
-import ImageDark from '../assets/img/maxresdefault.jpg'
+import ImageLight from '../assets/img/login-office.jpeg'
+import ImageDark from '../assets/img/create-account-office-dark.jpeg'
 //import ImageDark from '../assets/img/login-office-dark.jpeg'
 import AutForm from '../components/form/Models/AutForm'
 
@@ -32,7 +32,7 @@ function Login() {
         
             guardarTokenLocalStorage(respuesta.data);
             actualizar(obtenerClaims());
-            history.push("/app");
+            history.push("/app/dashboard");
         console.log(respuesta);
     }
     catch (error) {

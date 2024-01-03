@@ -83,7 +83,7 @@ export default function ListUsers() {
   }
 
 
-  const labels = ["Nombre de Usuario", "Email", "Nombre", "Direccion", "Telefono", "Rol", "Fecha Alta", "Fecha Modificación"]
+  const labels = ["Nombre de Usuario", "Email", "Nombre", "Dirección", "Telófono", "Rol", "Fecha Alta", "Fecha Modificación"]
   const columns = ["userName", "email", "name", "address", "phone", "roleName", "addRow", "updRow"]
 
   return (

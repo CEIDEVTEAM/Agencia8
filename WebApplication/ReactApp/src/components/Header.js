@@ -1,19 +1,15 @@
 import React, { useContext, useState } from 'react'
 import { SidebarContext } from '../context/SidebarContext'
 import {
-  SearchIcon,
-  MoonIcon,
-  SunIcon,
-  BellIcon,
-  MenuIcon,
-  OutlinePersonIcon,
-  OutlineCogIcon,
+  MenuIcon, 
   OutlineLogoutIcon,
 } from '../icons'
 import { Avatar, Badge, Input, Dropdown, DropdownItem, WindmillContext } from '@windmill/react-ui'
 import AuthContext from '../context/AuthContext'
 import { logout } from '../utils/auth/manejadorJWT';
 import { Link, NavLink } from 'react-router-dom'
+import usuario from '../assets/img/usuario.png'
+import BreadCrumbContainer from './BreadCrumbContainer'
 
 function Header() {
   const {actualizar, claims} = useContext(AuthContext);
@@ -39,29 +35,25 @@ function Header() {
       <div className="container flex items-center justify-between h-full px-6 mx-auto text-purple-600 dark:text-purple-300">
         {/* <!-- Mobile hamburger --> */}
         <button
-          className="p-1 mr-5 -ml-1 rounded-md lg:hidden focus:outline-none focus:shadow-outline-purple"
+          className="p-1 mr-5 -ml-1 rounded-md focus:outline-none focus:shadow-outline-purple"
           onClick={toggleSidebar}
           aria-label="Menu"
         >
           <MenuIcon className="w-6 h-6" aria-hidden="true" />
         </button>
+        <a className="ml-6 text-lg font-bold text-gray-800 dark:text-gray-200" href="/app/dashboard">
+        Los Rodriguez
+      </a>
         {/* <!-- Search input --> */}
         <div className="flex justify-center flex-1 lg:mr-32">
           <div className="relative w-full max-w-xl mr-6 focus-within:text-purple-500">
-            {/* <div className="absolute inset-y-0 flex items-center pl-2">
-              <SearchIcon className="w-4 h-4" aria-hidden="true" />
-            </div> */}
-            {/* <Input
-              className="pl-8 text-gray-700"
-              placeholder="Search for projects"
-              aria-label="Search"
-            /> */}
+            <BreadCrumbContainer></BreadCrumbContainer>
           </div>
         </div>
         <ul className="flex items-center flex-shrink-0 space-x-6">
           {/* <!-- Theme toggler --> */}
           <li className="flex">
-            <button
+            {/* <button
               className="rounded-md focus:outline-none focus:shadow-outline-purple"
               onClick={toggleMode}
               aria-label="Toggle color mode"
@@ -71,7 +63,7 @@ function Header() {
               ) : (
                 <MoonIcon className="w-5 h-5" aria-hidden="true" />
               )}
-            </button>
+            </button> */}
           </li>
           {/* <!-- Notifications menu --> */}
           {/* <li className="relative">
@@ -117,7 +109,7 @@ function Header() {
             >
               <Avatar
                 className="align-middle"
-                src="https://cdn-icons-png.flaticon.com/512/6335/6335618.png"
+                src={usuario}
                 alt=""
                 aria-hidden="true"
               />
