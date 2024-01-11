@@ -9,7 +9,7 @@ import AuthContext from '../context/AuthContext'
 import { logout } from '../utils/auth/manejadorJWT';
 import { Link, NavLink } from 'react-router-dom'
 import usuario from '../assets/img/usuario.png'
-import BreadCrumbContainer from './BreadCrumbContainer'
+import PageIndicatorContainer from './PageIndicatorContainer'
 
 function Header() {
   const {actualizar, claims} = useContext(AuthContext);
@@ -47,7 +47,7 @@ function Header() {
         {/* <!-- Search input --> */}
         <div className="flex justify-center flex-1 lg:mr-32">
           <div className="relative w-full max-w-xl mr-6 focus-within:text-purple-500">
-            <BreadCrumbContainer></BreadCrumbContainer>
+            <PageIndicatorContainer/>
           </div>
         </div>
         <ul className="flex items-center flex-shrink-0 space-x-6">
