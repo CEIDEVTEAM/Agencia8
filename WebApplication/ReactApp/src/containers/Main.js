@@ -1,9 +1,12 @@
 import React from 'react'
+import '../assets/css/customStyles.css'
+
 
 function Main({ children }) {
+  
   return (
     <main className="h-full overflow-y-auto">
-      <div className="container grid px-6 mx-auto">{children}</div>
+      <div className="ccontainer grid px-6 mx-auto">{children}</div>
     </main>
   )
 }
