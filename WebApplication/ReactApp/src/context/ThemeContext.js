@@ -22,10 +22,12 @@ function useStorageTheme(key) {
   const userPreference =
     !!window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches
 
-  const [theme, setTheme] = useState(
-    // use stored theme; fallback to user preference
-    localStorage.getItem(key) || userPreference
-  )
+  // const [theme, setTheme] = useState(
+  //   // use stored theme; fallback to user preference
+  //   localStorage.getItem(key) || userPreference
+  // )
+
+  const [theme, setTheme] = useState('light')
 
   // update stored theme
   useEffect(() => {
