@@ -6,9 +6,9 @@ import React, { useState, useEffect, useRef, useLayoutEffect, useMemo } from 're
  * @return {string} previousTheme
  */
 function usePrevious(theme) {
-  const ref = 'light'
+  const ref = useRef()
   useEffect(() => {
-    ref.current = theme
+    ref.current = 'light' //desHarcodear si se quiere usar temas
   })
   return ref.current
 }
