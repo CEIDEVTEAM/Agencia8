@@ -6,7 +6,7 @@ import React, { useState, useEffect, useRef, useLayoutEffect, useMemo } from 're
  * @return {string} previousTheme
  */
 function usePrevious(theme) {
-  const ref = useRef()
+  const ref = 'light'
   useEffect(() => {
     ref.current = theme
   })
@@ -30,12 +30,12 @@ function useStorageTheme(key) {
   const [theme, setTheme] = useState('light')
 
   // update stored theme
-//   useEffect(() => {
-//     localStorage.setItem(key, theme)
-//   }, [theme, key])
+  useEffect(() => {
+    localStorage.setItem(key, theme)
+  }, [theme, key])
 
-//   return [theme, setTheme]
-// }
+  return [theme, setTheme]
+}
 
 // create context
 export const ThemeContext = React.createContext()
@@ -52,7 +52,7 @@ export const ThemeProvider = ({ children }) => {
   }, [theme, oldTheme])
 
   function toggleTheme() {
-    if (theme === 'light') setTheme('ligth')
+    if (theme === 'light') setTheme('dark')
     else setTheme('light')
   }
 
