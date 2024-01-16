@@ -107,7 +107,7 @@ const routes = [
       // submenu
       {
         path: '/app/config/ListDecitionParams',
-        name: 'Parametros de Decisión',
+        name: 'Parámetros',
         resourse: "decitionParams",
         exact: true
       },

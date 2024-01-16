@@ -35,7 +35,7 @@ function NewUser() {
 
     return (
         <>
-            <PageTitle>Registro de Usuarios</PageTitle>
+            <PageTitle >Por favor completar los datos:</PageTitle>
             <ToastyErrors errors={errors}/>
             <UsersForm model={model}
                 onSubmit={async (values, { resetForm }) => {

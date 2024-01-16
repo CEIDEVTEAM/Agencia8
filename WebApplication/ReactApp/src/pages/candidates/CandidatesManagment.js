@@ -21,15 +21,12 @@ import confirmation from '../../utils/generals/confirmation';
 import EditCandidate from './EditCandidate';
 import Procedure from './Procedure';
 import DecisionSupport from './DecisionSupport';
+import { Grid } from '../../components/dataGrid/Grid';
 
 
 export default function CandidatesManagment () {
 
-  const recordsPerPage = 30
-  const [totalResults, setTotalResults] = useState(0);
-  const [page, setPage] = useState(1)
-  const [dataTable, setDataTable] = useState([])  
-
+  
   const [openModal, setModalOpen] = useState(false)
   const [openProceduresModal, setOpenProceduresModal] = useState(false)
   const [openDecisionModal, setOpenDecisionModal] = useState(false)
@@ -37,28 +34,6 @@ export default function CandidatesManagment () {
   const [search, setSearch] = useState(null)
 
 
-  useEffect(() => {   
-    loadData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-
-  }, [page, setPage, openModal, openProceduresModal,search])
-
-  function loadData() {
-    axios.get(candidateUrl, {
-      params: { page, recordsPerPage, search }
-    })
-    .then((response) => {
-      const totalRecords =
-        parseInt(response.headers['totalrecords'], 10);
-      setDataTable(response.data);
-      setTotalResults(totalRecords)
-      console.log(response)       
-      })
-  } 
-
-  function onPageChangeTable(p) {
-    setPage(p)
-  }
 
   function handleEdit(id) {
     setModalOpen(true)
@@ -98,23 +73,8 @@ export default function CandidatesManagment () {
   return (
     <>
     <PageTitle>Gestión de Aspirantes</PageTitle>
-      <div className="relative w-full max-w-xl mr-6 focus-within:text-purple-500">
-        <div className="absolute inset-y-0 flex items-center pl-2">
-          <SearchIcon className="w-4 h-4" aria-hidden="true" />
-        </div>
-        <Input
-          className="pl-8 text-gray-700"
-          placeholder="Búsqueda por documento o apellido"
-          aria-label="Búsqueda"
-          onChange={(e) => {
-            if (e.target.value === "") {
-              setSearch(null)
-            } else { setSearch(e.target.value.toLowerCase()) }
-          }}
-        />
-      </div>
-      <br />
-      <TableContainer className="mb-8">
+ 
+      {/* <TableContainer className="mb-8">
         <Table>
           <TableHeader>
             <tr>
@@ -152,7 +112,8 @@ export default function CandidatesManagment () {
             label="Table navigation"
           />
         </TableFooter>
-      </TableContainer>
+      </TableContainer> */}
+      <Grid url={candidateUrl} columnsData={columns} labelsData={labels} ></Grid>
       <EditCandidate isOpen={openModal} onClose={onClose} id={id}></EditCandidate> 
       <Procedure isOpen={openProceduresModal} onClose={onCloseProcedure} id={id}></Procedure>
       <DecisionSupport isOpen={openDecisionModal} onClose={onCloseSupport} id={id}></DecisionSupport>

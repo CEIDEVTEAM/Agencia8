@@ -21,11 +21,11 @@ import CustomPagination from '../../utils/generals/CustomPagination';
 
 export default function ListUsers() {
 
-  const recordsPerPage = 3
+  const recordsPerPage = 10
   const [totalResults, setTotalResults] = useState(0);
   const [page, setPage] = useState(1)
   const [dataTable, setDataTable] = useState([])
-  const [totalDePaginas, serTotaDePaginas] = useState(0);
+  const [totalDePaginas, setTotaDePaginas] = useState(0);
 
   const [openModal, setModalOpen] = useState(false)
   const [id, setId] = useState(0)
@@ -48,7 +48,7 @@ export default function ListUsers() {
           parseInt(response.headers['totalrecords']);
         setDataTable(response.data);
         setTotalResults((totalRecords))
-        serTotaDePaginas(Math.ceil(totalRecords / recordsPerPage))
+        setTotaDePaginas(Math.ceil(totalRecords / recordsPerPage))
         console.log(response)
       })
   }
@@ -79,7 +79,6 @@ export default function ListUsers() {
   function handleSearch(e) {
     setSearch(e.target.value.toLowerCase())
     setPage(1)
-
   }
 
 

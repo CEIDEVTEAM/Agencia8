@@ -44,7 +44,8 @@ const routes = [
     path: '/dashboard', 
     component: Dashboard, 
     isAdmin: false,
-    resourse: "dashboard"
+    resourse: "dashboard",
+    name: "Inicio"
   },
   {
     path: '/forms',
@@ -99,7 +100,8 @@ const routes = [
     path: '/users/newUser',
     component: NewUser,
     isAdmin: true,
-    resourse: "NewUser"
+    resourse: "NewUser",
+    name:"Registro de Usuario"
   },
   {
     path: '/users/ListUsers',

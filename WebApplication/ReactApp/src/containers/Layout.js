@@ -9,7 +9,6 @@ import Header from '../components/Header'
 import Main from '../containers/Main'
 import ThemedSuspense from '../components/ThemedSuspense'
 import { SidebarContext } from '../context/SidebarContext'
-import Footer from '../components/Footer';
 
 const Page404 = lazy(() => import('../pages/404'))
 
@@ -63,8 +62,7 @@ function Layout() {
                 </Route>)}
             </Switch>
           </Suspense>
-        </Main>
-       <Footer/>
+        </Main>      
       </div>
       </AuthContext.Provider>
     </div>
