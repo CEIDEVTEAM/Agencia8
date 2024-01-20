@@ -8,7 +8,7 @@ import React, { useState, useEffect, useRef, useLayoutEffect, useMemo } from 're
 function usePrevious(theme) {
   const ref = useRef()
   useEffect(() => {
-    ref.current = 'light' //desHarcodear si se quiere usar temas
+    ref.current = theme //desHarcodear si se quiere usar temas
   })
   return ref.current
 }
@@ -42,7 +42,7 @@ export const ThemeContext = React.createContext()
 
 // create context provider
 export const ThemeProvider = ({ children }) => {
-  const [theme, setTheme] = useStorageTheme('theme')
+  const [theme, setTheme] = useStorageTheme(theme)
 
   // update root element class on theme change
   const oldTheme = usePrevious(theme)
@@ -52,7 +52,7 @@ export const ThemeProvider = ({ children }) => {
   }, [theme, oldTheme])
 
   function toggleTheme() {
-    if (theme === 'light') setTheme('dark')
+    if (theme === 'light') setTheme('light')
     else setTheme('light')
   }
 

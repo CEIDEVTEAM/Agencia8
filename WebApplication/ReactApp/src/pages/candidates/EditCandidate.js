@@ -19,6 +19,7 @@ function EditCandidate(props) {
                         <CandidateForm model={entidad} isEdit={true}
                             onSubmit={async valores => {
                                 await editar(valores)
+                                handleClose()
                             }} />}
                 </Edit>
             </ModalBody>

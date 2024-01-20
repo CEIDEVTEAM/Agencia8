@@ -198,14 +198,7 @@ const routes = [
     component: Period,
     isAdmin: true,
     resourse: "Period"
-  },
-
-
-  
-
-
-
-  
+  },  
 ]
 
 export default routes

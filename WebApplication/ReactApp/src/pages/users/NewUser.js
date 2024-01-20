@@ -12,20 +12,20 @@ function NewUser() {
     const history = useHistory();
     const [errors, setErrors] = useState([]);
     const [model, setModel] = useState({ name: '', userName: '', password: '', email: '', address: '', phone: '', idRole: '' });
-        
+
     async function New(values) {
         try {
             console.log(values)
 
             const response = await axios.post(urlNewUser, values);
             console.log(response)
-            
+
             if (response.data.successful) {
                 return true;
-            }else{
-                setErrors(response.data.errors )
+            } else {
+                setErrors(response.data.errors)
                 return false;
-            } 
+            }
         }
         catch (error) {
             setErrors(error.errors);
@@ -35,18 +35,20 @@ function NewUser() {
 
     return (
         <>
-            <PageTitle >Por favor completar los datos:</PageTitle>
-            <ToastyErrors errors={errors}/>
-            <UsersForm model={model}
-                onSubmit={async (values, { resetForm }) => {
-                    let response = await New(values);
-                    if (response) {
-                        toast.success("Guardado correctamente")
-                        setErrors([])
-                        resetForm()
-                    }
-                }}
-            />
+            
+            <div className="flex justify-center items-center px-4 py-3 mb-8 shadow-sm">
+                <ToastyErrors errors={errors} />
+                <UsersForm model={model}
+                    onSubmit={async (values, { resetForm }) => {
+                        let response = await New(values);
+                        if (response) {
+                            toast.success("Guardado correctamente")
+                            setErrors([])
+                            resetForm()
+                        }
+                    }}
+                />
+            </div>
         </>
     )
 }
